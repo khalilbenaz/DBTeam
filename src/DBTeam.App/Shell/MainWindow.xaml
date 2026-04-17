@@ -1,0 +1,228 @@
+<Window x:Class="DBTeam.App.Shell.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ad="https://github.com/Dirkster99/AvalonDock"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:DBTeam.App.ViewModels"
+        xmlns:oe="clr-namespace:DBTeam.Modules.ObjectExplorer.Views;assembly=DBTeam.Modules.ObjectExplorer"
+        xmlns:cm="clr-namespace:DBTeam.Modules.ConnectionManager.Views;assembly=DBTeam.Modules.ConnectionManager"
+        xmlns:qe="clr-namespace:DBTeam.Modules.QueryEditor.Views;assembly=DBTeam.Modules.QueryEditor"
+        Title="DB TEAM" Height="800" Width="1400"
+        ui:WindowHelper.UseModernWindowStyle="True">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{DynamicResource Menu.File}">
+                <MenuItem Header="{DynamicResource Menu.NewConnection}" Command="{Binding NewConnectionCommand}" InputGestureText="Ctrl+N">
+                    <MenuItem.Icon><md:PackIcon Kind="DatabasePlus"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.NewQuery}" Command="{Binding NewQueryCommand}" InputGestureText="Ctrl+Q">
+                    <MenuItem.Icon><md:PackIcon Kind="FileDocumentPlus"/></MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Menu.Exit}" Command="{Binding ExitCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="ExitToApp"/></MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Menu.Edit}">
+                <MenuItem Header="{DynamicResource Menu.Cut}" Command="ApplicationCommands.Cut">
+                    <MenuItem.Icon><md:PackIcon Kind="ContentCut"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.Copy}" Command="ApplicationCommands.Copy">
+                    <MenuItem.Icon><md:PackIcon Kind="ContentCopy"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.Paste}" Command="ApplicationCommands.Paste">
+                    <MenuItem.Icon><md:PackIcon Kind="ContentPaste"/></MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Menu.Database}">
+                <MenuItem Header="{DynamicResource Menu.SchemaCompare}" Command="{Binding SchemaCompareCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="Compare"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.DataCompare}" Command="{Binding DataCompareCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="TableEdit"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.NewTable}" Command="{Binding NewTableCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="TablePlus"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.DataGenerator}" Command="{Binding DataGeneratorCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="DatabaseSync"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.Documenter}" Command="{Binding DocumenterCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="FileDocument"/></MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Menu.Tools}">
+                <MenuItem Header="{DynamicResource Menu.Profiler}" Command="{Binding ProfilerCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="ChartLine"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.Debugger}" Command="{Binding DebuggerCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="Bug"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.Diagram}" Command="{Binding DiagramCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="Graph"/></MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Menu.View}">
+                <MenuItem Header="{DynamicResource Menu.ObjectExplorer}" Command="{Binding ShowObjectExplorerCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="FileTree"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.Connections}" Command="{Binding ShowConnectionsCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="ServerNetwork"/></MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Menu.Theme}">
+                    <MenuItem.Icon><md:PackIcon Kind="ThemeLightDark"/></MenuItem.Icon>
+                    <MenuItem Header="{DynamicResource Menu.ThemeDark}" Command="{Binding SetThemeCommand}" CommandParameter="Dark">
+                        <MenuItem.Icon><md:PackIcon Kind="WeatherNight"/></MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource Menu.ThemeLight}" Command="{Binding SetThemeCommand}" CommandParameter="Light">
+                        <MenuItem.Icon><md:PackIcon Kind="WhiteBalanceSunny"/></MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource Menu.ThemeSystem}" Command="{Binding SetThemeCommand}" CommandParameter="System">
+                        <MenuItem.Icon><md:PackIcon Kind="MonitorScreenshot"/></MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="{DynamicResource Menu.Language}">
+                    <MenuItem.Icon><md:PackIcon Kind="Translate"/></MenuItem.Icon>
+                    <MenuItem Header="English" Command="{Binding SetLanguageCommand}" CommandParameter="en-US">
+                        <MenuItem.Icon><md:PackIcon Kind="Alphabetical"/></MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Français" Command="{Binding SetLanguageCommand}" CommandParameter="fr-FR">
+                        <MenuItem.Icon><md:PackIcon Kind="AlphabeticalVariant"/></MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource Menu.Help}">
+                <MenuItem Header="{DynamicResource Menu.Shortcuts}" Command="{Binding ShortcutsCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="KeyboardOutline"/></MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Menu.About}" Command="{Binding AboutCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="InformationOutline"/></MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem><TextBlock Text="{Binding StatusMessage}"/></StatusBarItem>
+            <Separator/>
+            <StatusBarItem><TextBlock Text="{Binding ActiveConnectionName}"/></StatusBarItem>
+        </StatusBar>
+
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding NewConnectionCommand}" ToolTip="{DynamicResource Menu.NewConnection}">
+                    <md:PackIcon Kind="DatabasePlus" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding NewQueryCommand}" ToolTip="{DynamicResource Menu.NewQuery}">
+                    <md:PackIcon Kind="FileDocumentPlus" Width="20" Height="20"/>
+                </Button>
+                <Separator/>
+                <Button Command="{Binding ExecuteQueryCommand}" ToolTip="{DynamicResource Btn.Execute}">
+                    <md:PackIcon Kind="Play" Width="20" Height="20" Foreground="#2E7D32"/>
+                </Button>
+                <Separator/>
+                <Button Command="{Binding SchemaCompareCommand}" ToolTip="{DynamicResource Welcome.SchemaCompare}">
+                    <md:PackIcon Kind="Compare" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding DataCompareCommand}" ToolTip="{DynamicResource Welcome.DataCompare}">
+                    <md:PackIcon Kind="TableEdit" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding DiagramCommand}" ToolTip="{DynamicResource Menu.Diagram}">
+                    <md:PackIcon Kind="Graph" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding ProfilerCommand}" ToolTip="{DynamicResource Menu.Profiler}">
+                    <md:PackIcon Kind="ChartLine" Width="20" Height="20"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <ad:DockingManager x:Name="Dock">
+            <ad:LayoutRoot>
+                <ad:LayoutPanel Orientation="Horizontal">
+                    <ad:LayoutAnchorablePane DockWidth="300">
+                        <ad:LayoutAnchorable x:Name="ConnectionsPane" Title="{DynamicResource Panel.Connections}" CanClose="False" CanHide="False" ContentId="CONNECTIONS">
+                            <cm:ConnectionsPanel/>
+                        </ad:LayoutAnchorable>
+                        <ad:LayoutAnchorable x:Name="ObjectExplorerPane" Title="{DynamicResource Panel.ObjectExplorer}" CanClose="False" CanHide="False" ContentId="OBJECT_EXPLORER">
+                            <oe:ObjectExplorerView/>
+                        </ad:LayoutAnchorable>
+                    </ad:LayoutAnchorablePane>
+                    <ad:LayoutDocumentPaneGroup>
+                        <ad:LayoutDocumentPane x:Name="DocumentsPane">
+                            <ad:LayoutDocument Title="Welcome" CanClose="True">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <StackPanel MaxWidth="900" Margin="48,32" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                                            <md:PackIcon Kind="DatabaseCheck" Width="48" Height="48" Foreground="{StaticResource Brand.Primary}" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock Text="{DynamicResource App.Title}" FontSize="32" FontWeight="Bold"/>
+                                                <TextBlock Text="{DynamicResource App.Subtitle}" Style="{StaticResource Caption}" FontSize="14"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <TextBlock Text="{DynamicResource Welcome.QuickStart}" Style="{StaticResource H2}" Margin="0,16,0,8"/>
+                                        <UniformGrid Columns="2">
+                                            <Border Style="{StaticResource Card}" Margin="0,0,8,8" Cursor="Hand">
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" Command="{Binding NewConnectionCommand}"/>
+                                                </Border.InputBindings>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <md:PackIcon Kind="DatabasePlus" Width="32" Height="32" Foreground="{StaticResource Brand.Primary}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{DynamicResource Welcome.NewConnection}" FontWeight="SemiBold"/>
+                                                        <TextBlock Text="{DynamicResource Welcome.NewConnectionDesc}" Style="{StaticResource Caption}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Style="{StaticResource Card}" Margin="8,0,0,8" Cursor="Hand">
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" Command="{Binding NewQueryCommand}"/>
+                                                </Border.InputBindings>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <md:PackIcon Kind="FileDocumentPlus" Width="32" Height="32" Foreground="{StaticResource Brand.Success}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{DynamicResource Welcome.NewQuery}" FontWeight="SemiBold"/>
+                                                        <TextBlock Text="{DynamicResource Welcome.NewQueryDesc}" Style="{StaticResource Caption}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Style="{StaticResource Card}" Margin="0,0,8,0" Cursor="Hand">
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" Command="{Binding SchemaCompareCommand}"/>
+                                                </Border.InputBindings>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <md:PackIcon Kind="Compare" Width="32" Height="32" Foreground="{StaticResource Brand.Warning}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{DynamicResource Welcome.SchemaCompare}" FontWeight="SemiBold"/>
+                                                        <TextBlock Text="{DynamicResource Welcome.SchemaCompareDesc}" Style="{StaticResource Caption}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Style="{StaticResource Card}" Margin="8,0,0,0" Cursor="Hand">
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" Command="{Binding DataCompareCommand}"/>
+                                                </Border.InputBindings>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <md:PackIcon Kind="TableEdit" Width="32" Height="32" Foreground="{StaticResource Brand.Info}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{DynamicResource Welcome.DataCompare}" FontWeight="SemiBold"/>
+                                                        <TextBlock Text="{DynamicResource Welcome.DataCompareDesc}" Style="{StaticResource Caption}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Border>
+                                        </UniformGrid>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </ad:LayoutDocument>
+                        </ad:LayoutDocumentPane>
+                    </ad:LayoutDocumentPaneGroup>
+                </ad:LayoutPanel>
+            </ad:LayoutRoot>
+        </ad:DockingManager>
+    </DockPanel>
+</Window>

@@ -1,0 +1,86 @@
+<UserControl x:Class="DBTeam.Modules.QueryEditor.Views.QueryEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Padding="8,6" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}">
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding ExecuteCommand}" Style="{StaticResource SuccessButton}" ToolTip="Execute (F5)" Margin="0,0,6,0">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Kind="Play" Width="16" Height="16" Margin="0,0,6,0"/>
+                        <TextBlock Text="{DynamicResource Btn.Execute}"/>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding EstimatedPlanCommand}" Style="{StaticResource IconButton}" ToolTip="Estimated Execution Plan">
+                    <md:PackIcon Kind="SitemapOutline" Width="20" Height="20"/>
+                </Button>
+                <Button Command="{Binding FormatSqlCommand}" Style="{StaticResource IconButton}" ToolTip="Format SQL (Ctrl+K)">
+                    <md:PackIcon Kind="FormatAlignLeft" Width="20" Height="20"/>
+                </Button>
+                <Border Width="1" Background="{DynamicResource SystemControlForegroundBaseLowBrush}" Margin="8,4"/>
+                <md:PackIcon Kind="Database" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.6"/>
+                <ComboBox Width="200" Margin="0,0,12,0" ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}"/>
+                <Border Style="{StaticResource Pill}" Background="{StaticResource Brand.Info}">
+                    <TextBlock Text="{Binding StatusText}" Foreground="White" FontSize="11" FontWeight="SemiBold"/>
+                </Border>
+                <StackPanel Orientation="Horizontal" Margin="12,0,0,0" VerticalAlignment="Center">
+                    <md:PackIcon Kind="Timer" Width="13" Height="13" VerticalAlignment="Center" Margin="0,0,3,0" Opacity="0.6"/>
+                    <TextBlock Text="{Binding Elapsed, StringFormat='\{0:mm\\:ss\\.fff\}'}" FontSize="12" Opacity="0.8"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="12,0,0,0" VerticalAlignment="Center">
+                    <md:PackIcon Kind="TableRow" Width="13" Height="13" VerticalAlignment="Center" Margin="0,0,3,0" Opacity="0.6"/>
+                    <TextBlock Text="{Binding RowCount, StringFormat='{}{0} rows'}" FontSize="12" Opacity="0.8"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" BorderThickness="0" Padding="0">
+                <ae:TextEditor x:Name="Editor"
+                               FontFamily="Consolas" FontSize="13"
+                               ShowLineNumbers="True"
+                               SyntaxHighlighting="TSQL"
+                               WordWrap="False"/>
+            </Border>
+
+            <GridSplitter Grid.Row="1" Height="6" HorizontalAlignment="Stretch" Background="Transparent"/>
+
+            <TabControl Grid.Row="2">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="TableLarge" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="{DynamicResource Label.Results}"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ItemsControl ItemsSource="{Binding Results}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="True" IsReadOnly="True" Margin="0,0,0,8"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="MessageTextOutline" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="{DynamicResource Label.Messages}"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TextBox Text="{Binding Messages}" IsReadOnly="True"
+                             FontFamily="Consolas" BorderThickness="0"
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                             AcceptsReturn="True" TextWrapping="NoWrap"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
+</UserControl>

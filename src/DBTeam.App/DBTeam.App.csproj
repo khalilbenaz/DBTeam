@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AssemblyTitle>DB TEAM</AssemblyTitle>
+    <Product>DB TEAM</Product>
+    <ApplicationIcon Condition="Exists('Resources\app-icon.ico')">Resources\app-icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\app-icon.png" Condition="Exists('Resources\app-icon.png')" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.73.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.3.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.6" />
+    <PackageReference Include="ModernWpfUI" Version="0.9.6" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DBTeam.Core\DBTeam.Core.csproj" />
+    <ProjectReference Include="..\DBTeam.Data\DBTeam.Data.csproj" />
+    <ProjectReference Include="..\DBTeam.UI\DBTeam.UI.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.ConnectionManager\DBTeam.Modules.ConnectionManager.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.DataCompare\DBTeam.Modules.DataCompare.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.DataGenerator\DBTeam.Modules.DataGenerator.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.Debugger\DBTeam.Modules.Debugger.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.Diagram\DBTeam.Modules.Diagram.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.Documenter\DBTeam.Modules.Documenter.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.ObjectExplorer\DBTeam.Modules.ObjectExplorer.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.Profiler\DBTeam.Modules.Profiler.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.QueryEditor\DBTeam.Modules.QueryEditor.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.ResultsGrid\DBTeam.Modules.ResultsGrid.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.SchemaCompare\DBTeam.Modules.SchemaCompare.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.TableDesigner\DBTeam.Modules.TableDesigner.csproj" />
+  </ItemGroup>
+
+</Project>
