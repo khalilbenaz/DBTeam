@@ -1,0 +1,105 @@
+<UserControl x:Class="DBTeam.Modules.Diagram.Views.DiagramView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:vm="clr-namespace:DBTeam.Modules.Diagram.ViewModels">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Style="{StaticResource SectionHeader}">
+            <StackPanel Orientation="Horizontal">
+                <md:PackIcon Kind="Graph" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{DynamicResource Diag.Title}" Style="{StaticResource H1}"/>
+                    <TextBlock Text="{DynamicResource Diag.Subtitle}" Style="{StaticResource Caption}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Top" Padding="16,12" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                    <TextBlock Text="{DynamicResource Designer.Connection}" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox ItemsSource="{Binding Connections}" DisplayMemberPath="Name" SelectedItem="{Binding Connection}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,0,8,0">
+                    <TextBlock Text="{DynamicResource Designer.Database}" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" IsEditable="True"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" VerticalAlignment="Bottom">
+                    <Button Command="{Binding LoadDiagramCommand}" Style="{StaticResource PrimaryButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="Refresh" Margin="0,0,6,0"/>
+                            <TextBlock Text="{DynamicResource Diag.Load}"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <md:PackIcon Kind="InformationOutline" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.6"/>
+            <StatusBarItem><TextBlock Text="{Binding Status}"/></StatusBarItem>
+        </StatusBar>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+            <Grid Width="3000" Height="3000">
+                <ItemsControl x:Name="LinesControl" ItemsSource="{Binding Lines}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Line Stroke="#90A4AE" StrokeThickness="1.5">
+                                <Line.X1><Binding Path="From.X"/></Line.X1>
+                                <Line.Y1><Binding Path="From.Y"/></Line.Y1>
+                                <Line.X2><Binding Path="To.X"/></Line.X2>
+                                <Line.Y2><Binding Path="To.Y"/></Line.Y2>
+                            </Line>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding Tables}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:TableBoxViewModel}">
+                            <Border Width="220" BorderBrush="#1565C0" BorderThickness="1" CornerRadius="6"
+                                    Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
+                                <DockPanel>
+                                    <Border DockPanel.Dock="Top" Background="#1E88E5" Padding="8,4" CornerRadius="6,6,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <md:PackIcon Kind="Table" Foreground="White" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <TextBlock Text="{Binding QualifiedName}" Foreground="White" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <ItemsControl ItemsSource="{Binding Columns}" Margin="6,4">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" FontFamily="Consolas" FontSize="11" Margin="0,1"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

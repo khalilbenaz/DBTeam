@@ -1,0 +1,54 @@
+# Build
+bin/
+obj/
+out/
+*.user
+*.suo
+*.sln.docstates
+*.rsuser
+*.userosscache
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Packages
+*.nupkg
+packages/
+.nuget/
+
+# Logs
+*.log
+logs/
+
+# Test / coverage
+TestResults/
+[Cc]overage/
+*.coverage
+*.coveragexml
+
+# Publish
+publish/
+*.pubxml.user
+PublishScripts/
+
+# Local config
+*.local.json
+connections.json
+theme.json
+lang.json
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Misc
+*.tmp
+*.cache

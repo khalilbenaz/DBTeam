@@ -1,0 +1,146 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="App.Title">DB TEAM</sys:String>
+    <sys:String x:Key="App.Subtitle">IDE SQL Server professionnel</sys:String>
+
+    <sys:String x:Key="Menu.File">_Fichier</sys:String>
+    <sys:String x:Key="Menu.Edit">_Édition</sys:String>
+    <sys:String x:Key="Menu.Database">_Base de données</sys:String>
+    <sys:String x:Key="Menu.Tools">_Outils</sys:String>
+    <sys:String x:Key="Menu.View">_Affichage</sys:String>
+    <sys:String x:Key="Menu.Help">A_ide</sys:String>
+    <sys:String x:Key="Menu.About">À _propos de DB TEAM</sys:String>
+    <sys:String x:Key="Menu.Shortcuts">_Raccourcis clavier</sys:String>
+    <sys:String x:Key="About.Title">À propos de DB TEAM</sys:String>
+    <sys:String x:Key="About.Version">Version 1.0.0</sys:String>
+    <sys:String x:Key="About.Description">IDE SQL Server professionnel développé en WPF.</sys:String>
+    <sys:String x:Key="About.Close">Fermer</sys:String>
+    <sys:String x:Key="Shortcuts.Title">Raccourcis clavier</sys:String>
+    <sys:String x:Key="Menu.Language">_Langue</sys:String>
+    <sys:String x:Key="Menu.Theme">_Thème</sys:String>
+    <sys:String x:Key="Menu.NewConnection">Nouvelle _connexion...</sys:String>
+    <sys:String x:Key="Menu.NewQuery">Nouvelle _requête</sys:String>
+    <sys:String x:Key="Menu.Exit">_Quitter</sys:String>
+    <sys:String x:Key="Menu.Cut">Co_uper</sys:String>
+    <sys:String x:Key="Menu.Copy">_Copier</sys:String>
+    <sys:String x:Key="Menu.Paste">C_oller</sys:String>
+    <sys:String x:Key="Menu.SchemaCompare">_Comparer les schémas...</sys:String>
+    <sys:String x:Key="Menu.DataCompare">Comparer les _données...</sys:String>
+    <sys:String x:Key="Menu.DataGenerator">_Générateur de données...</sys:String>
+    <sys:String x:Key="Menu.Documenter">Docum_enter...</sys:String>
+    <sys:String x:Key="Menu.Profiler">_Profiler</sys:String>
+    <sys:String x:Key="Menu.Debugger">_Débogueur</sys:String>
+    <sys:String x:Key="Menu.Diagram">Diagr_amme</sys:String>
+    <sys:String x:Key="Menu.ObjectExplorer">_Explorateur d'objets</sys:String>
+    <sys:String x:Key="Menu.Connections">_Connexions</sys:String>
+    <sys:String x:Key="Menu.ThemeDark">_Sombre</sys:String>
+    <sys:String x:Key="Menu.ThemeLight">_Clair</sys:String>
+    <sys:String x:Key="Menu.ThemeSystem">_Système</sys:String>
+
+    <sys:String x:Key="Welcome.QuickStart">Démarrage rapide</sys:String>
+    <sys:String x:Key="Welcome.Tips">Astuces</sys:String>
+    <sys:String x:Key="Welcome.NewConnection">Nouvelle connexion</sys:String>
+    <sys:String x:Key="Welcome.NewConnectionDesc">Se connecter à une instance SQL Server</sys:String>
+    <sys:String x:Key="Welcome.NewQuery">Nouvelle requête</sys:String>
+    <sys:String x:Key="Welcome.NewQueryDesc">Ouvrir un éditeur T-SQL</sys:String>
+    <sys:String x:Key="Welcome.SchemaCompare">Comparer les schémas</sys:String>
+    <sys:String x:Key="Welcome.SchemaCompareDesc">Comparer et synchroniser les structures</sys:String>
+    <sys:String x:Key="Welcome.DataCompare">Comparer les données</sys:String>
+    <sys:String x:Key="Welcome.DataCompareDesc">Comparer les lignes et générer un script de fusion</sys:String>
+
+    <sys:String x:Key="Dialog.ConnectionTitle">Connexion à SQL Server</sys:String>
+    <sys:String x:Key="Dialog.ConnectionSubtitle">Configurer une connexion à votre base de données</sys:String>
+    <sys:String x:Key="Dialog.General">Général</sys:String>
+    <sys:String x:Key="Dialog.Authentication">Authentification</sys:String>
+    <sys:String x:Key="Dialog.Options">Options</sys:String>
+    <sys:String x:Key="Dialog.ConnectionName">Nom de la connexion</sys:String>
+    <sys:String x:Key="Dialog.Server">Serveur</sys:String>
+    <sys:String x:Key="Dialog.Database">Base de données</sys:String>
+    <sys:String x:Key="Dialog.AuthMode">Mode</sys:String>
+    <sys:String x:Key="Dialog.Login">Identifiant</sys:String>
+    <sys:String x:Key="Dialog.Password">Mot de passe</sys:String>
+    <sys:String x:Key="Dialog.TrustCert">Approuver le certificat serveur</sys:String>
+    <sys:String x:Key="Dialog.Encrypt">Chiffrer la connexion</sys:String>
+    <sys:String x:Key="Btn.Test">Tester</sys:String>
+    <sys:String x:Key="Btn.Connect">Se connecter</sys:String>
+    <sys:String x:Key="Btn.Cancel">Annuler</sys:String>
+    <sys:String x:Key="Btn.Execute">Exécuter</sys:String>
+    <sys:String x:Key="Btn.Compare">Comparer</sys:String>
+    <sys:String x:Key="Btn.SyncScript">Script de synchro</sys:String>
+    <sys:String x:Key="Btn.Reload">Recharger</sys:String>
+    <sys:String x:Key="Btn.Delete">Supprimer</sys:String>
+
+    <sys:String x:Key="Panel.Connections">Connexions</sys:String>
+    <sys:String x:Key="Panel.ObjectExplorer">Explorateur d'objets</sys:String>
+    <sys:String x:Key="Panel.NoConnections">Aucune connexion</sys:String>
+    <sys:String x:Key="Panel.NoConnectionsHint">Fichier → Nouvelle connexion</sys:String>
+
+    <sys:String x:Key="Label.Source">SOURCE</sys:String>
+    <sys:String x:Key="Label.Target">CIBLE</sys:String>
+    <sys:String x:Key="Label.Table">TABLE</sys:String>
+    <sys:String x:Key="Label.Results">Résultats</sys:String>
+    <sys:String x:Key="Label.Messages">Messages</sys:String>
+    <sys:String x:Key="Label.Differences">Différences</sys:String>
+    <sys:String x:Key="Label.RowDifferences">Différences de lignes</sys:String>
+    <sys:String x:Key="Label.SourceScript">Script source</sys:String>
+    <sys:String x:Key="Label.TargetScript">Script cible</sys:String>
+    <sys:String x:Key="Status.Ready">Prêt</sys:String>
+    <sys:String x:Key="Status.NoConnection">Aucune connexion</sys:String>
+
+    <sys:String x:Key="Ctx.NewQueryHere">Nouvelle requête ici</sys:String>
+    <sys:String x:Key="Ctx.ScriptObject">Scripter l'objet</sys:String>
+    <sys:String x:Key="Ctx.Disconnect">Déconnecter</sys:String>
+    <sys:String x:Key="Tree.Connections">{0} connexion(s)</sys:String>
+
+    <sys:String x:Key="Designer.Title">Concepteur de tables</sys:String>
+    <sys:String x:Key="Designer.Subtitle">Concevoir visuellement une table et générer le DDL</sys:String>
+    <sys:String x:Key="Designer.Connection">Connexion</sys:String>
+    <sys:String x:Key="Designer.Database">Base de données</sys:String>
+    <sys:String x:Key="Designer.Schema">Schéma</sys:String>
+    <sys:String x:Key="Designer.TableName">Nom de la table</sys:String>
+    <sys:String x:Key="Designer.GenerateDdl">Générer le DDL</sys:String>
+    <sys:String x:Key="Designer.AddColumn">Ajouter une colonne</sys:String>
+    <sys:String x:Key="Designer.RemoveColumn">Supprimer la colonne</sys:String>
+    <sys:String x:Key="Designer.MoveUp">Monter</sys:String>
+    <sys:String x:Key="Designer.MoveDown">Descendre</sys:String>
+    <sys:String x:Key="Designer.ColName">Nom</sys:String>
+    <sys:String x:Key="Designer.ColType">Type</sys:String>
+    <sys:String x:Key="Designer.ColLength">Longueur</sys:String>
+    <sys:String x:Key="Designer.ColNullable">Nullable</sys:String>
+    <sys:String x:Key="Designer.ColIdentity">Identité</sys:String>
+    <sys:String x:Key="Designer.ColPK">PK</sys:String>
+    <sys:String x:Key="Designer.ColDefault">Défaut</sys:String>
+
+    <sys:String x:Key="Profiler.Title">Profiler de requêtes</sys:String>
+    <sys:String x:Key="Profiler.Subtitle">Analyser les plans d'exécution et les statistiques d'opérateurs</sys:String>
+    <sys:String x:Key="Profiler.Estimated">Plan estimé</sys:String>
+    <sys:String x:Key="Profiler.ActualPlan">Exécuter avec plan réel</sys:String>
+    <sys:String x:Key="Profiler.Operators">Opérateurs</sys:String>
+    <sys:String x:Key="Profiler.PlanXml">XML du plan</sys:String>
+
+    <sys:String x:Key="Gen.Title">Générateur de données</sys:String>
+    <sys:String x:Key="Gen.Subtitle">Remplir les tables avec des données réalistes</sys:String>
+    <sys:String x:Key="Gen.Rows">Lignes</sys:String>
+    <sys:String x:Key="Gen.SkipIdentity">Ignorer l'identité</sys:String>
+    <sys:String x:Key="Gen.Preview">Aperçu</sys:String>
+    <sys:String x:Key="Gen.ExportScript">Exporter en script</sys:String>
+    <sys:String x:Key="Gen.Insert">Insérer en base</sys:String>
+    <sys:String x:Key="Gen.PreviewHeader">Aperçu</sys:String>
+
+    <sys:String x:Key="Doc.Title">Documenter</sys:String>
+    <sys:String x:Key="Doc.Subtitle">Générer une documentation HTML d'une base de données</sys:String>
+    <sys:String x:Key="Doc.Target">Cible</sys:String>
+    <sys:String x:Key="Doc.Output">Sortie</sys:String>
+    <sys:String x:Key="Doc.NotGenerated">Non généré</sys:String>
+    <sys:String x:Key="Doc.GenerateOpen">Générer et ouvrir</sys:String>
+    <sys:String x:Key="Doc.OpenLast">Ouvrir le dernier</sys:String>
+
+    <sys:String x:Key="Diag.Title">Diagramme</sys:String>
+    <sys:String x:Key="Diag.Subtitle">Visualiser les tables et leurs relations de clés étrangères</sys:String>
+    <sys:String x:Key="Diag.Load">Charger</sys:String>
+
+    <sys:String x:Key="Menu.NewTable">Nouvelle _table...</sys:String>
+</ResourceDictionary>

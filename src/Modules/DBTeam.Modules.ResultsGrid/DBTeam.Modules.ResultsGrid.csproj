@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="EPPlus" Version="8.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DBTeam.Core\DBTeam.Core.csproj" />
+    <ProjectReference Include="..\..\DBTeam.Data\DBTeam.Data.csproj" />
+    <ProjectReference Include="..\..\DBTeam.UI\DBTeam.UI.csproj" />
+  </ItemGroup>
+
+</Project>
