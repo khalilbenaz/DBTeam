@@ -93,10 +93,13 @@ public partial class QueryEditorView : UserControl
         if (_provider is null) return;
         if (_completionWindow is not null) return;
 
+        int wordStart = FindWordStart(Editor.CaretOffset);
+
         _completionWindow = new CompletionWindow(Editor.TextArea)
         {
             MaxHeight = 280,
-            Width = 320
+            Width = 320,
+            StartOffset = afterDot ? Editor.CaretOffset : wordStart
         };
         _completionWindow.Closed += (_, _) => _completionWindow = null;
         var data = _completionWindow.CompletionList.CompletionData;
@@ -120,14 +123,21 @@ public partial class QueryEditorView : UserControl
         foreach (var kw in SqlCompletionProvider.Keywords)
             data.Add(new SqlCompletionItem(kw, CompletionKind.Keyword));
 
-        if (vm.Connection is not null && !string.IsNullOrEmpty(vm.Database))
-        {
-            var tables = await _provider.GetTablesAsync(vm.Connection, vm.Database!);
-            foreach (var t in tables) data.Add(new SqlCompletionItem(t, CompletionKind.Table));
-        }
-
         if (data.Count == 0) { _completionWindow.Close(); return; }
         _completionWindow.Show();
+    }
+
+    private int FindWordStart(int offset)
+    {
+        var doc = Editor.Document;
+        int start = offset;
+        while (start > 0)
+        {
+            char ch = doc.GetCharAt(start - 1);
+            if (char.IsLetterOrDigit(ch) || ch == '_') start--;
+            else break;
+        }
+        return start;
     }
 
     private string? ExtractIdentifierBeforeDot()

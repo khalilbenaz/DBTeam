@@ -143,4 +143,13 @@
     <sys:String x:Key="Diag.Load">Load</sys:String>
 
     <sys:String x:Key="Menu.NewTable">New _Table...</sys:String>
+
+    <!-- Tooltip / plain-text variants without mnemonic underscore -->
+    <sys:String x:Key="Tip.NewConnection">New connection</sys:String>
+    <sys:String x:Key="Tip.NewQuery">New query</sys:String>
+    <sys:String x:Key="Tip.Execute">Execute (F5)</sys:String>
+    <sys:String x:Key="Tip.SchemaCompare">Schema Compare</sys:String>
+    <sys:String x:Key="Tip.DataCompare">Data Compare</sys:String>
+    <sys:String x:Key="Tip.Diagram">Database Diagram</sys:String>
+    <sys:String x:Key="Tip.Profiler">Query Profiler</sys:String>
 </ResourceDictionary>

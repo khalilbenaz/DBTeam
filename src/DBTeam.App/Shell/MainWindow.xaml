@@ -115,27 +115,27 @@
 
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Command="{Binding NewConnectionCommand}" ToolTip="{DynamicResource Menu.NewConnection}">
+                <Button Command="{Binding NewConnectionCommand}" ToolTip="{DynamicResource Tip.NewConnection}">
                     <md:PackIcon Kind="DatabasePlus" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding NewQueryCommand}" ToolTip="{DynamicResource Menu.NewQuery}">
+                <Button Command="{Binding NewQueryCommand}" ToolTip="{DynamicResource Tip.NewQuery}">
                     <md:PackIcon Kind="FileDocumentPlus" Width="20" Height="20"/>
                 </Button>
                 <Separator/>
-                <Button Command="{Binding ExecuteQueryCommand}" ToolTip="{DynamicResource Btn.Execute}">
+                <Button Command="{Binding ExecuteQueryCommand}" ToolTip="{DynamicResource Tip.Execute}">
                     <md:PackIcon Kind="Play" Width="20" Height="20" Foreground="#2E7D32"/>
                 </Button>
                 <Separator/>
-                <Button Command="{Binding SchemaCompareCommand}" ToolTip="{DynamicResource Welcome.SchemaCompare}">
+                <Button Command="{Binding SchemaCompareCommand}" ToolTip="{DynamicResource Tip.SchemaCompare}">
                     <md:PackIcon Kind="Compare" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding DataCompareCommand}" ToolTip="{DynamicResource Welcome.DataCompare}">
+                <Button Command="{Binding DataCompareCommand}" ToolTip="{DynamicResource Tip.DataCompare}">
                     <md:PackIcon Kind="TableEdit" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding DiagramCommand}" ToolTip="{DynamicResource Menu.Diagram}">
+                <Button Command="{Binding DiagramCommand}" ToolTip="{DynamicResource Tip.Diagram}">
                     <md:PackIcon Kind="Graph" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding ProfilerCommand}" ToolTip="{DynamicResource Menu.Profiler}">
+                <Button Command="{Binding ProfilerCommand}" ToolTip="{DynamicResource Tip.Profiler}">
                     <md:PackIcon Kind="ChartLine" Width="20" Height="20"/>
                 </Button>
             </ToolBar>
