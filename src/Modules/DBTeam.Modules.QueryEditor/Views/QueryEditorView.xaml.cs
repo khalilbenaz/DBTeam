@@ -123,6 +123,18 @@ public partial class QueryEditorView : UserControl
         foreach (var kw in SqlCompletionProvider.Keywords)
             data.Add(new SqlCompletionItem(kw, CompletionKind.Keyword));
 
+        if (vm.Connection is not null && !string.IsNullOrEmpty(vm.Database))
+        {
+            foreach (var t in await _provider.GetTablesAsync(vm.Connection, vm.Database!))
+                data.Add(new SqlCompletionItem(t, CompletionKind.Table));
+            foreach (var v in await _provider.GetViewsAsync(vm.Connection, vm.Database!))
+                data.Add(new SqlCompletionItem(v, CompletionKind.View));
+            foreach (var p in await _provider.GetProceduresAsync(vm.Connection, vm.Database!))
+                data.Add(new SqlCompletionItem(p, CompletionKind.Procedure));
+            foreach (var f in await _provider.GetFunctionsAsync(vm.Connection, vm.Database!))
+                data.Add(new SqlCompletionItem(f, CompletionKind.Function));
+        }
+
         if (data.Count == 0) { _completionWindow.Close(); return; }
         _completionWindow.Show();
     }
