@@ -143,4 +143,12 @@
     <sys:String x:Key="Diag.Load">Charger</sys:String>
 
     <sys:String x:Key="Menu.NewTable">Nouvelle _table...</sys:String>
+
+    <sys:String x:Key="Tip.NewConnection">Nouvelle connexion</sys:String>
+    <sys:String x:Key="Tip.NewQuery">Nouvelle requête</sys:String>
+    <sys:String x:Key="Tip.Execute">Exécuter (F5)</sys:String>
+    <sys:String x:Key="Tip.SchemaCompare">Comparer les schémas</sys:String>
+    <sys:String x:Key="Tip.DataCompare">Comparer les données</sys:String>
+    <sys:String x:Key="Tip.Diagram">Diagramme</sys:String>
+    <sys:String x:Key="Tip.Profiler">Profiler</sys:String>
 </ResourceDictionary>

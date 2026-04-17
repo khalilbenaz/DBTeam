@@ -242,4 +242,3 @@ MIT — see [LICENSE](LICENSE) if present, otherwise consider the code MIT-licen
 - [Kinnara](https://github.com/Kinnara) — ModernWpf
 - [Material Design In XAML Toolkit](http://materialdesigninxaml.net/)
 - [Bogus](https://github.com/bchavez/Bogus)
-- Inspired by the UX of **dbForge Studio for SQL Server** (Devart) and **SQL Server Management Studio**
