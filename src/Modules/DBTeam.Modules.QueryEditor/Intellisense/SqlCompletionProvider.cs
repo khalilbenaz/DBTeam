@@ -25,6 +25,9 @@ public sealed class SqlCompletionProvider
 
     private readonly IDatabaseMetadataService _meta;
     private readonly Dictionary<string, List<string>> _tableCache = new();
+    private readonly Dictionary<string, List<string>> _viewCache = new();
+    private readonly Dictionary<string, List<string>> _procCache = new();
+    private readonly Dictionary<string, List<string>> _funcCache = new();
     private readonly Dictionary<string, List<string>> _columnCache = new();
 
     public SqlCompletionProvider(IDatabaseMetadataService meta) { _meta = meta; }
@@ -34,13 +37,38 @@ public sealed class SqlCompletionProvider
         var key = $"{c.Id}|{db}";
         if (_tableCache.TryGetValue(key, out var cached)) return cached;
         var list = new List<string>();
-        try
-        {
-            foreach (var t in await _meta.GetTablesAsync(c, db)) list.Add($"{t.Schema}.{t.Name}");
-            foreach (var t in await _meta.GetViewsAsync(c, db)) list.Add($"{t.Schema}.{t.Name}");
-        }
-        catch { }
+        try { foreach (var t in await _meta.GetTablesAsync(c, db)) list.Add($"{t.Schema}.{t.Name}"); } catch { }
         _tableCache[key] = list;
+        return list;
+    }
+
+    public async Task<List<string>> GetViewsAsync(SqlConnectionInfo c, string db)
+    {
+        var key = $"{c.Id}|{db}";
+        if (_viewCache.TryGetValue(key, out var cached)) return cached;
+        var list = new List<string>();
+        try { foreach (var v in await _meta.GetViewsAsync(c, db)) list.Add($"{v.Schema}.{v.Name}"); } catch { }
+        _viewCache[key] = list;
+        return list;
+    }
+
+    public async Task<List<string>> GetProceduresAsync(SqlConnectionInfo c, string db)
+    {
+        var key = $"{c.Id}|{db}";
+        if (_procCache.TryGetValue(key, out var cached)) return cached;
+        var list = new List<string>();
+        try { foreach (var p in await _meta.GetProceduresAsync(c, db)) list.Add($"{p.Schema}.{p.Name}"); } catch { }
+        _procCache[key] = list;
+        return list;
+    }
+
+    public async Task<List<string>> GetFunctionsAsync(SqlConnectionInfo c, string db)
+    {
+        var key = $"{c.Id}|{db}";
+        if (_funcCache.TryGetValue(key, out var cached)) return cached;
+        var list = new List<string>();
+        try { foreach (var f in await _meta.GetFunctionsAsync(c, db)) list.Add($"{f.Schema}.{f.Name}"); } catch { }
+        _funcCache[key] = list;
         return list;
     }
 
