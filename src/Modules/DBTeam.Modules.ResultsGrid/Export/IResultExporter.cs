@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DBTeam.Modules.ResultsGrid.Export;
 
-public enum ExportFormat { Csv, Excel, Json }
+public enum ExportFormat { Csv, Excel, Json, Xml }
 
 public interface IResultExporter
 {

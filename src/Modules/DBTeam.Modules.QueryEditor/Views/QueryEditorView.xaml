@@ -32,6 +32,9 @@
                         <MenuItem Header="Export to JSON" Command="{Binding ExportCommand}" CommandParameter="Json">
                             <MenuItem.Icon><md:PackIcon Kind="CodeJson"/></MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem Header="Export to XML" Command="{Binding ExportCommand}" CommandParameter="Xml">
+                            <MenuItem.Icon><md:PackIcon Kind="CodeBraces"/></MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                 </Menu>
                 <Border Width="1" Background="{DynamicResource SystemControlForegroundBaseLowBrush}" Margin="8,4"/>

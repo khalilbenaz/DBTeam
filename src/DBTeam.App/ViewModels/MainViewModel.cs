@@ -95,6 +95,20 @@ public partial class MainViewModel : ObservableObject
         bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Query Profiler", Content = view });
     }
     [RelayCommand]
+    private void Administration()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.Admin.Views.AdminView>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Administration", Content = view });
+    }
+    [RelayCommand]
+    private void Terminal()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.Terminal.Views.TerminalView>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Terminal", Content = view });
+    }
+    [RelayCommand]
     private void Debugger()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Debugger.Views.DebuggerView>();

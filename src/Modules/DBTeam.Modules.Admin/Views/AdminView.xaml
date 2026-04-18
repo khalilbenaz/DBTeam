@@ -1,0 +1,88 @@
+<UserControl x:Class="DBTeam.Modules.Admin.Views.AdminView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Style="{StaticResource SectionHeader}">
+            <StackPanel Orientation="Horizontal">
+                <md:PackIcon Kind="ShieldAccount" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Server Administration" Style="{StaticResource H1}"/>
+                    <TextBlock Text="Logins · users · permissions · indexes · sessions · backup · restore" Style="{StaticResource Caption}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Top" Padding="16,12" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                    <TextBlock Text="Connection" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox ItemsSource="{Binding Connections}" DisplayMemberPath="Name" SelectedItem="{Binding Connection}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,0,8,0">
+                    <TextBlock Text="Database" Style="{StaticResource FieldLabel}"/>
+                    <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" IsEditable="True"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <Button Command="{Binding RefreshCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0">
+                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Refresh" Margin="0,0,6,0"/><TextBlock Text="Refresh"/></StackPanel>
+                    </Button>
+                    <Button Command="{Binding GenerateBackupScriptCommand}" Style="{StaticResource IconButton}" ToolTip="Generate BACKUP script">
+                        <md:PackIcon Kind="DatabaseArrowDown" Foreground="{StaticResource Brand.Success}"/>
+                    </Button>
+                    <Button Command="{Binding GenerateRestoreScriptCommand}" Style="{StaticResource IconButton}" ToolTip="Generate RESTORE script">
+                        <md:PackIcon Kind="DatabaseArrowUp" Foreground="{StaticResource Brand.Warning}"/>
+                    </Button>
+                    <Button Command="{Binding GenerateIndexMaintenanceScriptCommand}" Style="{StaticResource IconButton}" ToolTip="Generate index rebuild/reorganize script">
+                        <md:PackIcon Kind="WrenchCog" Foreground="{StaticResource Brand.Primary}"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <md:PackIcon Kind="InformationOutline" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.6"/>
+            <StatusBarItem><TextBlock Text="{Binding Status}"/></StatusBarItem>
+        </StatusBar>
+
+        <TabControl Margin="8">
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Database" Margin="0,0,6,0"/><TextBlock Text="Databases"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding DatabaseSizes}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="AccountGroup" Margin="0,0,6,0"/><TextBlock Text="Logins"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding Logins}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Account" Margin="0,0,6,0"/><TextBlock Text="Users"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding Users}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="KeyVariant" Margin="0,0,6,0"/><TextBlock Text="Roles"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding Roles}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="ShieldKey" Margin="0,0,6,0"/><TextBlock Text="Permissions"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding Permissions}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Tune" Margin="0,0,6,0"/><TextBlock Text="Indexes"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding Indexes}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="ChartLine" Margin="0,0,6,0"/><TextBlock Text="Slow queries"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding SlowQueries}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="AccountEye" Margin="0,0,6,0"/><TextBlock Text="Sessions"/></StackPanel></TabItem.Header>
+                <DataGrid ItemsSource="{Binding Sessions}" AutoGenerateColumns="True" IsReadOnly="True"/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>

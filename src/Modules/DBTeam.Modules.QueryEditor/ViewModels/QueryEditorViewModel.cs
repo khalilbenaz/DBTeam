@@ -116,6 +116,7 @@ public partial class QueryEditorViewModel : ObservableObject
         {
             "excel" or "xlsx" => ExportFormat.Excel,
             "json" => ExportFormat.Json,
+            "xml" => ExportFormat.Xml,
             _ => ExportFormat.Csv
         };
         var exporter = ResultExporterFactory.Create(fmt);

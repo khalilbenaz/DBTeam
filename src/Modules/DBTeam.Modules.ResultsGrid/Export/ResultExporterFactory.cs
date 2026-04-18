@@ -7,6 +7,7 @@ public static class ResultExporterFactory
         ExportFormat.Csv => new CsvExporter(),
         ExportFormat.Excel => new ExcelExporter(),
         ExportFormat.Json => new JsonExporter(),
+        ExportFormat.Xml => new XmlExporter(),
         _ => new CsvExporter()
     };
 }

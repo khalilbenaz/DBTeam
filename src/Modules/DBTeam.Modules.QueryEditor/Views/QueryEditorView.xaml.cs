@@ -1,12 +1,20 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using DBTeam.Core.Abstractions;
+using DBTeam.Core.Events;
 using DBTeam.Core.Infrastructure;
+using DBTeam.Core.Models;
 using DBTeam.Modules.QueryEditor.Intellisense;
 using DBTeam.Modules.QueryEditor.ViewModels;
 using ICSharpCode.AvalonEdit.CodeCompletion;
+using ICSharpCode.AvalonEdit.Rendering;
+using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 namespace DBTeam.Modules.QueryEditor.Views;
 
@@ -14,6 +22,8 @@ public partial class QueryEditorView : UserControl
 {
     private CompletionWindow? _completionWindow;
     private SqlCompletionProvider? _provider;
+    private readonly DispatcherTimer _validationTimer = new() { Interval = TimeSpan.FromMilliseconds(700) };
+    private ErrorRenderer? _errorRenderer;
 
     public QueryEditorView()
     {
@@ -24,6 +34,10 @@ public partial class QueryEditorView : UserControl
         Editor.KeyDown += OnEditorKeyDown;
         Editor.TextArea.TextEntered += TextArea_TextEntered;
         Editor.TextArea.TextEntering += TextArea_TextEntering;
+
+        _errorRenderer = new ErrorRenderer();
+        Editor.TextArea.TextView.BackgroundRenderers.Add(_errorRenderer);
+        _validationTimer.Tick += (_, _) => { _validationTimer.Stop(); Validate(); };
     }
 
     private void OnDataContextChanged(object? sender, DependencyPropertyChangedEventArgs e)
@@ -43,6 +57,32 @@ public partial class QueryEditorView : UserControl
     {
         if (DataContext is QueryEditorViewModel vm && vm.Sql != Editor.Text)
             vm.Sql = Editor.Text;
+        _validationTimer.Stop(); _validationTimer.Start();
+    }
+
+    private void Validate()
+    {
+        if (_errorRenderer is null) return;
+        _errorRenderer.Errors.Clear();
+        try
+        {
+            var parser = new TSql160Parser(true);
+            using var sr = new StringReader(Editor.Text);
+            parser.Parse(sr, out var errors);
+            foreach (var err in errors)
+            {
+                try
+                {
+                    var line = Editor.Document.GetLineByNumber(err.Line);
+                    int start = line.Offset + Math.Max(0, err.Column - 1);
+                    int end = Math.Min(start + 20, line.EndOffset);
+                    _errorRenderer.Errors.Add((start, end, err.Message));
+                }
+                catch { }
+            }
+        }
+        catch { }
+        Editor.TextArea.TextView.InvalidateLayer(KnownLayer.Selection);
     }
 
     private void OnEditorKeyDown(object sender, KeyEventArgs e)
@@ -63,6 +103,76 @@ public partial class QueryEditorView : UserControl
             ShowCompletion(force: true);
             e.Handled = true;
         }
+        else if (e.Key == Key.F12)
+        {
+            _ = GoToDefinitionAsync();
+            e.Handled = true;
+        }
+        else if (e.Key == Key.Tab)
+        {
+            if (TryExpandSnippet()) e.Handled = true;
+        }
+    }
+
+    private bool TryExpandSnippet()
+    {
+        int caret = Editor.CaretOffset;
+        int start = FindWordStart(caret);
+        if (start == caret) return false;
+        var word = Editor.Document.GetText(start, caret - start);
+        var snip = SqlSnippets.All.FirstOrDefault(s => string.Equals(s.Trigger, word, StringComparison.OrdinalIgnoreCase));
+        if (snip is null) return false;
+        Editor.Document.Replace(start, caret - start, string.Format(snip.Body, "Table", "Column", "Value", "Id", "1"));
+        return true;
+    }
+
+    private async System.Threading.Tasks.Task GoToDefinitionAsync()
+    {
+        if (DataContext is not QueryEditorViewModel vm || vm.Connection is null || string.IsNullOrEmpty(vm.Database)) return;
+        var ident = GetIdentifierUnderCaret();
+        if (string.IsNullOrEmpty(ident)) return;
+
+        string schema = "dbo", name = ident;
+        var parts = ident.Split('.');
+        if (parts.Length >= 2) { schema = parts[^2].Trim('[', ']'); name = parts[^1].Trim('[', ']'); }
+
+        var meta = ServiceLocator.TryGet<IDatabaseMetadataService>();
+        var bus = ServiceLocator.TryGet<IEventBus>();
+        if (meta is null || bus is null) return;
+
+        string sql = "";
+        foreach (var kind in new[] { DbObjectKind.Table, DbObjectKind.View, DbObjectKind.StoredProcedure, DbObjectKind.Function })
+        {
+            try
+            {
+                sql = await meta.ScriptObjectAsync(vm.Connection, vm.Database!, schema, name, kind);
+                if (!string.IsNullOrWhiteSpace(sql)) break;
+            }
+            catch { }
+        }
+        if (string.IsNullOrWhiteSpace(sql)) return;
+        bus.Publish(new OpenQueryEditorRequest { Connection = vm.Connection, Database = vm.Database, InitialSql = sql });
+    }
+
+    private string? GetIdentifierUnderCaret()
+    {
+        var doc = Editor.Document;
+        int caret = Editor.CaretOffset;
+        int start = caret, end = caret;
+        while (start > 0)
+        {
+            char ch = doc.GetCharAt(start - 1);
+            if (char.IsLetterOrDigit(ch) || ch == '_' || ch == '.' || ch == '[' || ch == ']') start--;
+            else break;
+        }
+        while (end < doc.TextLength)
+        {
+            char ch = doc.GetCharAt(end);
+            if (char.IsLetterOrDigit(ch) || ch == '_' || ch == '.' || ch == '[' || ch == ']') end++;
+            else break;
+        }
+        if (start == end) return null;
+        return doc.GetText(start, end - start);
     }
 
     private void TextArea_TextEntered(object sender, System.Windows.Input.TextCompositionEventArgs e)
