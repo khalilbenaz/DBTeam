@@ -18,10 +18,11 @@ public partial class QueryEditorViewModel : ObservableObject
 {
     private readonly IQueryExecutionService _exec;
     private readonly IDatabaseMetadataService _meta;
+    private readonly IQueryHistoryStore? _history;
 
-    public QueryEditorViewModel(IQueryExecutionService exec, IDatabaseMetadataService meta)
+    public QueryEditorViewModel(IQueryExecutionService exec, IDatabaseMetadataService meta, IQueryHistoryStore? history = null)
     {
-        _exec = exec; _meta = meta;
+        _exec = exec; _meta = meta; _history = history;
         Databases = new ObservableCollection<string>();
     }
 
@@ -73,6 +74,23 @@ public partial class QueryEditorViewModel : ObservableObject
         RowCount = 0;
         foreach (var t in r.ResultSets) RowCount += t.Rows.Count;
         IsBusy = false;
+
+        if (_history is not null)
+        {
+            try
+            {
+                await _history.AppendAsync(new QueryHistoryEntry
+                {
+                    Sql = Sql,
+                    ConnectionName = Connection.Name,
+                    Database = Database,
+                    Elapsed = r.Elapsed,
+                    RowsAffected = r.RowsAffected,
+                    Success = !r.HasError
+                });
+            }
+            catch { }
+        }
     }
 
     [RelayCommand]
