@@ -1,15 +1,22 @@
 # DB TEAM
 
-> Professional SQL Server IDE built with WPF.
+> Professional SQL Server IDE built with WPF · v1.3.0
 
-![.NET](https://img.shields.io/badge/.NET-8-blueviolet)
-![Platform](https://img.shields.io/badge/platform-Windows-blue)
-![Status](https://img.shields.io/badge/status-WIP-orange)
-![License](https://img.shields.io/badge/license-MIT-green)
+[![.NET](https://img.shields.io/badge/.NET-8-blueviolet)](https://dotnet.microsoft.com/)
+[![Platform](https://img.shields.io/badge/platform-Windows-blue)](https://github.com/khalilbenaz/DBTeam/releases)
+[![Release](https://img.shields.io/github/v/release/khalilbenaz/DBTeam?include_prereleases&label=release)](https://github.com/khalilbenaz/DBTeam/releases)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![CI](https://github.com/khalilbenaz/DBTeam/actions/workflows/ci.yml/badge.svg)](https://github.com/khalilbenaz/DBTeam/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/khalilbenaz/DBTeam/actions/workflows/codeql.yml/badge.svg)](https://github.com/khalilbenaz/DBTeam/actions/workflows/codeql.yml)
+[![Website](https://img.shields.io/badge/website-khalilbenaz.github.io%2FDBTeam-1E88E5)](https://khalilbenaz.github.io/DBTeam/)
 
-**DB TEAM** is a modular Windows desktop IDE for Microsoft SQL Server. It ships connection management, object browsing, a T-SQL editor with IntelliSense, schema/data comparison, data generation, HTML documentation, a visual query profiler, a table designer, and an ER-style diagram viewer.
+**DB TEAM** is a modular, bilingual (EN/FR), themeable Windows desktop IDE for Microsoft SQL Server.
 
-> ⚠️ **Work in progress.** Several modules are already functional but the product is not feature-complete. See [Roadmap](#roadmap).
+Connection management · Object Explorer · T-SQL editor with autocomplete + format · Schema Compare with column-level ALTER · Data Compare · Table Designer (create + edit) · Query Profiler with plan tree · Data Generator · HTML Documenter · Interactive ER Diagram · Query History & favorites · Session restore.
+
+**📥 Download installer**: [DBTeam-Setup-1.3.0.exe](https://github.com/khalilbenaz/DBTeam/releases/latest) or [portable ZIP](https://github.com/khalilbenaz/DBTeam/releases/latest)
+**🌐 Website**: <https://khalilbenaz.github.io/DBTeam/>
+**📚 Docs**: [Install](docs/INSTALL.md) · [User guide](docs/USER-GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Modules](docs/MODULES.md) · [Changelog](CHANGELOG.md)
 
 ---
 

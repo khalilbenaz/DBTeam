@@ -1,9 +1,8 @@
 title: DB TEAM
-description: Professional SQL Server IDE built with WPF
-theme: jekyll-theme-cayman
+description: Professional SQL Server IDE for Windows — modular, bilingual, themeable
 url: "https://khalilbenaz.github.io"
 baseurl: "/DBTeam"
-show_downloads: true
+show_downloads: false
 github:
   is_project_page: true
   repository_url: https://github.com/khalilbenaz/DBTeam
@@ -13,6 +12,7 @@ github:
 markdown: kramdown
 plugins:
   - jekyll-relative-links
+  - jekyll-seo-tag
 relative_links:
   enabled: true
   collections: true
@@ -22,3 +22,8 @@ include:
   - ARCHITECTURE.md
   - MODULES.md
   - bmad
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
