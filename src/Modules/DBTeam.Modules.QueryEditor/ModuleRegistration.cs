@@ -12,5 +12,7 @@ public static class ModuleRegistration
         s.AddSingleton<SqlCompletionProvider>();
         s.AddTransient<QueryEditorViewModel>();
         s.AddTransient<QueryEditorView>();
+        s.AddSingleton<QueryHistoryPanelViewModel>();
+        s.AddTransient<QueryHistoryPanel>();
     }
 }

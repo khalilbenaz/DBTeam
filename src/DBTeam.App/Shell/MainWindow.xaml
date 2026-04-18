@@ -8,6 +8,7 @@
         xmlns:oe="clr-namespace:DBTeam.Modules.ObjectExplorer.Views;assembly=DBTeam.Modules.ObjectExplorer"
         xmlns:cm="clr-namespace:DBTeam.Modules.ConnectionManager.Views;assembly=DBTeam.Modules.ConnectionManager"
         xmlns:qe="clr-namespace:DBTeam.Modules.QueryEditor.Views;assembly=DBTeam.Modules.QueryEditor"
+        xmlns:qh="clr-namespace:DBTeam.Modules.QueryEditor.Views;assembly=DBTeam.Modules.QueryEditor"
         Title="DB TEAM" Height="800" Width="1400"
         ui:WindowHelper.UseModernWindowStyle="True">
     <Window.DataContext>
@@ -150,6 +151,9 @@
                         </ad:LayoutAnchorable>
                         <ad:LayoutAnchorable x:Name="ObjectExplorerPane" Title="{DynamicResource Panel.ObjectExplorer}" CanClose="False" CanHide="False" ContentId="OBJECT_EXPLORER">
                             <oe:ObjectExplorerView/>
+                        </ad:LayoutAnchorable>
+                        <ad:LayoutAnchorable x:Name="HistoryPane" Title="History" CanClose="False" CanHide="False" ContentId="HISTORY">
+                            <qh:QueryHistoryPanel/>
                         </ad:LayoutAnchorable>
                     </ad:LayoutAnchorablePane>
                     <ad:LayoutDocumentPaneGroup>

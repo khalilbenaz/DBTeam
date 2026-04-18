@@ -54,6 +54,7 @@ public partial class App : System.Windows.Application
         s.AddSingleton<IConnectionService, SqlServerConnectionService>();
         s.AddSingleton<IDatabaseMetadataService, SqlServerMetadataService>();
         s.AddSingleton<IQueryExecutionService, SqlServerQueryExecutionService>();
+        s.AddSingleton<IQueryHistoryStore, JsonLinesQueryHistoryStore>();
         s.AddSingleton<IEventBus, EventBus>();
 
         s.AddSingleton<Services.ThemeService>();
