@@ -75,7 +75,7 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.SchemaCompare.Views.SchemaCompareView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.SchemaCompare", "Schema Compare"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.SchemaCompare", Title = "Schema Compare", Content = view });
     }
 
     [RelayCommand]
@@ -83,7 +83,7 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.DataCompare.Views.DataCompareView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.DataCompare", "Data Compare"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.DataCompare", Title = "Data Compare", Content = view });
     }
 
     [RelayCommand]
@@ -91,7 +91,7 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.TableDesigner.Views.TableDesignerView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.NewTable", "New Table"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.NewTable", Title = "New Table", Content = view });
     }
 
     [RelayCommand]
@@ -99,84 +99,84 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.DataGenerator.Views.DataGeneratorView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.DataGenerator", "Data Generator"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.DataGenerator", Title = "Data Generator", Content = view });
     }
     [RelayCommand]
     private void Documenter()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Documenter.Views.DocumenterView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Documenter", "Documenter"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Documenter", Title = "Documenter", Content = view });
     }
     [RelayCommand]
     private void Profiler()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Profiler.Views.ProfilerView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Profiler", "Query Profiler"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Profiler", Title = "Query Profiler", Content = view });
     }
     [RelayCommand]
     private void Administration()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Admin.Views.AdminView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Administration", "Administration"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Administration", Title = "Administration", Content = view });
     }
     [RelayCommand]
     private void Terminal()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Terminal.Views.TerminalView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Terminal", "Terminal"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Terminal", Title = "Terminal", Content = view });
     }
     [RelayCommand]
     private void AiAssistant()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.AiAssistant.Views.AiAssistantView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.AiAssistant", "AI Assistant"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.AiAssistant", Title = "AI Assistant", Content = view });
     }
     [RelayCommand]
     private void Monitoring()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Monitoring.Views.MonitoringView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Monitoring", "Monitoring"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Monitoring", Title = "Monitoring", Content = view });
     }
     [RelayCommand]
     private void ImportData()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Import.Views.ImportView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Import", "Import"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Import", Title = "Import", Content = view });
     }
     [RelayCommand]
     private void QueryBuilder()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.QueryBuilder.Views.QueryBuilderView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.QueryBuilder", "Query Builder"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.QueryBuilder", Title = "Query Builder", Content = view });
     }
     [RelayCommand]
     private void Git()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Git.Views.GitPanel>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Git", "Git"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Git", Title = "Git", Content = view });
     }
     [RelayCommand]
     private void Debugger()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Debugger.Views.DebuggerView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Debugger", "T-SQL Debugger"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Debugger", Title = "T-SQL Debugger", Content = view });
     }
     [RelayCommand]
     private void Diagram()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Diagram.Views.DiagramView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Diagram", "Database Diagram"), Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { TitleKey = "Tab.Diagram", Title = "Database Diagram", Content = view });
     }
     [RelayCommand]
     private void ShowObjectExplorer() => App.Services.GetRequiredService<IEventBus>().Publish(new DBTeam.Core.Events.ShowPaneRequest { PaneId = "OBJECT_EXPLORER" });

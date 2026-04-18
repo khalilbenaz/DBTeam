@@ -122,6 +122,8 @@ public partial class MainWindow : Window
         Dispatcher.Invoke(() =>
         {
             var doc = new LayoutDocument { Title = req.Title, Content = req.Content };
+            if (!string.IsNullOrEmpty(req.TitleKey))
+                DBTeam.App.Services.LocalizedDockDocument.Bind(doc, req.TitleKey, req.Title);
             DocumentsPane.Children.Add(doc);
             doc.IsActive = true;
         });
