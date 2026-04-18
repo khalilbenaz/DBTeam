@@ -100,6 +100,6 @@ Overview of each feature module, its entry point, and current state.
 Currently shows a placeholder message. T-SQL debugging requires either:
 - The legacy **SQL Server Debugger API** (deprecated since SSMS 18)
 - A custom instrumentation approach (rewrite stored procs with checkpoint markers)
-- An external tool like **dbForge Debugger** or **ApexSQL Debugger** integration
+- Integrating an external third-party debugger
 
 Design decision pending.

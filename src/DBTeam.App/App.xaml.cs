@@ -22,8 +22,17 @@ public partial class App : System.Windows.Application
         var logDir = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DBTeam", "logs");
         System.IO.Directory.CreateDirectory(logDir);
         Log.Logger = new LoggerConfiguration()
-            .WriteTo.File(System.IO.Path.Combine(logDir, "app-.log"), rollingInterval: RollingInterval.Day)
+            .Enrich.WithProperty("AppVersion", typeof(App).Assembly.GetName().Version?.ToString() ?? "unknown")
+            .Enrich.WithProperty("OSVersion", Environment.OSVersion.ToString())
+            .WriteTo.File(System.IO.Path.Combine(logDir, "app-.log"), rollingInterval: RollingInterval.Day,
+                          outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
             .CreateLogger();
+
+        Log.Information("App starting · version {AppVersion}", typeof(App).Assembly.GetName().Version);
+
+        AppDomain.CurrentDomain.UnhandledException += (_, a) => HandleFatal(a.ExceptionObject as Exception, "AppDomain.UnhandledException");
+        DispatcherUnhandledException += (_, a) => { HandleNonFatal(a.Exception, "Dispatcher.UnhandledException"); a.Handled = true; };
+        System.Threading.Tasks.TaskScheduler.UnobservedTaskException += (_, a) => { HandleNonFatal(a.Exception, "TaskScheduler.UnobservedTaskException"); a.SetObserved(); };
 
         var services = new ServiceCollection();
         ConfigureServices(services);
@@ -69,5 +78,27 @@ public partial class App : System.Windows.Application
     {
         Log.CloseAndFlush();
         base.OnExit(e);
+    }
+
+    private static void HandleNonFatal(Exception? ex, string source)
+    {
+        if (ex is null) return;
+        Log.Error(ex, "Non-fatal exception from {Source}", source);
+        try
+        {
+            Current?.Dispatcher?.Invoke(() =>
+            {
+                var dlg = new Shell.ErrorDialog(ex, source);
+                if (Current.MainWindow is { IsLoaded: true } w) dlg.Owner = w;
+                dlg.ShowDialog();
+            });
+        }
+        catch (Exception inner) { Log.Error(inner, "Failed to show error dialog"); }
+    }
+
+    private static void HandleFatal(Exception? ex, string source)
+    {
+        Log.Fatal(ex, "Fatal exception from {Source}", source);
+        Log.CloseAndFlush();
     }
 }
