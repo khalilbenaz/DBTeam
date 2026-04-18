@@ -44,7 +44,9 @@ if (-not $iscc) {
 
 Write-Host "==> Compiling installer with $iscc" -ForegroundColor Cyan
 $iss = Join-Path $repo "installer/DBTeam.iss"
-& $iscc /DAppVersion=$Version /DSourceDir="dist\DBTeam-$Version-$Runtime" /DOutputDir="dist" $iss
+$absSource = (Resolve-Path $published).Path
+$absOutput = (Resolve-Path (Join-Path $repo "dist")).Path
+& $iscc /DAppVersion=$Version "/DSourceDir=$absSource" "/DOutputDir=$absOutput" $iss
 if ($LASTEXITCODE -ne 0) { throw "ISCC failed" }
 
 $setup = Join-Path $repo "dist/DBTeam-Setup-$Version.exe"
