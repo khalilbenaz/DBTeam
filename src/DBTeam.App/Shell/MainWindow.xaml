@@ -180,7 +180,7 @@
                     </ad:LayoutAnchorablePane>
                     <ad:LayoutDocumentPaneGroup>
                         <ad:LayoutDocumentPane x:Name="DocumentsPane">
-                            <ad:LayoutDocument Title="{DynamicResource Welcome.Title}" CanClose="True">
+                            <ad:LayoutDocument x:Name="WelcomeDoc" Title="Welcome" ContentId="WELCOME" CanClose="True">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <StackPanel MaxWidth="900" Margin="48,32" HorizontalAlignment="Center">
                                         <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
