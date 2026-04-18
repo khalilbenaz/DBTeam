@@ -27,8 +27,21 @@ public partial class MainWindow : Window
             else if (e.PaneId == "CONNECTIONS" && ConnectionsPane is not null) ConnectionsPane.IsActive = true;
         }));
         TryLoadIcon();
+        BindStaticPaneTitles();
         Loaded += OnWindowLoaded;
         Closing += OnWindowClosing;
+    }
+
+    private void BindStaticPaneTitles()
+    {
+        if (ConnectionsPane is not null)
+            DBTeam.App.Services.LocalizedDockDocument.Bind(ConnectionsPane, "Panel.Connections", "Connections");
+        if (ObjectExplorerPane is not null)
+            DBTeam.App.Services.LocalizedDockDocument.Bind(ObjectExplorerPane, "Panel.ObjectExplorer", "Object Explorer");
+        if (HistoryPane is not null)
+            DBTeam.App.Services.LocalizedDockDocument.Bind(HistoryPane, "Panel.History", "History");
+        if (WelcomeDoc is not null)
+            DBTeam.App.Services.LocalizedDockDocument.Bind(WelcomeDoc, "Welcome.Title", "Welcome");
     }
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
