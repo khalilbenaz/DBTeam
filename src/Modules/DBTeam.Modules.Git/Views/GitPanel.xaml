@@ -1,0 +1,100 @@
+<UserControl x:Class="DBTeam.Modules.Git.Views.GitPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Style="{StaticResource SectionHeader}">
+            <StackPanel Orientation="Horizontal">
+                <md:PackIcon Kind="Git" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Git" Style="{StaticResource H1}"/>
+                    <TextBlock Text="Version your .sql scripts directly from DB TEAM" Style="{StaticResource Caption}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Top" Padding="16,12" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                    <TextBlock Text="Repository path" Style="{StaticResource FieldLabel}"/>
+                    <TextBox Text="{Binding RepoPath, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <Button Command="{Binding PickFolderCommand}" Style="{StaticResource IconButton}" ToolTip="Browse">
+                        <md:PackIcon Kind="FolderOpen"/>
+                    </Button>
+                    <Button Command="{Binding RefreshCommand}" Style="{StaticResource IconButton}" ToolTip="Refresh">
+                        <md:PackIcon Kind="Refresh"/>
+                    </Button>
+                    <Button Command="{Binding PullCommand}" Style="{StaticResource IconButton}" ToolTip="Pull">
+                        <md:PackIcon Kind="SourcePull"/>
+                    </Button>
+                    <Button Command="{Binding PushCommand}" Style="{StaticResource IconButton}" ToolTip="Push">
+                        <md:PackIcon Kind="SourceCommit"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <md:PackIcon Kind="SourceBranch" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.7"/>
+            <StatusBarItem><TextBlock Text="{Binding Branch}" FontWeight="SemiBold"/></StatusBarItem>
+            <Separator/>
+            <StatusBarItem><TextBlock Text="{Binding Status}"/></StatusBarItem>
+        </StatusBar>
+
+        <Grid Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource Card}" Padding="0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="SQL files" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                    <ListBox ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}">
+                        <ListBox.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenFileCommand}" CommandParameter="{Binding SelectedFile}"/>
+                        </ListBox.InputBindings>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <md:PackIcon Kind="FileCode" VerticalAlignment="Center" Margin="0,0,6,0" Foreground="{StaticResource Brand.Primary}"/>
+                                    <TextBlock Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+            <GridSplitter Grid.Column="1" Width="8" HorizontalAlignment="Stretch" Background="Transparent"/>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Commit message" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Text="{Binding CommitMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,6"/>
+                        <Button Command="{Binding CommitCommand}" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal"><md:PackIcon Kind="SourceCommit" Margin="0,0,6,0"/><TextBlock Text="Commit"/></StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Style="{StaticResource Card}" Padding="0" Margin="0,8,0,0">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="git log --oneline -15" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                        <TextBox Text="{Binding GitLog, Mode=OneWay}" IsReadOnly="True" FontFamily="Consolas" FontSize="11" BorderThickness="0"
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="NoWrap"/>
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>

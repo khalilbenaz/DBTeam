@@ -27,6 +27,36 @@ public sealed class DataCompareEngine
     private readonly IDatabaseMetadataService _meta;
     public DataCompareEngine(IDatabaseMetadataService meta) { _meta = meta; }
 
+    /// <summary>
+    /// CHECKSUM mode — no PK required. Produces a per-row hash comparison via BINARY_CHECKSUM(*).
+    /// Slower (full scan + hash) but handles tables without primary keys.
+    /// </summary>
+    public async Task<(int sourceRows, int targetRows, int matching, int onlySource, int onlyTarget)> CompareByChecksumAsync(
+        SqlConnectionInfo sConn, string sDb, string schema, string table,
+        SqlConnectionInfo tConn, string tDb, CancellationToken ct = default)
+    {
+        var sSums = await HashesAsync(sConn, sDb, schema, table, ct);
+        var tSums = await HashesAsync(tConn, tDb, schema, table, ct);
+        var inter = new HashSet<int>(sSums.Keys); inter.IntersectWith(tSums.Keys);
+        int matching = inter.Sum(k => Math.Min(sSums[k], tSums[k]));
+        int onlySource = sSums.Where(kv => !inter.Contains(kv.Key)).Sum(kv => kv.Value)
+                       + inter.Sum(k => Math.Max(0, sSums[k] - tSums[k]));
+        int onlyTarget = tSums.Where(kv => !inter.Contains(kv.Key)).Sum(kv => kv.Value)
+                       + inter.Sum(k => Math.Max(0, tSums[k] - sSums[k]));
+        return (sSums.Values.Sum(), tSums.Values.Sum(), matching, onlySource, onlyTarget);
+    }
+
+    private static async Task<Dictionary<int, int>> HashesAsync(SqlConnectionInfo c, string db, string schema, string table, CancellationToken ct)
+    {
+        var d = new Dictionary<int, int>();
+        await using var conn = new SqlConnection(ConnectionStringFactory.Build(c, db));
+        await conn.OpenAsync(ct);
+        await using var cmd = new SqlCommand($"SELECT BINARY_CHECKSUM(*) AS h, COUNT(*) AS c FROM [{schema}].[{table}] GROUP BY BINARY_CHECKSUM(*)", conn) { CommandTimeout = 180 };
+        await using var r = await cmd.ExecuteReaderAsync(ct);
+        while (await r.ReadAsync(ct)) d[r.GetInt32(0)] = r.GetInt32(1);
+        return d;
+    }
+
     public async Task<(IReadOnlyList<RowDiff> Diffs, IReadOnlyList<string> KeyCols, IReadOnlyList<string> AllCols)> CompareAsync(
         SqlConnectionInfo sConn, string sDb, string schema, string table,
         SqlConnectionInfo tConn, string tDb, CancellationToken ct = default)

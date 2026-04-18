@@ -4,6 +4,21 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.7.0] — 2026-04-18
+
+### Added — 4 new modules
+- **Monitoring** (`Tools → Monitoring`) — real-time DMV polling (configurable interval), 4 live counters (active sessions / running requests / buffer cache hit % / page life expectancy), rolling 120-sample DataGrid, Top-10 waits table.
+- **Import** (`Database → Import CSV...`) — CSV/TSV file picker with delimiter + header options, auto type inference (INT/BIGINT/DECIMAL/BIT/DATETIME2/NVARCHAR), preview grid, `CREATE TABLE` generator, `SqlBulkCopy` import with progress reporting.
+- **Query Builder** (`Database → Query Builder...`) — visual tree of tables + views with per-column checkboxes, WHERE / ORDER BY / TOP / DISTINCT controls, live `SELECT` generation, "Open in Editor" to move to Query Editor.
+- **Git** (`Tools → Git`) — pick a Git repository folder, list `.sql` files, double-click to open in a new Query tab, commit with message, pull/push, `git log --oneline -15` pane.
+
+### Added — engines
+- **SchemaSnapshot** — capture a full DB schema to `%AppData%\DBTeam\snapshots\<db>-<timestamp>.json`, reload and diff two snapshots without needing both live connections.
+- **Data Compare — CHECKSUM mode** — `DataCompareEngine.CompareByChecksumAsync` groups rows by `BINARY_CHECKSUM(*)` and reports matching / only-source / only-target counts; works on tables without a primary key.
+
+### Changed
+- Shell menu gains *Database → Query Builder…*, *Database → Import CSV…*, *Tools → Monitoring*, *Tools → Git*.
+
 ## [1.6.0] — 2026-04-18
 
 ### Added
