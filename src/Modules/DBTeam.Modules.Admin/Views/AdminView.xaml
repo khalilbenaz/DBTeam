@@ -7,8 +7,8 @@
             <StackPanel Orientation="Horizontal">
                 <md:PackIcon Kind="ShieldAccount" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="Server Administration" Style="{StaticResource H1}"/>
-                    <TextBlock Text="Logins · users · permissions · indexes · sessions · backup · restore" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Admin.Title}" Style="{StaticResource H1}"/>
+                    <TextBlock Text="{DynamicResource Admin.Subtitle}" Style="{StaticResource Caption}"/>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -30,15 +30,15 @@
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <Button Command="{Binding RefreshCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0">
-                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Refresh" Margin="0,0,6,0"/><TextBlock Text="Refresh"/></StackPanel>
+                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Refresh" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.Refresh}"/></StackPanel>
                     </Button>
-                    <Button Command="{Binding GenerateBackupScriptCommand}" Style="{StaticResource IconButton}" ToolTip="Generate BACKUP script">
+                    <Button Command="{Binding GenerateBackupScriptCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Admin.Backup}">
                         <md:PackIcon Kind="DatabaseArrowDown" Foreground="{StaticResource Brand.Success}"/>
                     </Button>
-                    <Button Command="{Binding GenerateRestoreScriptCommand}" Style="{StaticResource IconButton}" ToolTip="Generate RESTORE script">
+                    <Button Command="{Binding GenerateRestoreScriptCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Admin.Restore}">
                         <md:PackIcon Kind="DatabaseArrowUp" Foreground="{StaticResource Brand.Warning}"/>
                     </Button>
-                    <Button Command="{Binding GenerateIndexMaintenanceScriptCommand}" Style="{StaticResource IconButton}" ToolTip="Generate index rebuild/reorganize script">
+                    <Button Command="{Binding GenerateIndexMaintenanceScriptCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Admin.IndexScript}">
                         <md:PackIcon Kind="WrenchCog" Foreground="{StaticResource Brand.Primary}"/>
                     </Button>
                 </StackPanel>

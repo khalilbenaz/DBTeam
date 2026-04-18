@@ -109,6 +109,13 @@ public partial class MainViewModel : ObservableObject
         bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Terminal", Content = view });
     }
     [RelayCommand]
+    private void AiAssistant()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.AiAssistant.Views.AiAssistantView>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "AI Assistant", Content = view });
+    }
+    [RelayCommand]
     private void Debugger()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Debugger.Views.DebuggerView>();

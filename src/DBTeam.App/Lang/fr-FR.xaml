@@ -151,4 +151,59 @@
     <sys:String x:Key="Tip.DataCompare">Comparer les données</sys:String>
     <sys:String x:Key="Tip.Diagram">Diagramme</sys:String>
     <sys:String x:Key="Tip.Profiler">Profiler</sys:String>
+
+    <sys:String x:Key="Menu.Administration">_Administration</sys:String>
+    <sys:String x:Key="Menu.Terminal">T_erminal</sys:String>
+    <sys:String x:Key="Menu.AiAssistant">_Assistant IA</sys:String>
+    <sys:String x:Key="Admin.Title">Administration serveur</sys:String>
+    <sys:String x:Key="Admin.Subtitle">Connexions · utilisateurs · permissions · index · sessions · sauvegarde · restauration</sys:String>
+    <sys:String x:Key="Admin.Refresh">Rafraîchir</sys:String>
+    <sys:String x:Key="Admin.Backup">Générer script de SAUVEGARDE</sys:String>
+    <sys:String x:Key="Admin.Restore">Générer script de RESTAURATION</sys:String>
+    <sys:String x:Key="Admin.IndexScript">Générer script de maintenance d'index</sys:String>
+    <sys:String x:Key="Admin.Databases">Bases de données</sys:String>
+    <sys:String x:Key="Admin.Logins">Connexions</sys:String>
+    <sys:String x:Key="Admin.Users">Utilisateurs</sys:String>
+    <sys:String x:Key="Admin.Roles">Rôles</sys:String>
+    <sys:String x:Key="Admin.Permissions">Permissions</sys:String>
+    <sys:String x:Key="Admin.Indexes">Index</sys:String>
+    <sys:String x:Key="Admin.SlowQueries">Requêtes lentes</sys:String>
+    <sys:String x:Key="Admin.Sessions">Sessions</sys:String>
+
+    <sys:String x:Key="Terminal.Title">Terminal</sys:String>
+    <sys:String x:Key="Terminal.Subtitle">PowerShell · Claude Code · gh · sqlcmd · tout CLI</sys:String>
+    <sys:String x:Key="Terminal.Shell">Shell</sys:String>
+    <sys:String x:Key="Terminal.WorkDir">Répertoire de travail</sys:String>
+    <sys:String x:Key="Terminal.Start">Démarrer</sys:String>
+    <sys:String x:Key="Terminal.Stop">Arrêter</sys:String>
+    <sys:String x:Key="Terminal.Clear">Effacer la sortie</sys:String>
+    <sys:String x:Key="Terminal.Snippets">Commandes rapides</sys:String>
+
+    <sys:String x:Key="Ai.Title">Assistant IA</sys:String>
+    <sys:String x:Key="Ai.Subtitle">Clé propre · Anthropic · OpenAI · Azure OpenAI · Ollama</sys:String>
+    <sys:String x:Key="Ai.Chat">Discussion</sys:String>
+    <sys:String x:Key="Ai.Settings">Paramètres</sys:String>
+    <sys:String x:Key="Ai.Send">Envoyer</sys:String>
+    <sys:String x:Key="Ai.Clear">Effacer</sys:String>
+    <sys:String x:Key="Ai.QuickPrompts">Suggestions</sys:String>
+    <sys:String x:Key="Ai.Preset">Préréglage</sys:String>
+    <sys:String x:Key="Ai.Provider">Fournisseur</sys:String>
+    <sys:String x:Key="Ai.Endpoint">URL du service</sys:String>
+    <sys:String x:Key="Ai.Model">Modèle</sys:String>
+    <sys:String x:Key="Ai.ApiKey">Clé API (chiffrée DPAPI côté utilisateur)</sys:String>
+    <sys:String x:Key="Ai.MaxTokens">Tokens max</sys:String>
+    <sys:String x:Key="Ai.SystemPrompt">Prompt système</sys:String>
+    <sys:String x:Key="Ai.Save">Enregistrer</sys:String>
+
+    <sys:String x:Key="Debugger.Title">Débogueur T-SQL</sys:String>
+    <sys:String x:Key="Debugger.Subtitle">Pas-à-pas par instruction · points d'arrêt · état de session</sys:String>
+    <sys:String x:Key="Debugger.Attach">Attacher</sys:String>
+    <sys:String x:Key="Debugger.StepOver">Pas à pas</sys:String>
+    <sys:String x:Key="Debugger.Continue">Continuer</sys:String>
+    <sys:String x:Key="Debugger.Stop">Arrêter</sys:String>
+    <sys:String x:Key="Debugger.Restart">Redémarrer</sys:String>
+    <sys:String x:Key="Debugger.Detach">Détacher</sys:String>
+    <sys:String x:Key="Debugger.Script">Script</sys:String>
+    <sys:String x:Key="Debugger.Steps">Étapes (double-clic pour basculer un point d'arrêt)</sys:String>
+    <sys:String x:Key="Debugger.SessionState">État de session</sys:String>
 </ResourceDictionary>
