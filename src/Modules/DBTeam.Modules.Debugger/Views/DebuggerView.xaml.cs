@@ -1,19 +1,22 @@
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using DBTeam.Core.Infrastructure;
+using DBTeam.Modules.Debugger.ViewModels;
 
 namespace DBTeam.Modules.Debugger.Views;
 
 public partial class DebuggerView : UserControl
 {
-    public DebuggerView() { InitializeComponent(); }
-
-    private void OpenIssue_Click(object sender, RoutedEventArgs e)
+    public DebuggerView()
     {
-        try
+        InitializeComponent();
+        var vm = ServiceLocator.TryGet<DebuggerViewModel>();
+        DataContext = vm;
+        if (vm is not null)
         {
-            Process.Start(new ProcessStartInfo("https://github.com/khalilbenaz/DBTeam/issues/13") { UseShellExecute = true });
+            Editor.Text = vm.Sql ?? "";
+            Editor.TextChanged += (_, _) => vm.Sql = Editor.Text;
+            vm.PropertyChanged += (_, a) => { if (a.PropertyName == nameof(DebuggerViewModel.Sql) && Editor.Text != vm.Sql) Editor.Text = vm.Sql ?? ""; };
         }
-        catch { }
     }
 }
