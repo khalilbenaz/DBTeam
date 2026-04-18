@@ -11,6 +11,10 @@ public sealed class LocalizationService
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DBTeam", "lang.json");
 
     public string Current { get; private set; } = "en-US";
+    public event Action? LanguageChanged;
+
+    public static string T(string key, string? fallback = null)
+        => Application.Current?.TryFindResource(key) as string ?? fallback ?? key;
 
     public void LoadAndApply()
     {
@@ -45,6 +49,7 @@ public sealed class LocalizationService
             var dict = new ResourceDictionary { Source = uri };
             app.Resources.MergedDictionaries.Add(dict);
             Save();
+            LanguageChanged?.Invoke();
         }
         catch { }
     }

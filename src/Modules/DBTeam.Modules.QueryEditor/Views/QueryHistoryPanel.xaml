@@ -7,11 +7,11 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon Kind="History" Width="18" Height="18" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.8"/>
-                    <TextBlock Text="Query History" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                    <Button Style="{StaticResource IconButton}" Command="{Binding ReloadCommand}" ToolTip="Reload" Margin="8,0,0,0">
+                    <TextBlock Text="{DynamicResource History.Title}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <Button Style="{StaticResource IconButton}" Command="{Binding ReloadCommand}" ToolTip="{DynamicResource History.Reload}" Margin="8,0,0,0">
                         <md:PackIcon Kind="Refresh" Width="14" Height="14"/>
                     </Button>
-                    <Button Style="{StaticResource IconButton}" Command="{Binding ClearCommand}" ToolTip="Clear history">
+                    <Button Style="{StaticResource IconButton}" Command="{Binding ClearCommand}" ToolTip="{DynamicResource History.Clear}">
                         <md:PackIcon Kind="DeleteSweep" Width="14" Height="14" Foreground="{StaticResource Brand.Danger}"/>
                     </Button>
                 </StackPanel>
@@ -20,8 +20,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" md:HintAssist.Hint="Filter..."/>
-                    <ToggleButton Grid.Column="1" IsChecked="{Binding FavoritesOnly}" Margin="6,0,0,0" ToolTip="Favorites only" Padding="6">
+                    <TextBox Grid.Column="0" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" md:HintAssist.Hint="{DynamicResource History.Filter}"/>
+                    <ToggleButton Grid.Column="1" IsChecked="{Binding FavoritesOnly}" Margin="6,0,0,0" ToolTip="{DynamicResource History.FavoritesOnly}" Padding="6">
                         <md:PackIcon Kind="Star" Width="16" Height="16" Foreground="#FFC107"/>
                     </ToggleButton>
                 </Grid>
@@ -79,14 +79,14 @@
             </ListBox.Resources>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Open in new tab" Command="{Binding OpenInNewTabCommand}" CommandParameter="{Binding Selected}">
+                    <MenuItem Header="{DynamicResource History.OpenInNewTab}" Command="{Binding OpenInNewTabCommand}" CommandParameter="{Binding Selected}">
                         <MenuItem.Icon><md:PackIcon Kind="FileDocumentPlus"/></MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Toggle favorite" Command="{Binding ToggleFavoriteCommand}" CommandParameter="{Binding Selected}">
+                    <MenuItem Header="{DynamicResource History.ToggleFavorite}" Command="{Binding ToggleFavoriteCommand}" CommandParameter="{Binding Selected}">
                         <MenuItem.Icon><md:PackIcon Kind="Star" Foreground="#FFC107"/></MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding Selected}">
+                    <MenuItem Header="{DynamicResource History.Delete}" Command="{Binding DeleteCommand}" CommandParameter="{Binding Selected}">
                         <MenuItem.Icon><md:PackIcon Kind="Delete" Foreground="{StaticResource Brand.Danger}"/></MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>

@@ -4,6 +4,27 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [2.1.0] — 2026-04-18 — Conditional breakpoints + full i18n polish
+
+### Added — Conditional breakpoints
+- New `Breakpoint` model (`Line`, `Condition`, `HitCount`) replaces the former `int` list. `IsConditional` is `true` whenever `Condition` is non-empty.
+- `TSqlStepExecutor.EvaluateConditionAsync` runs `SELECT CASE WHEN (<expr>) THEN 1 ELSE 0 END` on the live debug session, so the expression can reference `DECLARE`'d variables and `@@` state. Errors are surfaced in Messages rather than silently swallowed.
+- `DebuggerViewModel.ContinueAsync` evaluates the condition before breaking; if it returns 0 the runner simply skips the breakpoint and keeps stepping. Hit counts increment per actual break.
+- `BreakpointConditionWindow` — a small modal to type/clear the T-SQL expression; opened via the step list context menu (`Set condition…` / `Clear condition`).
+
+### Fixed
+- PackIcon `PulseOutline` → `Pulse` (the former is not a valid `PackIconKind`; it crashed the app at startup when the user opened it after a clean install).
+- `Author` line added to About dialog — `Khalil Benazzouz`.
+
+### i18n
+- All hardcoded English strings in Welcome tab, History panel, Monitoring module, Debugger context menu/tooltips and the Tools menu items (Monitoring, Git, Query Builder, Import CSV) are now bound with `DynamicResource`.
+- Status bar: `Ready` / `No connection` / `Connected` / `Theme: X` / `Language: Y` all go through `LocalizationService.T(key, fallback)` and refresh live via a new `LanguageChanged` event.
+- AvalonDock document tab titles (Schema Compare, Data Compare, Monitoring, …) are resolved through the localization service at open time — opening a tool after switching language yields its translated title.
+- 15 new `Tab.*`, 4 new `Status.*`, 4 new `Debugger.*` (ConditionTitle/Header/Hint/ToggleBreakpoint), full `Monitoring.*` and `History.*` key sets in both `fr-FR.xaml` and `en-US.xaml`.
+
+### Changed
+- Version bumped to **2.1.0**.
+
 ## [2.0.0] — 2026-04-18 — Feature complete
 
 Closes the last two items from the roadmap.

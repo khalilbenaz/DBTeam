@@ -15,9 +15,11 @@
     <sys:String x:Key="Menu.About">À _propos de DB TEAM</sys:String>
     <sys:String x:Key="Menu.Shortcuts">_Raccourcis clavier</sys:String>
     <sys:String x:Key="About.Title">À propos de DB TEAM</sys:String>
-    <sys:String x:Key="About.Version">Version 1.0.0</sys:String>
+    <sys:String x:Key="About.Version">Version 2.1.0</sys:String>
     <sys:String x:Key="About.Description">IDE SQL Server professionnel développé en WPF.</sys:String>
     <sys:String x:Key="About.Close">Fermer</sys:String>
+    <sys:String x:Key="About.Author">Auteur · Khalil Benazzouz</sys:String>
+    <sys:String x:Key="About.Stack">Stack</sys:String>
     <sys:String x:Key="Shortcuts.Title">Raccourcis clavier</sys:String>
     <sys:String x:Key="Menu.Language">_Langue</sys:String>
     <sys:String x:Key="Menu.Theme">_Thème</sys:String>
@@ -89,6 +91,26 @@
     <sys:String x:Key="Label.TargetScript">Script cible</sys:String>
     <sys:String x:Key="Status.Ready">Prêt</sys:String>
     <sys:String x:Key="Status.NoConnection">Aucune connexion</sys:String>
+    <sys:String x:Key="Status.Connected">Connecté</sys:String>
+    <sys:String x:Key="Status.PickConnection">Sélectionnez ou créez une connexion d'abord</sys:String>
+    <sys:String x:Key="Status.Theme">Thème</sys:String>
+    <sys:String x:Key="Status.Language">Langue</sys:String>
+
+    <sys:String x:Key="Tab.SchemaCompare">Comparer les schémas</sys:String>
+    <sys:String x:Key="Tab.DataCompare">Comparer les données</sys:String>
+    <sys:String x:Key="Tab.NewTable">Nouvelle table</sys:String>
+    <sys:String x:Key="Tab.DataGenerator">Générateur de données</sys:String>
+    <sys:String x:Key="Tab.Documenter">Documenter</sys:String>
+    <sys:String x:Key="Tab.Profiler">Profiler de requêtes</sys:String>
+    <sys:String x:Key="Tab.Administration">Administration</sys:String>
+    <sys:String x:Key="Tab.Terminal">Terminal</sys:String>
+    <sys:String x:Key="Tab.AiAssistant">Assistant IA</sys:String>
+    <sys:String x:Key="Tab.Monitoring">Supervision</sys:String>
+    <sys:String x:Key="Tab.Import">Import</sys:String>
+    <sys:String x:Key="Tab.QueryBuilder">Générateur de requêtes</sys:String>
+    <sys:String x:Key="Tab.Git">Git</sys:String>
+    <sys:String x:Key="Tab.Debugger">Débogueur T-SQL</sys:String>
+    <sys:String x:Key="Tab.Diagram">Diagramme</sys:String>
 
     <sys:String x:Key="Ctx.NewQueryHere">Nouvelle requête ici</sys:String>
     <sys:String x:Key="Ctx.ScriptObject">Scripter l'objet</sys:String>
@@ -206,4 +228,54 @@
     <sys:String x:Key="Debugger.Script">Script</sys:String>
     <sys:String x:Key="Debugger.Steps">Étapes (double-clic pour basculer un point d'arrêt)</sys:String>
     <sys:String x:Key="Debugger.SessionState">État de session</sys:String>
+    <sys:String x:Key="Debugger.Connection">Connexion</sys:String>
+    <sys:String x:Key="Debugger.Database">Base de données</sys:String>
+    <sys:String x:Key="Debugger.Results">Résultats</sys:String>
+    <sys:String x:Key="Debugger.Messages">Messages</sys:String>
+    <sys:String x:Key="Debugger.StepInto">Entrer dans la procédure</sys:String>
+    <sys:String x:Key="Debugger.ToggleBreakpoint">Activer/désactiver le point d'arrêt</sys:String>
+    <sys:String x:Key="Debugger.SetCondition">Définir une condition…</sys:String>
+    <sys:String x:Key="Debugger.ClearCondition">Supprimer la condition</sys:String>
+    <sys:String x:Key="Debugger.ConditionTitle">Point d'arrêt conditionnel</sys:String>
+    <sys:String x:Key="Debugger.ConditionHeader">Expression T-SQL évaluée avant la pause</sys:String>
+    <sys:String x:Key="Debugger.ConditionHint">Saisir une expression booléenne dans la session en cours (les variables DECLARE et @@variables sont visibles). Exemple : @i > 10 AND @@ROWCOUNT = 0</sys:String>
+
+    <sys:String x:Key="Welcome.Title">Bienvenue</sys:String>
+    <sys:String x:Key="Panel.History">Historique</sys:String>
+
+    <sys:String x:Key="Menu.Monitoring">_Monitoring</sys:String>
+    <sys:String x:Key="Menu.Git">_Git</sys:String>
+    <sys:String x:Key="Menu.QueryBuilder">Générateur de _requêtes...</sys:String>
+    <sys:String x:Key="Menu.ImportCsv">_Importer un CSV...</sys:String>
+
+    <sys:String x:Key="Common.OK">OK</sys:String>
+    <sys:String x:Key="Common.Cancel">Annuler</sys:String>
+
+    <sys:String x:Key="History.Title">Historique des requêtes</sys:String>
+    <sys:String x:Key="History.Reload">Recharger</sys:String>
+    <sys:String x:Key="History.Clear">Effacer l'historique</sys:String>
+    <sys:String x:Key="History.Filter">Filtrer...</sys:String>
+    <sys:String x:Key="History.FavoritesOnly">Favoris uniquement</sys:String>
+    <sys:String x:Key="History.OpenInNewTab">Ouvrir dans un nouvel onglet</sys:String>
+    <sys:String x:Key="History.ToggleFavorite">Basculer favori</sys:String>
+    <sys:String x:Key="History.Delete">Supprimer</sys:String>
+
+    <sys:String x:Key="Monitoring.Title">Supervision temps réel</sys:String>
+    <sys:String x:Key="Monitoring.Subtitle">Sessions · requêtes · cache tampon · PLE · attentes principales</sys:String>
+    <sys:String x:Key="Monitoring.Connection">Connexion</sys:String>
+    <sys:String x:Key="Monitoring.Interval">Intervalle (s)</sys:String>
+    <sys:String x:Key="Monitoring.Start">Démarrer</sys:String>
+    <sys:String x:Key="Monitoring.Stop">Arrêter</sys:String>
+    <sys:String x:Key="Monitoring.Clear">Vider les échantillons</sys:String>
+    <sys:String x:Key="Monitoring.ActiveSessions">Sessions actives</sys:String>
+    <sys:String x:Key="Monitoring.RunningRequests">Requêtes en cours</sys:String>
+    <sys:String x:Key="Monitoring.BufferCacheHit">Cache tampon (%)</sys:String>
+    <sys:String x:Key="Monitoring.PageLifeExpectancy">Espérance de vie des pages (s)</sys:String>
+    <sys:String x:Key="Monitoring.Samples">Échantillons (glissant · 120)</sys:String>
+    <sys:String x:Key="Monitoring.TopWaits">Attentes principales (dm_os_wait_stats)</sys:String>
+    <sys:String x:Key="Monitoring.Col.At">Horodatage</sys:String>
+    <sys:String x:Key="Monitoring.Col.Sessions">Sessions</sys:String>
+    <sys:String x:Key="Monitoring.Col.Requests">Requêtes</sys:String>
+    <sys:String x:Key="Monitoring.Col.Cache">Cache %</sys:String>
+    <sys:String x:Key="Monitoring.Col.Ple">PLE (s)</sys:String>
 </ResourceDictionary>

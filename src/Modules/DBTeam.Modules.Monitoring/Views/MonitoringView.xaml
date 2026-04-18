@@ -5,10 +5,10 @@
     <DockPanel>
         <Border DockPanel.Dock="Top" Style="{StaticResource SectionHeader}">
             <StackPanel Orientation="Horizontal">
-                <md:PackIcon Kind="PulseOutline" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
+                <md:PackIcon Kind="Pulse" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="Live Monitoring" Style="{StaticResource H1}"/>
-                    <TextBlock Text="Sessions · requests · buffer cache · PLE · top waits" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.Title}" Style="{StaticResource H1}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.Subtitle}" Style="{StaticResource Caption}"/>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -21,21 +21,21 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                    <TextBlock Text="Connection" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.Connection}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Connections}" DisplayMemberPath="Name" SelectedItem="{Binding Connection}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="0,0,8,0">
-                    <TextBlock Text="Poll interval (s)" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.Interval}" Style="{StaticResource FieldLabel}"/>
                     <TextBox Text="{Binding IntervalSeconds, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <Button Command="{Binding StartCommand}" Style="{StaticResource SuccessButton}" Margin="0,0,6,0">
-                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Play" Margin="0,0,6,0"/><TextBlock Text="Start"/></StackPanel>
+                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Play" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Monitoring.Start}"/></StackPanel>
                     </Button>
-                    <Button Command="{Binding StopCommand}" Style="{StaticResource IconButton}" ToolTip="Stop" IsEnabled="{Binding IsRunning}">
+                    <Button Command="{Binding StopCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Monitoring.Stop}" IsEnabled="{Binding IsRunning}">
                         <md:PackIcon Kind="Stop" Foreground="{StaticResource Brand.Danger}"/>
                     </Button>
-                    <Button Command="{Binding ClearCommand}" Style="{StaticResource IconButton}" ToolTip="Clear samples">
+                    <Button Command="{Binding ClearCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Monitoring.Clear}">
                         <md:PackIcon Kind="Broom"/>
                     </Button>
                 </StackPanel>
@@ -57,33 +57,33 @@
 
             <UniformGrid Grid.Row="0" Columns="4" Margin="0,0,0,8">
                 <Border Style="{StaticResource Card}" Margin="0,0,4,0"><StackPanel>
-                    <TextBlock Text="Active sessions" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.ActiveSessions}" Style="{StaticResource Caption}"/>
                     <TextBlock Text="{Binding Latest.ActiveSessions, FallbackValue=0}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource Brand.Primary}"/>
                 </StackPanel></Border>
                 <Border Style="{StaticResource Card}" Margin="4,0"><StackPanel>
-                    <TextBlock Text="Running requests" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.RunningRequests}" Style="{StaticResource Caption}"/>
                     <TextBlock Text="{Binding Latest.RunningRequests, FallbackValue=0}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource Brand.Success}"/>
                 </StackPanel></Border>
                 <Border Style="{StaticResource Card}" Margin="4,0"><StackPanel>
-                    <TextBlock Text="Buffer cache hit %" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.BufferCacheHit}" Style="{StaticResource Caption}"/>
                     <TextBlock Text="{Binding Latest.BufferCacheHitRatio, FallbackValue=0, StringFormat={}{0:F2}}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource Brand.Warning}"/>
                 </StackPanel></Border>
                 <Border Style="{StaticResource Card}" Margin="4,0,0,0"><StackPanel>
-                    <TextBlock Text="Page life expectancy (s)" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Monitoring.PageLifeExpectancy}" Style="{StaticResource Caption}"/>
                     <TextBlock Text="{Binding Latest.PageLifeExpectancy, FallbackValue=0, StringFormat={}{0:F0}}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource Brand.Info}"/>
                 </StackPanel></Border>
             </UniformGrid>
 
             <Border Grid.Row="1" Style="{StaticResource Card}" Padding="0">
                 <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="Samples (rolling 120)" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                    <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Monitoring.Samples}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                     <DataGrid ItemsSource="{Binding Samples}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="At" Binding="{Binding At, StringFormat=HH:mm:ss}" Width="90"/>
-                            <DataGridTextColumn Header="Sessions" Binding="{Binding ActiveSessions}" Width="100"/>
-                            <DataGridTextColumn Header="Requests" Binding="{Binding RunningRequests}" Width="100"/>
-                            <DataGridTextColumn Header="Cache %" Binding="{Binding BufferCacheHitRatio, StringFormat=F2}" Width="100"/>
-                            <DataGridTextColumn Header="PLE (s)" Binding="{Binding PageLifeExpectancy, StringFormat=F0}" Width="100"/>
+                            <DataGridTextColumn Header="{DynamicResource Monitoring.Col.At}" Binding="{Binding At, StringFormat=HH:mm:ss}" Width="90"/>
+                            <DataGridTextColumn Header="{DynamicResource Monitoring.Col.Sessions}" Binding="{Binding ActiveSessions}" Width="100"/>
+                            <DataGridTextColumn Header="{DynamicResource Monitoring.Col.Requests}" Binding="{Binding RunningRequests}" Width="100"/>
+                            <DataGridTextColumn Header="{DynamicResource Monitoring.Col.Cache}" Binding="{Binding BufferCacheHitRatio, StringFormat=F2}" Width="100"/>
+                            <DataGridTextColumn Header="{DynamicResource Monitoring.Col.Ple}" Binding="{Binding PageLifeExpectancy, StringFormat=F0}" Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
@@ -93,7 +93,7 @@
 
             <Border Grid.Row="3" Style="{StaticResource Card}" Padding="0">
                 <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="Top waits (dm_os_wait_stats)" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                    <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Monitoring.TopWaits}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                     <DataGrid ItemsSource="{Binding TopWaits}" AutoGenerateColumns="True" IsReadOnly="True"/>
                 </DockPanel>
             </Border>
