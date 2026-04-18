@@ -72,6 +72,51 @@ public sealed class SqlCompletionProvider
         return list;
     }
 
+    /// <summary>
+    /// Parses the current SQL and extracts a map of alias → (schema, table).
+    /// Handles FROM/JOIN with optional AS + schema qualifier.
+    /// </summary>
+    public static Dictionary<string, (string schema, string table)> ExtractAliases(string sql)
+    {
+        var map = new Dictionary<string, (string, string)>(System.StringComparer.OrdinalIgnoreCase);
+        if (string.IsNullOrWhiteSpace(sql)) return map;
+        // Match:  FROM/JOIN  [schema].[table]  [AS]  alias
+        var pattern = @"\b(?:FROM|JOIN)\s+(?:\[?(?<schema>\w+)\]?\.)?\[?(?<table>\w+)\]?\s+(?:AS\s+)?\[?(?<alias>\w+)\]?\b";
+        foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(sql, pattern,
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Multiline))
+        {
+            var alias = m.Groups["alias"].Value;
+            var table = m.Groups["table"].Value;
+            var schema = m.Groups["schema"].Success ? m.Groups["schema"].Value : "dbo";
+            if (string.IsNullOrWhiteSpace(alias) || alias.Equals(table, System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("ON", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("WHERE", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("GROUP", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("ORDER", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("INNER", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("LEFT", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("RIGHT", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("FULL", System.StringComparison.OrdinalIgnoreCase)
+                || alias.Equals("CROSS", System.StringComparison.OrdinalIgnoreCase)) continue;
+            map[alias] = (schema, table);
+        }
+        return map;
+    }
+
+    /// <summary>
+    /// CTE names declared via WITH foo AS (...), bar AS (...).
+    /// </summary>
+    public static HashSet<string> ExtractCteNames(string sql)
+    {
+        var set = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        if (string.IsNullOrWhiteSpace(sql)) return set;
+        var pattern = @"\b(?:WITH|,)\s+(?<cte>\w+)\s+AS\s*\(";
+        foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(sql, pattern,
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Multiline))
+            set.Add(m.Groups["cte"].Value);
+        return set;
+    }
+
     public async Task<List<string>> GetColumnsForTableAsync(SqlConnectionInfo c, string db, string schema, string table)
     {
         var key = $"{c.Id}|{db}|{schema}|{table}";

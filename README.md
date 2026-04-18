@@ -250,15 +250,21 @@ Themes are managed by **ModernWpfUI**. The `ThemeService` persists the choice in
 - [x] **Code signing** workflow step (Azure Trusted Signing, gated on secret) — v1.8
 - [x] **LocalDB integration tests** — v1.8
 
-### Still to do (v1.9+ / v2)
-- [ ] **IntelliSense advanced**: CTE / alias resolution, function signatures, snippet marketplace
-- [ ] **Profiler graphical plan** (draw op boxes with arrows, not just tree)
-- [ ] **Per-tab DB selector** (currently shared with side pane)
-- [ ] **Master-detail** data explorer (follow FK relations)
-- [ ] **Reports & pivots** (beyond raw export)
-- [ ] **Auto-update** (Velopack) — requires signed releases
-- [ ] **Automated screenshots** (FlaUI) for release README
-- [ ] **Debugger step-into SPs** via full instrumentation — v2
+### Shipped in v1.9
+- [x] **IntelliSense alias resolution** — `alias.column` autocomplete resolves through `FROM/JOIN table AS alias`; CTE names extracted
+- [x] **Profiler graphical plan** — Graph tab with canvas + per-operator boxes (cost, estimated rows, actual rows, logical reads) — layered layout
+- [x] **Per-tab DB selector** — explicit refresh button next to each Query Editor's database combo
+- [x] **Master-detail** — right-click cell → `FollowRelation` command infers FK target table and opens a filtered `SELECT` in a new tab
+- [x] **Reports & pivots** — one-click `PIVOT` skeleton generator from the active result set
+- [x] **Auto-update scaffold** — `UpdateService` ready for Velopack (activation blocked on signing)
+- [x] **Automated screenshots** — `DBTeam.Screenshots` console project scaffold for FlaUI.UIA3
+
+### Still to do (v2)
+- [ ] **Debugger step-into SPs** via full instrumentation — v2 (statement-level stepping and breakpoints already shipped in v1.4)
+- [ ] **Function signatures + snippet marketplace** inside autocomplete (core autocomplete + 16 snippets already shipped)
+- [ ] **Velopack activation** (requires code-signed releases — see E14)
+
+All scaffolds + design notes: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md).
 
 Detailed implementation plans: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md).
 

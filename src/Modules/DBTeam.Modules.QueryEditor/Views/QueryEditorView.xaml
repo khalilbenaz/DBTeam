@@ -18,6 +18,9 @@
                 <Button Command="{Binding FormatSqlCommand}" Style="{StaticResource IconButton}" ToolTip="Format SQL (Ctrl+K)">
                     <md:PackIcon Kind="FormatAlignLeft" Width="20" Height="20"/>
                 </Button>
+                <Button Command="{Binding GeneratePivotCommand}" Style="{StaticResource IconButton}" ToolTip="Generate PIVOT skeleton from results">
+                    <md:PackIcon Kind="TableHeadersEye" Width="20" Height="20"/>
+                </Button>
                 <Menu Background="Transparent" Margin="0">
                     <MenuItem ToolTip="Export results">
                         <MenuItem.Header>
@@ -39,7 +42,10 @@
                 </Menu>
                 <Border Width="1" Background="{DynamicResource SystemControlForegroundBaseLowBrush}" Margin="8,4"/>
                 <md:PackIcon Kind="Database" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.6"/>
-                <ComboBox Width="200" Margin="0,0,12,0" ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}"/>
+                <ComboBox Width="200" Margin="0,0,4,0" ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" ToolTip="Database context for this tab (per-tab)"/>
+                <Button Command="{Binding RefreshDatabasesCommand}" Style="{StaticResource IconButton}" ToolTip="Refresh database list" Margin="0,0,12,0">
+                    <md:PackIcon Kind="Refresh" Width="14" Height="14"/>
+                </Button>
                 <Border Style="{StaticResource Pill}" Background="{StaticResource Brand.Info}">
                     <TextBlock Text="{Binding StatusText}" Foreground="White" FontSize="11" FontWeight="SemiBold"/>
                 </Border>

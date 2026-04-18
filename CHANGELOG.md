@@ -4,6 +4,20 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.9.0] — 2026-04-18
+
+### Added
+- **IntelliSense alias resolution**: `SqlCompletionProvider.ExtractAliases` parses the current SQL and resolves `alias.` to the real `schema.table`, so typing `c.` after `FROM dbo.Customers AS c` now lists the customer columns. `ExtractCteNames` also captures CTE declarations for future completion sources.
+- **Master-detail drill-down**: `QueryEditorViewModel.FollowRelation` deduces the referenced table from common conventions (`XxxId` → `Xxx`, `FK_A_B` → `B`) and opens a `SELECT TOP 100` filtered by the clicked value in a new tab.
+- **Pivot generator**: new toolbar button in the Query Editor turns the first result set into a `PIVOT` skeleton (row/column/value axes inferred from column order, distinct pivot values pre-populated up to 20).
+- **Profiler Graph tab**: plan operators rendered as boxes on a canvas (layered layout — root at top, children 140 px below, siblings 210 px apart), one colored header per operator with its icon and cost/rows/reads stats.
+- **Per-tab database refresh button** next to the database selector in the Query Editor.
+- **UpdateService scaffold** (`src/DBTeam.App/Services/UpdateService.cs`): placeholder that returns "no update" today; drop-in instructions for Velopack + GithubSource embedded in the file.
+- **DBTeam.Screenshots** harness (`tests/DBTeam.Screenshots/`): console project targeting net8.0-windows, ready for FlaUI.UIA3 wiring. See `docs/bmad/DESIGN-NOTES.md#e18`.
+
+### Changed
+- Version bumped to 1.9.0.
+
 ## [1.8.0] — 2026-04-18
 
 ### Added — distribution & quality

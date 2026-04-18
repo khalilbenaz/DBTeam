@@ -19,6 +19,8 @@ public sealed class OperatorStat
     public double EstimatedRows { get; set; }
     public double ActualRows { get; set; }
     public double LogicalReads { get; set; }
+    public double GraphX { get; set; }
+    public double GraphY { get; set; }
     public ObservableCollection<OperatorStat> Children { get; } = new();
     public string IconKind => Name switch
     {
@@ -121,11 +123,13 @@ public partial class ProfilerViewModel : ObservableObject
     }
 
     public ObservableCollection<OperatorStat> RootTree { get; } = new();
+    public ObservableCollection<OperatorStat> FlatOperators { get; } = new();
 
     private void ParsePlan(string xml, bool actual)
     {
         Operators.Clear();
         RootTree.Clear();
+        FlatOperators.Clear();
         if (string.IsNullOrWhiteSpace(xml)) return;
         try
         {
@@ -135,6 +139,8 @@ public partial class ProfilerViewModel : ObservableObject
             {
                 var treeRoot = BuildTree(rootRel, ns, actual);
                 RootTree.Add(treeRoot);
+                LayoutTree(treeRoot, 20, 20);
+                FlattenTree(treeRoot);
             }
             foreach (var rel in doc.Descendants(ns + "RelOp"))
             {
@@ -181,6 +187,24 @@ public partial class ProfilerViewModel : ObservableObject
         foreach (var child in rel.Elements().SelectMany(e => e.Elements(ns + "RelOp")))
             op.Children.Add(BuildTree(child, ns, actual));
         return op;
+    }
+
+    /// <summary>
+    /// Simple layered layout: root at (x, y), children stacked 140 px down; each sibling shifted 210 px right.
+    /// </summary>
+    private double LayoutTree(OperatorStat node, double x, double y)
+    {
+        node.GraphX = x; node.GraphY = y;
+        if (node.Children.Count == 0) return x + 210;
+        double childX = x;
+        foreach (var c in node.Children) childX = LayoutTree(c, childX, y + 140);
+        return childX;
+    }
+
+    private void FlattenTree(OperatorStat node)
+    {
+        FlatOperators.Add(node);
+        foreach (var c in node.Children) FlattenTree(c);
     }
 
     private static double ParseDouble(string? s) => double.TryParse(s, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var v) ? v : 0;
