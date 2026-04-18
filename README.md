@@ -1,13 +1,13 @@
 # DB TEAM
 
-> Professional SQL Server IDE built with WPF — inspired by dbForge Studio.
+> Professional SQL Server IDE built with WPF.
 
 ![.NET](https://img.shields.io/badge/.NET-8-blueviolet)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Status](https://img.shields.io/badge/status-WIP-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-**DB TEAM** is a modular Windows desktop IDE for Microsoft SQL Server, designed as a modern alternative to dbForge Studio and SSMS. It ships connection management, object browsing, a T-SQL editor with IntelliSense, schema/data comparison, data generation, HTML documentation, a visual query profiler, a table designer, and an ER-style diagram viewer.
+**DB TEAM** is a modular Windows desktop IDE for Microsoft SQL Server. It ships connection management, object browsing, a T-SQL editor with IntelliSense, schema/data comparison, data generation, HTML documentation, a visual query profiler, a table designer, and an ER-style diagram viewer.
 
 > ⚠️ **Work in progress.** Several modules are already functional but the product is not feature-complete. See [Roadmap](#roadmap).
 
@@ -111,7 +111,11 @@ Each **module** exposes a `ModuleRegistration.Register(IServiceCollection)` stat
 - **.NET 8 SDK** — <https://dotnet.microsoft.com/download>
 - **SQL Server** reachable (local, remote, Azure, Express, or LocalDB)
 
-### Build & run
+### Install (end user)
+
+Download the latest `DBTeam-<version>-win-x64.zip` from the [Releases page](https://github.com/khalilbenaz/DBTeam/releases), extract, and run `DBTeam.App.exe`. Full instructions in [docs/INSTALL.md](docs/INSTALL.md). No .NET install required — the binary is self-contained.
+
+### Build from source
 
 ```bash
 git clone https://github.com/khalilbenaz/DBTeam.git
@@ -119,6 +123,11 @@ cd DBTeam
 dotnet restore
 dotnet build DBTeam.sln
 dotnet run --project src/DBTeam.App/DBTeam.App.csproj
+```
+
+Produce your own installable binary:
+```powershell
+pwsh ./scripts/publish.ps1
 ```
 
 ### First use
@@ -167,9 +176,19 @@ Themes are managed by **ModernWpfUI**. The `ThemeService` persists the choice in
 
 - Passwords are encrypted with **DPAPI** (`ProtectedData.Protect`) with a static entropy, scoped to `CurrentUser` — credentials cannot be decrypted by another Windows user on the same machine.
 - `TrustServerCertificate` defaults to `true` (developer-friendly). **Disable for production** and provision a valid TLS certificate on the SQL Server.
-- The app ships with `ApplicationName=DbForgeClone`/`DBTeam` so queries can be traced in `sys.dm_exec_sessions`.
+- The app ships with `ApplicationName=DBTeam` so queries can be traced in `sys.dm_exec_sessions`.
 
 ---
+
+## 📚 Documentation
+
+- [docs/INSTALL.md](docs/INSTALL.md) — install & first run
+- [docs/USER-GUIDE.md](docs/USER-GUIDE.md) — end-user guide
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — layers, DI, event bus, data flows
+- [docs/MODULES.md](docs/MODULES.md) — per-module reference
+- [docs/bmad/PRD.md](docs/bmad/PRD.md) — product requirements
+- [docs/bmad/EPICS.md](docs/bmad/EPICS.md) — detailed backlog (stories)
+- [CHANGELOG.md](CHANGELOG.md) — release notes
 
 ## 🗺️ Roadmap
 

@@ -1,0 +1,54 @@
+<Window x:Class="DBTeam.App.Shell.ErrorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Unexpected error" Height="440" Width="560"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize" MinHeight="300" MinWidth="420"
+        ui:WindowHelper.UseModernWindowStyle="True">
+    <DockPanel Margin="20">
+        <Border DockPanel.Dock="Top" Padding="0,0,0,12">
+            <StackPanel Orientation="Horizontal">
+                <md:PackIcon Kind="AlertCircle" Width="36" Height="36" Foreground="{StaticResource Brand.Danger}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Something went wrong" Style="{StaticResource H1}"/>
+                    <TextBlock x:Name="SourceText" Style="{StaticResource Caption}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Bottom" Padding="0,12,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Click="Copy_Click" Padding="14,8" Margin="0,0,8,0" ToolTip="Copy details to clipboard">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Kind="ContentCopy" Margin="0,0,6,0"/>
+                        <TextBlock Text="Copy"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="OpenLogs_Click" Padding="14,8" Margin="0,0,8,0" ToolTip="Open logs folder">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Kind="FolderOpen" Margin="0,0,6,0"/>
+                        <TextBlock Text="Open logs"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="Report_Click" Padding="14,8" Margin="0,0,8,0" ToolTip="Report an issue on GitHub">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Kind="Github" Margin="0,0,6,0"/>
+                        <TextBlock Text="Report"/>
+                    </StackPanel>
+                </Button>
+                <Button Click="Close_Click" IsDefault="True" IsCancel="True" Style="{StaticResource PrimaryButton}" MinWidth="100">
+                    <TextBlock Text="Close"/>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <TextBlock x:Name="MessageText" DockPanel.Dock="Top" Margin="0,0,0,8" TextWrapping="Wrap" FontWeight="SemiBold"/>
+
+        <Expander Header="Details" IsExpanded="False">
+            <TextBox x:Name="DetailsText" IsReadOnly="True" FontFamily="Consolas" FontSize="11"
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                     AcceptsReturn="True" TextWrapping="NoWrap"/>
+        </Expander>
+    </DockPanel>
+</Window>

@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore DBTeam.sln
+
+      - name: Build
+        run: dotnet build DBTeam.sln -c Release --no-restore --nologo /p:TreatWarningsAsErrors=false
+
+      - name: Test (if any test project)
+        shell: pwsh
+        run: |
+          $tests = Get-ChildItem -Recurse -Filter *.Tests.csproj -ErrorAction SilentlyContinue
+          if ($tests) {
+            dotnet test DBTeam.sln -c Release --no-build --nologo --verbosity minimal
+          } else {
+            Write-Host "No test projects yet — skipping."
+          }

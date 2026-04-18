@@ -9,6 +9,15 @@
     <AssemblyTitle>DB TEAM</AssemblyTitle>
     <Product>DB TEAM</Product>
     <ApplicationIcon Condition="Exists('Resources\app-icon.ico')">Resources\app-icon.ico</ApplicationIcon>
+
+    <!-- Publish configuration -->
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and '$(IsPublishing)' == 'true'">win-x64</RuntimeIdentifier>
+    <SelfContained Condition="'$(IsPublishing)' == 'true'">true</SelfContained>
+    <PublishSingleFile Condition="'$(IsPublishing)' == 'true'">true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract Condition="'$(IsPublishing)' == 'true'">true</IncludeNativeLibrariesForSelfExtract>
+    <PublishReadyToRun Condition="'$(IsPublishing)' == 'true'">true</PublishReadyToRun>
+    <EnableCompressionInSingleFile Condition="'$(IsPublishing)' == 'true'">true</EnableCompressionInSingleFile>
+    <DebugType Condition="'$(Configuration)' == 'Release'">embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
