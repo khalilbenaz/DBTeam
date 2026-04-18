@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  {% seo %}
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="{{ site.baseurl }}/" class="brand">
+        <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true">
+          <ellipse cx="18" cy="14" rx="14" ry="4" fill="#FFC107" stroke="#111" stroke-width="2"/>
+          <path d="M4 14v14c0 2.2 6.3 4 14 4s14-1.8 14-4V14" fill="#FF9800" stroke="#111" stroke-width="2"/>
+          <path d="M32 24c6.6 0 12 2.2 12 6v8c0 3.8-5.4 6-12 6" fill="none" stroke="#111" stroke-width="2"/>
+          <path d="M32 26 L43 26 A1 1 0 0 1 44 27 L44 40 A3 3 0 0 1 41 43 L32 43 Z" fill="#1E88E5" stroke="#111" stroke-width="2"/>
+        </svg>
+        <span>DB TEAM</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="{{ '/INSTALL.html' | relative_url }}">Install</a>
+        <a href="{{ '/USER-GUIDE.html' | relative_url }}">User guide</a>
+        <a href="{{ '/ARCHITECTURE.html' | relative_url }}">Architecture</a>
+        <a href="{{ '/MODULES.html' | relative_url }}">Modules</a>
+        <a href="https://github.com/khalilbenaz/DBTeam" class="btn-ghost">GitHub</a>
+        <a href="https://github.com/khalilbenaz/DBTeam/releases/latest" class="btn-primary">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© 2026 Khalil Benazzouz · MIT License</div>
+      <div class="foot-links">
+        <a href="https://github.com/khalilbenaz/DBTeam">Repository</a> ·
+        <a href="https://github.com/khalilbenaz/DBTeam/issues">Issues</a> ·
+        <a href="https://github.com/khalilbenaz/DBTeam/releases">Releases</a> ·
+        <a href="https://github.com/khalilbenaz/DBTeam/blob/main/CHANGELOG.md">Changelog</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
