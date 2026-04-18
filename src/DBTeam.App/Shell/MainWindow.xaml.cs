@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Windows;
 using AvalonDock.Layout;
 using DBTeam.Core.Events;
@@ -26,6 +27,54 @@ public partial class MainWindow : Window
             else if (e.PaneId == "CONNECTIONS" && ConnectionsPane is not null) ConnectionsPane.IsActive = true;
         }));
         TryLoadIcon();
+        Loaded += OnWindowLoaded;
+        Closing += OnWindowClosing;
+    }
+
+    private void OnWindowLoaded(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var svc = App.Services.GetService(typeof(Services.SessionService)) as Services.SessionService;
+            var state = svc?.Load();
+            if (state is null) return;
+            var conns = (App.Services.GetService(typeof(DBTeam.Core.Abstractions.IConnectionService)) as DBTeam.Core.Abstractions.IConnectionService);
+            foreach (var d in state.Documents)
+            {
+                if (d.Kind != "Query" || string.IsNullOrEmpty(d.ConnectionId)) continue;
+                if (!System.Guid.TryParse(d.ConnectionId, out var id)) continue;
+                var conn = conns?.Saved.FirstOrDefault(c => c.Id == id);
+                if (conn is null) continue;
+                OnOpenQueryEditor(new OpenQueryEditorRequest { Connection = conn, Database = d.Database, InitialSql = d.Sql });
+            }
+        }
+        catch { }
+    }
+
+    private void OnWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        try
+        {
+            var svc = App.Services.GetService(typeof(Services.SessionService)) as Services.SessionService;
+            if (svc is null) return;
+            var state = new Services.SessionState();
+            foreach (var child in DocumentsPane.Children)
+            {
+                if (child is LayoutDocument doc && doc.Content is QueryEditorView qv && qv.DataContext is QueryEditorViewModel qvm && qvm.Connection is not null)
+                {
+                    state.Documents.Add(new Services.SessionDocument
+                    {
+                        Kind = "Query",
+                        Title = doc.Title,
+                        ConnectionId = qvm.Connection.Id.ToString(),
+                        Database = qvm.Database,
+                        Sql = qvm.Sql
+                    });
+                }
+            }
+            svc.Save(state);
+        }
+        catch { }
     }
 
     private void TryLoadIcon()

@@ -68,6 +68,33 @@ public partial class TableDesignerViewModel : ObservableObject
         try { foreach (var d in await _meta.GetDatabasesAsync(Connection)) Databases.Add(d); } catch { }
     }
 
+    [RelayCommand]
+    public async Task LoadExistingAsync()
+    {
+        if (Connection is null || string.IsNullOrEmpty(Database) || string.IsNullOrWhiteSpace(Schema) || string.IsNullOrWhiteSpace(TableName))
+        { Status = "Pick connection, database, schema, table name"; return; }
+        try
+        {
+            var cols = await _meta.GetColumnsAsync(Connection, Database!, Schema, TableName);
+            Columns.Clear();
+            foreach (var c in cols)
+            {
+                Columns.Add(new ColumnRowViewModel
+                {
+                    Name = c.Name,
+                    DataType = c.DataType,
+                    Length = c.MaxLength,
+                    IsNullable = c.IsNullable,
+                    IsIdentity = c.IsIdentity,
+                    IsPrimaryKey = c.IsPrimaryKey,
+                    DefaultExpression = c.DefaultExpression
+                });
+            }
+            Status = $"Loaded {cols.Count} column(s) from [{Schema}].[{TableName}]";
+        }
+        catch (System.Exception ex) { Status = ex.Message; }
+    }
+
     [RelayCommand] private void AddColumn() => Columns.Add(new ColumnRowViewModel { Name = $"Column{Columns.Count + 1}" });
     [RelayCommand] private void RemoveColumn() { if (Selected is not null) Columns.Remove(Selected); }
     [RelayCommand] private void MoveUp() { if (Selected is null) return; var i = Columns.IndexOf(Selected); if (i > 0) Columns.Move(i, i - 1); }
