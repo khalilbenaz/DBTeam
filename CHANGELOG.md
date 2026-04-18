@@ -4,6 +4,23 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-04-18
+
+### Added
+- **.exe installer** via Inno Setup — `DBTeam-Setup-{version}.exe` with Start menu entry, clean uninstall in *Apps & features*, silent install (`/SILENT` or `/VERYSILENT`). Released alongside the portable ZIP.
+- **Schema Compare column-level ALTER**: tables with definition differences now emit `ALTER TABLE ADD/DROP/ALTER COLUMN`, FK add/drop, and index add/drop — no more `-- TODO` placeholder. Whole script wrapped in `BEGIN TRAN / COMMIT`.
+- **Query History panel** with favorites, filter, double-click to reopen (shipped in v1.1.0, now prominent in shell).
+- **Diagram module**: drag tables to rearrange, `Ctrl+Wheel` to zoom, zoom in/out/reset buttons, **Export as PNG**. FK lines now route between box centers (+110,+40 offset for visual centering).
+
+### Changed
+- GitHub Actions bumped: `actions/checkout@v6`, `actions/setup-dotnet@v5`, `actions/upload-artifact@v7`, `softprops/action-gh-release@v3`, `github/codeql-action@v4`.
+- Release workflow installs Inno Setup and builds the installer automatically on tag push. Both assets (installer + zip) attached to the GitHub Release.
+
+## [1.1.0] — 2026-04-18
+
+### Added
+- **E11 Query History & favorites**: new side pane, filter, star favorites, right-click context (open in new tab, favorite, delete), 1000-entry JSONL store in `%AppData%\DBTeam\history.jsonl`, automatic recording on each query execution.
+
 ## [1.0.1] — 2026-04-18
 
 ### Added
