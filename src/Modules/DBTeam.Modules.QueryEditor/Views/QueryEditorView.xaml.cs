@@ -222,6 +222,9 @@ public partial class QueryEditorView : UserControl
                 var parts = before!.Split('.');
                 string schema = parts.Length >= 2 ? parts[^2].Trim('[', ']') : "dbo";
                 string table = parts[^1].Trim('[', ']');
+                // Alias resolution: if an alias matches, substitute the real schema+table
+                var aliases = SqlCompletionProvider.ExtractAliases(Editor.Text);
+                if (aliases.TryGetValue(table, out var resolved)) { schema = resolved.schema; table = resolved.table; }
                 var cols = await _provider.GetColumnsForTableAsync(vm.Connection, vm.Database!, schema, table);
                 foreach (var col in cols) data.Add(new SqlCompletionItem(col, CompletionKind.Column));
                 if (data.Count == 0) { _completionWindow.Close(); return; }

@@ -7,6 +7,8 @@ using CommunityToolkit.Mvvm.Input;
 using System.IO;
 using System.Windows;
 using DBTeam.Core.Abstractions;
+using DBTeam.Core.Events;
+using DBTeam.Core.Infrastructure;
 using DBTeam.Core.Models;
 using DBTeam.Modules.QueryEditor.Formatting;
 using DBTeam.Modules.ResultsGrid.Export;
@@ -42,6 +44,9 @@ public partial class QueryEditorViewModel : ObservableObject
     {
         if (value is not null) _ = LoadDatabasesAsync();
     }
+
+    [RelayCommand]
+    public Task RefreshDatabasesAsync() => LoadDatabasesAsync();
 
     private async Task LoadDatabasesAsync()
     {
@@ -135,6 +140,72 @@ public partial class QueryEditorViewModel : ObservableObject
             MessageBox.Show(ex.Message, "Export failed", MessageBoxButton.OK, MessageBoxImage.Error);
             StatusText = "Export failed";
         }
+    }
+
+    /// <summary>
+    /// Generate a pivot script from the first result set, using column names as hints.
+    /// User picks row/column/value axes afterwards in the generated SQL.
+    /// </summary>
+    [RelayCommand]
+    public void GeneratePivot()
+    {
+        if (Results.Count == 0 || Connection is null) { StatusText = "Execute a query first"; return; }
+        var t = Results[0];
+        if (t.Columns.Count < 3) { StatusText = "Need at least 3 columns (row, column, value)"; return; }
+        var rowCol = t.Columns[0].ColumnName;
+        var colCol = t.Columns[1].ColumnName;
+        var valCol = t.Columns[t.Columns.Count - 1].ColumnName;
+        var distinctVals = new System.Collections.Generic.HashSet<string>();
+        foreach (System.Data.DataRow r in t.Rows)
+        {
+            var v = r[colCol]?.ToString();
+            if (!string.IsNullOrEmpty(v) && distinctVals.Count < 20) distinctVals.Add(v);
+        }
+        var sb = new System.Text.StringBuilder();
+        sb.AppendLine("-- PIVOT skeleton. Adjust source, axis columns, aggregator, and value list.");
+        sb.AppendLine("SELECT *");
+        sb.AppendLine("FROM (");
+        sb.AppendLine($"    SELECT [{rowCol}], [{colCol}], [{valCol}]");
+        sb.AppendLine("    FROM (<your-source-query>)");
+        sb.AppendLine(") src");
+        sb.AppendLine("PIVOT (");
+        sb.AppendLine($"    SUM([{valCol}])");
+        sb.AppendLine($"    FOR [{colCol}] IN ({string.Join(", ", System.Linq.Enumerable.Select(distinctVals, v => $"[{v}]"))})");
+        sb.AppendLine(") p;");
+        var bus = ServiceLocator.TryGet<IEventBus>();
+        bus?.Publish(new OpenQueryEditorRequest { Connection = Connection, Database = Database, InitialSql = sb.ToString() });
+        StatusText = "Pivot skeleton generated";
+    }
+
+    /// <summary>
+    /// Master-detail: given a column name and its value, build a SELECT against the target table
+    /// (deduced from the column name or a naming convention like FK_Table_Id → Table).
+    /// </summary>
+    [RelayCommand]
+    public void FollowRelation(System.Tuple<string, object?>? arg)
+    {
+        if (arg is null || Connection is null) return;
+        var column = arg.Item1;
+        var value = arg.Item2;
+        if (string.IsNullOrWhiteSpace(column) || value is null) return;
+        // Heuristic: "CustomerId" → table "Customer"; "FK_Order_Customer" → "Customer"
+        string target;
+        if (column.EndsWith("Id", System.StringComparison.OrdinalIgnoreCase) && column.Length > 2)
+            target = column[..^2];
+        else if (column.StartsWith("FK_", System.StringComparison.OrdinalIgnoreCase))
+            target = column.Split('_').LastOrDefault() ?? column;
+        else
+            target = column;
+        var lit = value switch
+        {
+            string s => $"N'{s.Replace("'", "''")}'",
+            System.Guid g => $"'{g}'",
+            System.DateTime dt => $"'{dt:yyyy-MM-dd HH:mm:ss.fff}'",
+            _ => System.Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture) ?? "NULL"
+        };
+        var sql = $"SELECT TOP 100 *\nFROM [dbo].[{target}]\nWHERE [{column}] = {lit}\n   OR [Id] = {lit};";
+        var bus = ServiceLocator.TryGet<IEventBus>();
+        bus?.Publish(new OpenQueryEditorRequest { Connection = Connection, Database = Database, InitialSql = sql });
     }
 
     [RelayCommand]

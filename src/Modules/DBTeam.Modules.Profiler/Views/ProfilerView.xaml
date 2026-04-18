@@ -74,6 +74,49 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="GraphOutline" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="Graph"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                                  Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                        <ItemsControl x:Name="GraphControl" ItemsSource="{Binding FlatOperators}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><Canvas Width="2000" Height="1200"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Canvas.Left" Value="{Binding GraphX}"/>
+                                    <Setter Property="Canvas.Top"  Value="{Binding GraphY}"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="180" BorderBrush="#1565C0" BorderThickness="1" CornerRadius="6"
+                                            Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
+                                        <DockPanel>
+                                            <Border DockPanel.Dock="Top" Background="#1E88E5" Padding="8,4" CornerRadius="6,6,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <md:PackIcon Kind="{Binding IconKind}" Foreground="White" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                                                </StackPanel>
+                                            </Border>
+                                            <StackPanel Margin="6,4">
+                                                <TextBlock Text="{Binding EstimatedCost, StringFormat='Cost: {0:F4}'}" FontSize="11" Opacity="0.75"/>
+                                                <TextBlock Text="{Binding EstimatedRows, StringFormat='Est. rows: {0:F0}'}" FontSize="11" Opacity="0.75"/>
+                                                <TextBlock Text="{Binding ActualRows, StringFormat='Actual: {0:F0}'}" FontSize="11" Opacity="0.75"/>
+                                                <TextBlock Text="{Binding LogicalReads, StringFormat='Reads: {0:F0}'}" FontSize="11" Opacity="0.75"/>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="FileTree" VerticalAlignment="Center" Margin="0,0,6,0"/>
                             <TextBlock Text="Plan tree"/>
                         </StackPanel>
