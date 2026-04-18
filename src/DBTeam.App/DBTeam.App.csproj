@@ -51,6 +51,8 @@
     <ProjectReference Include="..\Modules\DBTeam.Modules.ResultsGrid\DBTeam.Modules.ResultsGrid.csproj" />
     <ProjectReference Include="..\Modules\DBTeam.Modules.SchemaCompare\DBTeam.Modules.SchemaCompare.csproj" />
     <ProjectReference Include="..\Modules\DBTeam.Modules.TableDesigner\DBTeam.Modules.TableDesigner.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.Admin\DBTeam.Modules.Admin.csproj" />
+    <ProjectReference Include="..\Modules\DBTeam.Modules.Terminal\DBTeam.Modules.Terminal.csproj" />
   </ItemGroup>
 
 </Project>

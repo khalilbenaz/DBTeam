@@ -66,6 +66,13 @@
                 <MenuItem Header="{DynamicResource Menu.Diagram}" Command="{Binding DiagramCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="Graph"/></MenuItem.Icon>
                 </MenuItem>
+                <Separator/>
+                <MenuItem Header="_Administration" Command="{Binding AdministrationCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="ShieldAccount"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="T_erminal" Command="{Binding TerminalCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="Console"/></MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="{DynamicResource Menu.View}">
                 <MenuItem Header="{DynamicResource Menu.ObjectExplorer}" Command="{Binding ShowObjectExplorerCommand}">

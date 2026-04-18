@@ -4,6 +4,19 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.5.0] — 2026-04-18
+
+### Added
+- **Snippets** — 16 Tab-triggered T-SQL snippets in Query Editor (`sel`, `ins`, `upd`, `del`, `mrg`, `cte`, `join`, `tbl`, `idx`, `sp`, `fn`, `tryc`, `tran`, `pivot`, `row`, `selw`). Type trigger + `Tab` to expand.
+- **F12 Go to Definition** — press `F12` on any identifier in the Query Editor to script the underlying object (table/view/procedure/function) and open it in a new tab.
+- **Real-time SQL validation** — ScriptDom parses on idle (700 ms debounce) and paints red squiggles under parse errors directly in the editor.
+- **XML export** — new format in Query Editor export dropdown (in addition to CSV/Excel/JSON).
+- **Administration module** (`Tools → Administration`) — new dedicated view with 8 tabs: Databases (size/recovery), Logins, Users, Roles, Permissions, Index fragmentation (with recommendation column: OK/REORGANIZE/REBUILD), Slow queries (top 50 via `sys.dm_exec_query_stats`), Active sessions. Three script generators: BACKUP DATABASE, RESTORE DATABASE, index rebuild/reorganize.
+- **Terminal module** (`Tools → Terminal`) — interactive shell embedded in a document tab. Supports `pwsh`, `powershell`, `cmd`, `claude`, `gh`, `sqlcmd`, or any CLI. Working directory picker, Quick snippets sidebar with common commands (Claude Code, gh, sqlcmd), send-on-Enter input box, clear + stop + start controls.
+
+### Changed
+- Query Editor export menu: 4 formats (CSV, Excel, JSON, XML).
+
 ## [1.4.0] — 2026-04-18
 
 ### Added
