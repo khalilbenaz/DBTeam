@@ -4,6 +4,26 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-04-18
+
+### Added
+- **Table Designer — load existing** (E8): new **Load** command in the designer fetches an existing table's columns via `IDatabaseMetadataService` and populates the grid for editing. Full column-level `ALTER` generation for cross-database diffs lives in Schema Compare (v1.2.0).
+- **Profiler graphical plan tree** (E12): the Profiler has a new **Plan tree** tab rendering the `SHOWPLAN_XML` hierarchy as a `TreeView`, with distinct icons per physical operator (Seek, Scan, Nested Loops, Hash Match, Merge Join, Sort, Filter, Compute Scalar, Aggregate, Top, Parallelism…) and inline stats (cost, estimated rows, actual rows).
+- **Session save/restore** (E23): open Query Editor tabs (connection Id, database, SQL) are persisted to `%AppData%\DBTeam\session.json` on window close and restored on next launch.
+- **Accessibility baseline** (E22): global implicit `Button` style binds `AutomationProperties.Name` to each button's `ToolTip` (Narrator-friendly for icon-only buttons). Added a `BrandFocusVisual` dashed ring for keyboard focus. Remaining items (high-contrast swap, full Tab audit) tracked in `docs/bmad/DESIGN-NOTES.md`.
+- **Local install script**: `scripts/install-local.ps1` copies the published output into `%LocalAppData%\Programs\DBTeam`, creates Start menu + desktop shortcuts, and registers the app in *Apps & features* for clean uninstall — useful for dev loops and environments without Inno Setup.
+- **Technical design notes**: `docs/bmad/DESIGN-NOTES.md` captures concrete implementation plans for items deferred to v2 or external-dependency items: T-SQL Debugger (E13), Code signing (E14), MSIX (E15), Auto-update via Velopack (E16), Screenshots automation via FlaUI (E18), LocalDB integration tests (E20), winget manifest (E27), AI assistant BYO-key (E25).
+- **Screenshots capture guide**: `docs/images/README.md` (naming convention, sizing, tools).
+
+### Changed
+- **README**: added CI / CodeQL / Website / Release badges, concise pitch and direct download link, documentation index header.
+- **GitHub Pages** redesign: custom Jekyll layout with sticky nav, dark theme, custom CSS (`docs/assets/style.css`), hero with gradient, 12 feature cards with colored icons, shortcuts panel with styled `<kbd>`, full module status grid, tech-stack pills, doc cards, footer, inline SVG favicon.
+- **`.gitignore`**: added `dist/` to avoid committing published artifacts.
+
+### Fixed
+- **Installer script**: `scripts/build-installer.ps1` now passes absolute paths to ISCC; previously the relative `dist/` path broke on GitHub Actions runners (ISCC resolves paths relative to the `.iss` file, not the current directory).
+- Dependabot group PRs merged: test deps (xUnit, coverlet, Microsoft.NET.Test.Sdk) bumped.
+
 ## [1.2.0] — 2026-04-18
 
 ### Added
