@@ -42,7 +42,7 @@ if (Test-Path $output)  { Remove-Item $output  -Recurse -Force }
 if (Test-Path $archive) { Remove-Item $archive -Force }
 
 Write-Host "==> dotnet restore" -ForegroundColor Cyan
-dotnet restore $solution
+dotnet restore $solution --source https://api.nuget.org/v3/index.json
 if ($LASTEXITCODE -ne 0) { throw "restore failed" }
 
 Write-Host "==> dotnet publish" -ForegroundColor Cyan
@@ -52,6 +52,7 @@ dotnet publish $appProj `
     -o $output `
     -p:IsPublishing=true `
     -p:Version=$Version `
+    --no-restore `
     --nologo
 if ($LASTEXITCODE -ne 0) { throw "publish failed" }
 
