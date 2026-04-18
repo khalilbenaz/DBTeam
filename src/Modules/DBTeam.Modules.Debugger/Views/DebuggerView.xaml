@@ -40,6 +40,10 @@
                             IsEnabled="{Binding IsAttached}">
                         <md:PackIcon Kind="DebugStepOver"/>
                     </Button>
+                    <Button Command="{Binding StepIntoCommand}" Style="{StaticResource IconButton}" ToolTip="Step into stored procedure (expand EXEC)"
+                            IsEnabled="{Binding IsAttached}">
+                        <md:PackIcon Kind="DebugStepInto"/>
+                    </Button>
                     <Button Command="{Binding ContinueCommand}" Style="{StaticResource SuccessButton}" Margin="6,0,0,0"
                             IsEnabled="{Binding IsAttached}" ToolTip="Continue until next breakpoint or end">
                         <StackPanel Orientation="Horizontal">

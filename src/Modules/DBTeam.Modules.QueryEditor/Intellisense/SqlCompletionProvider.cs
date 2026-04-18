@@ -29,8 +29,28 @@ public sealed class SqlCompletionProvider
     private readonly Dictionary<string, List<string>> _procCache = new();
     private readonly Dictionary<string, List<string>> _funcCache = new();
     private readonly Dictionary<string, List<string>> _columnCache = new();
+    private readonly Dictionary<string, Dictionary<string, RoutineSignature>> _sigCache = new();
 
     public SqlCompletionProvider(IDatabaseMetadataService meta) { _meta = meta; }
+
+    public async Task<RoutineSignature?> GetSignatureAsync(SqlConnectionInfo c, string db, string schema, string name)
+    {
+        var key = $"{c.Id}|{db}";
+        if (!_sigCache.TryGetValue(key, out var map))
+        {
+            map = new Dictionary<string, RoutineSignature>(System.StringComparer.OrdinalIgnoreCase);
+            try
+            {
+                foreach (var s in await _meta.GetRoutineSignaturesAsync(c, db))
+                    map[s.QualifiedName] = s;
+            }
+            catch { }
+            _sigCache[key] = map;
+        }
+        if (map.TryGetValue($"{schema}.{name}", out var sig)) return sig;
+        if (map.TryGetValue($"dbo.{name}", out sig)) return sig;
+        return null;
+    }
 
     public async Task<List<string>> GetTablesAsync(SqlConnectionInfo c, string db)
     {

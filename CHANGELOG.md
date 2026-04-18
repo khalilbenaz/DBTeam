@@ -4,6 +4,23 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [2.0.0] — 2026-04-18 — Feature complete
+
+Closes the last two items from the roadmap.
+
+### Added — Function signatures in autocomplete
+- `RoutineSignature` + `RoutineParameter` models in Core
+- `IDatabaseMetadataService.GetRoutineSignaturesAsync` — SQL against `sys.parameters`/`sys.objects`/`sys.types` returns signatures for every `P/FN/IF/TF/FS/FT` object with typed parameters and the return type for scalar UDFs
+- `SqlCompletionProvider.GetSignatureAsync` caches per (connection, database) and falls back to `dbo.<name>` if no schema
+- Query Editor hooks `(` keystroke → `OverloadInsightWindow` displays the signature header (`schema.name(p1 type, p2 type) → returnType`) and a parameter-by-parameter body with directionality indicators (`→` in, `⇄` out) and `[default]` markers
+
+### Added — Debugger step-into stored procedures
+- `DebuggerViewModel.StepIntoAsync` detects `EXEC/EXECUTE [schema].[proc] @p=…` statements, parses the target schema + name, fetches the body via `ScriptObjectAsync`, strips the `CREATE PROCEDURE … AS` header, and splices the resulting statements into the Steps list right after the EXEC so the user can `Step Over` through them. Parameter bindings from the call site are recorded as comment headers before the body. Inner statements are prefixed `↘` in the UI.
+- `DebuggerView` toolbar gains a **Step Into** button (`DebugStepInto` icon) between Step Over and Continue.
+
+### Changed
+- Version bumped to **2.0.0** — roadmap complete. Remaining items are either infrastructure scaffolds (Velopack activation awaiting signing, FlaUI screenshots awaiting visuals) or polish.
+
 ## [1.9.0] — 2026-04-18
 
 ### Added

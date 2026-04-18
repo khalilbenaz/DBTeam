@@ -259,12 +259,15 @@ Themes are managed by **ModernWpfUI**. The `ThemeService` persists the choice in
 - [x] **Auto-update scaffold** — `UpdateService` ready for Velopack (activation blocked on signing)
 - [x] **Automated screenshots** — `DBTeam.Screenshots` console project scaffold for FlaUI.UIA3
 
-### Still to do (v2)
-- [ ] **Debugger step-into SPs** via full instrumentation — v2 (statement-level stepping and breakpoints already shipped in v1.4)
-- [ ] **Function signatures + snippet marketplace** inside autocomplete (core autocomplete + 16 snippets already shipped)
-- [ ] **Velopack activation** (requires code-signed releases — see E14)
+### Shipped in v2.0
+- [x] **Function signatures in autocomplete** — typing `(` after a proc/function opens an `OverloadInsightWindow` with parameter list (name, type, direction) and return type
+- [x] **Debugger step-into** — `EXEC` statements expand inline: the proc body is fetched, parsed, and its statements spliced into the Steps list so you can step through them
 
-All scaffolds + design notes: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md).
+### Waiting on external credentials
+- [ ] **Velopack auto-update activation** — scaffold `UpdateService` ready; activation requires a code-signed release (see `docs/SIGNING.md`)
+- [ ] **FlaUI automated screenshots** — scaffold `DBTeam.Screenshots` ready; activation requires actually capturing images (manual for now)
+
+All scaffolds + design notes: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md) · signing paths in [docs/SIGNING.md](docs/SIGNING.md).
 
 Detailed implementation plans: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md).
 
