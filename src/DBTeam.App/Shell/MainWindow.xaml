@@ -55,6 +55,12 @@
                 <MenuItem Header="{DynamicResource Menu.Documenter}" Command="{Binding DocumenterCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="FileDocument"/></MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="_Query Builder..." Command="{Binding QueryBuilderCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="TableLarge"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Import CSV..." Command="{Binding ImportDataCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="FileImportOutline"/></MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="{DynamicResource Menu.Tools}">
                 <MenuItem Header="{DynamicResource Menu.Profiler}" Command="{Binding ProfilerCommand}">
@@ -75,6 +81,12 @@
                 </MenuItem>
                 <MenuItem Header="{DynamicResource Menu.AiAssistant}" Command="{Binding AiAssistantCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="RobotOutline"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Monitoring" Command="{Binding MonitoringCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="PulseOutline"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Git" Command="{Binding GitCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="Git"/></MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="{DynamicResource Menu.View}">

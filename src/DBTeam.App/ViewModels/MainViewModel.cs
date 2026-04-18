@@ -116,6 +116,34 @@ public partial class MainViewModel : ObservableObject
         bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "AI Assistant", Content = view });
     }
     [RelayCommand]
+    private void Monitoring()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.Monitoring.Views.MonitoringView>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Monitoring", Content = view });
+    }
+    [RelayCommand]
+    private void ImportData()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.Import.Views.ImportView>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Import", Content = view });
+    }
+    [RelayCommand]
+    private void QueryBuilder()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.QueryBuilder.Views.QueryBuilderView>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Query Builder", Content = view });
+    }
+    [RelayCommand]
+    private void Git()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.Git.Views.GitPanel>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Git", Content = view });
+    }
+    [RelayCommand]
     private void Debugger()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Debugger.Views.DebuggerView>();

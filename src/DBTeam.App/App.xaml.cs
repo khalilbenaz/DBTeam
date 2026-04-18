@@ -78,6 +78,10 @@ public partial class App : System.Windows.Application
         DBTeam.Modules.Admin.ModuleRegistration.Register(s);
         DBTeam.Modules.Terminal.ModuleRegistration.Register(s);
         DBTeam.Modules.AiAssistant.ModuleRegistration.Register(s);
+        DBTeam.Modules.Monitoring.ModuleRegistration.Register(s);
+        DBTeam.Modules.Import.ModuleRegistration.Register(s);
+        DBTeam.Modules.QueryBuilder.ModuleRegistration.Register(s);
+        DBTeam.Modules.Git.ModuleRegistration.Register(s);
     }
 
     protected override void OnExit(ExitEventArgs e)
