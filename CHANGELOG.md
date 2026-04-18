@@ -4,6 +4,17 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.8.0] — 2026-04-18
+
+### Added — distribution & quality
+- **MSIX manifest scaffold** at `installer/msix/Package.appxmanifest` with `runFullTrust` capability, file association for `.sql`, and multi-language (en-US / fr-FR) resources. Build recipe in `installer/msix/README.md`.
+- **winget manifests** at `installer/winget/` (installer + locale + version YAMLs) ready to submit to `microsoft/winget-pkgs` after the first signed release.
+- **Code signing step** in `release.yml` using `azure/trusted-signing-action@v0.4.0` — automatically activates when the `AZURE_TENANT_ID` secret is defined; keeps the release flow unchanged until credentials are provisioned.
+- **`DBTeam.IntegrationTests`** project (xUnit + LocalDB) with `LocalDbFixture` (creates/drops a disposable DB per test class) and a `[SkipIfLocalDbUnavailable]` attribute so the suite auto-skips on machines without LocalDB. Initial tests cover `GetDatabases`, `GetTables`, `GetColumns`, and `ExecuteAsync`.
+
+### Changed
+- CI's existing `dotnet test` step auto-discovers the new integration tests; they run only when LocalDB is present (Windows runners).
+
 ## [1.7.0] — 2026-04-18
 
 ### Added — 4 new modules

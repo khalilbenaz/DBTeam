@@ -1,0 +1,23 @@
+# Template manifest for winget (microsoft/winget-pkgs). Fill in SHA256 after
+# each release, or automate via `wingetcreate update` in release.yml (see
+# docs/bmad/DESIGN-NOTES.md#e27).
+
+PackageIdentifier: KhalilBenazzouz.DBTeam
+PackageVersion: 1.7.0
+Platform:
+  - Windows.Desktop
+MinimumOSVersion: 10.0.0.0
+Scope: user
+InstallerType: inno
+InstallerSwitches:
+  Silent: /VERYSILENT /NORESTART
+  SilentWithProgress: /SILENT /NORESTART
+  Custom: /NOCANCEL /CLOSEAPPLICATIONS
+  InstallLocation: /DIR="<INSTALLPATH>"
+UpgradeBehavior: install
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/khalilbenaz/DBTeam/releases/download/v1.7.0/DBTeam-Setup-1.7.0.exe
+    InstallerSha256: PLACEHOLDER_AFTER_RELEASE
+ManifestType: installer
+ManifestVersion: 1.6.0

@@ -1,0 +1,30 @@
+PackageIdentifier: KhalilBenazzouz.DBTeam
+PackageVersion: 1.7.0
+PackageLocale: en-US
+Publisher: Khalil Benazzouz
+PublisherUrl: https://github.com/khalilbenaz
+PublisherSupportUrl: https://github.com/khalilbenaz/DBTeam/issues
+PackageName: DB TEAM
+PackageUrl: https://khalilbenaz.github.io/DBTeam/
+License: MIT
+LicenseUrl: https://github.com/khalilbenaz/DBTeam/blob/main/LICENSE
+ShortDescription: Professional SQL Server IDE for Windows
+Description: |
+  DB TEAM is a modular, bilingual (EN/FR) SQL Server IDE for Windows. Features
+  include a T-SQL editor with autocomplete/format/F12/snippets, schema & data
+  compare with sync script generation, table designer, query profiler with plan
+  tree, data generator, HTML documenter, interactive ER diagram, query history,
+  administration panel (logins/users/indexes/backup/restore), real-time
+  monitoring, CSV import, query builder, git integration, AI assistant (BYO-key),
+  and statement-level T-SQL debugger.
+Moniker: dbteam
+Tags:
+  - sql-server
+  - sql
+  - database
+  - ide
+  - tsql
+  - developer-tools
+ReleaseNotesUrl: https://github.com/khalilbenaz/DBTeam/releases
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0

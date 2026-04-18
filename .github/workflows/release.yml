@@ -53,6 +53,28 @@ jobs:
         shell: pwsh
         run: ./scripts/build-installer.ps1 -Version ${{ steps.ver.outputs.version }} -Runtime win-x64
 
+      # Optional: sign exe + installer via Azure Trusted Signing when secrets are set.
+      # Add these repo secrets to enable: AZURE_TENANT_ID, AZURE_CLIENT_ID,
+      # AZURE_CLIENT_SECRET, AZURE_TRUSTED_SIGNING_ACCOUNT, AZURE_CERT_PROFILE.
+      - name: Sign binaries (optional)
+        if: env.AZURE_TENANT_ID != ''
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        uses: azure/trusted-signing-action@v0.4.0
+        continue-on-error: true
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          endpoint: https://eus.codesigning.azure.net/
+          trusted-signing-account-name: ${{ secrets.AZURE_TRUSTED_SIGNING_ACCOUNT }}
+          certificate-profile-name: ${{ secrets.AZURE_CERT_PROFILE }}
+          files-folder: dist
+          files-folder-filter: exe
+          files-folder-recurse: true
+
       - name: List artifacts
         shell: pwsh
         run: Get-ChildItem dist -Recurse | Select-Object FullName, Length
