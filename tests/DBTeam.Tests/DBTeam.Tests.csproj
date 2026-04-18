@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DBTeam.Core\DBTeam.Core.csproj" />
+    <ProjectReference Include="..\..\src\DBTeam.Data\DBTeam.Data.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.SchemaCompare\DBTeam.Modules.SchemaCompare.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.DataCompare\DBTeam.Modules.DataCompare.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.DataGenerator\DBTeam.Modules.DataGenerator.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.QueryEditor\DBTeam.Modules.QueryEditor.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.Documenter\DBTeam.Modules.Documenter.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.TableDesigner\DBTeam.Modules.TableDesigner.csproj" />
+  </ItemGroup>
+
+</Project>
