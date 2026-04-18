@@ -19,6 +19,22 @@ public sealed class OperatorStat
     public double EstimatedRows { get; set; }
     public double ActualRows { get; set; }
     public double LogicalReads { get; set; }
+    public ObservableCollection<OperatorStat> Children { get; } = new();
+    public string IconKind => Name switch
+    {
+        var n when n.Contains("Seek") => "Magnify",
+        var n when n.Contains("Scan") => "TableLarge",
+        var n when n.Contains("Nested Loops") => "ArrowDecision",
+        var n when n.Contains("Hash Match") => "Pound",
+        var n when n.Contains("Merge Join") => "SourceMerge",
+        var n when n.Contains("Sort") => "Sort",
+        var n when n.Contains("Filter") => "Filter",
+        var n when n.Contains("Compute Scalar") => "Calculator",
+        var n when n.Contains("Aggregate") => "Sigma",
+        var n when n.Contains("Top") => "ArrowUpBold",
+        var n when n.Contains("Parallelism") => "DotsHorizontal",
+        _ => "CircleOutline"
+    };
 }
 
 public partial class ProfilerViewModel : ObservableObject
@@ -104,14 +120,22 @@ public partial class ProfilerViewModel : ObservableObject
         IsBusy = false;
     }
 
+    public ObservableCollection<OperatorStat> RootTree { get; } = new();
+
     private void ParsePlan(string xml, bool actual)
     {
         Operators.Clear();
+        RootTree.Clear();
         if (string.IsNullOrWhiteSpace(xml)) return;
         try
         {
             var doc = XDocument.Parse(xml);
             var ns = doc.Root?.GetDefaultNamespace() ?? XNamespace.None;
+            foreach (var rootRel in doc.Descendants(ns + "QueryPlan").Elements(ns + "RelOp"))
+            {
+                var treeRoot = BuildTree(rootRel, ns, actual);
+                RootTree.Add(treeRoot);
+            }
             foreach (var rel in doc.Descendants(ns + "RelOp"))
             {
                 var op = new OperatorStat
@@ -134,6 +158,29 @@ public partial class ProfilerViewModel : ObservableObject
             }
         }
         catch { }
+    }
+
+    private static OperatorStat BuildTree(XElement rel, XNamespace ns, bool actual)
+    {
+        var op = new OperatorStat
+        {
+            Name = rel.Attribute("PhysicalOp")?.Value ?? rel.Attribute("LogicalOp")?.Value ?? "?",
+            Node = rel.Attribute("NodeId")?.Value ?? "",
+            EstimatedCost = ParseDouble(rel.Attribute("EstimatedTotalSubtreeCost")?.Value),
+            EstimatedRows = ParseDouble(rel.Attribute("EstimateRows")?.Value)
+        };
+        if (actual)
+        {
+            var run = rel.Descendants(ns + "RunTimeInformation").Descendants(ns + "RunTimeCountersPerThread").FirstOrDefault();
+            if (run is not null)
+            {
+                op.ActualRows = ParseDouble(run.Attribute("ActualRows")?.Value);
+                op.LogicalReads = ParseDouble(run.Attribute("ActualLogicalReads")?.Value);
+            }
+        }
+        foreach (var child in rel.Elements().SelectMany(e => e.Elements(ns + "RelOp")))
+            op.Children.Add(BuildTree(child, ns, actual));
+        return op;
     }
 
     private static double ParseDouble(string? s) => double.TryParse(s, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var v) ? v : 0;

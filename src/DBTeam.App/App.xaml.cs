@@ -59,6 +59,7 @@ public partial class App : System.Windows.Application
 
         s.AddSingleton<Services.ThemeService>();
         s.AddSingleton<Services.LocalizationService>();
+        s.AddSingleton<Services.SessionService>();
         s.AddSingleton<Shell.MainWindow>();
         s.AddSingleton<ViewModels.MainViewModel>();
 
