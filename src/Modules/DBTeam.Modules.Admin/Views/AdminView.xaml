@@ -21,11 +21,11 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                    <TextBlock Text="Connection" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Designer.Connection}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Connections}" DisplayMemberPath="Name" SelectedItem="{Binding Connection}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="0,0,8,0">
-                    <TextBlock Text="Database" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Designer.Database}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" IsEditable="True"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
@@ -52,31 +52,31 @@
 
         <TabControl Margin="8">
             <TabItem>
-                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Database" Margin="0,0,6,0"/><TextBlock Text="Databases"/></StackPanel></TabItem.Header>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Database" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.Databases}"/></StackPanel></TabItem.Header>
                 <DataGrid ItemsSource="{Binding DatabaseSizes}" AutoGenerateColumns="True" IsReadOnly="True"/>
             </TabItem>
             <TabItem>
-                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="AccountGroup" Margin="0,0,6,0"/><TextBlock Text="Logins"/></StackPanel></TabItem.Header>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="AccountGroup" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.Logins}"/></StackPanel></TabItem.Header>
                 <DataGrid ItemsSource="{Binding Logins}" AutoGenerateColumns="True" IsReadOnly="True"/>
             </TabItem>
             <TabItem>
-                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Account" Margin="0,0,6,0"/><TextBlock Text="Users"/></StackPanel></TabItem.Header>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Account" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.Users}"/></StackPanel></TabItem.Header>
                 <DataGrid ItemsSource="{Binding Users}" AutoGenerateColumns="True" IsReadOnly="True"/>
             </TabItem>
             <TabItem>
-                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="KeyVariant" Margin="0,0,6,0"/><TextBlock Text="Roles"/></StackPanel></TabItem.Header>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="KeyVariant" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.Roles}"/></StackPanel></TabItem.Header>
                 <DataGrid ItemsSource="{Binding Roles}" AutoGenerateColumns="True" IsReadOnly="True"/>
             </TabItem>
             <TabItem>
-                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="ShieldKey" Margin="0,0,6,0"/><TextBlock Text="Permissions"/></StackPanel></TabItem.Header>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="ShieldKey" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.Permissions}"/></StackPanel></TabItem.Header>
                 <DataGrid ItemsSource="{Binding Permissions}" AutoGenerateColumns="True" IsReadOnly="True"/>
             </TabItem>
             <TabItem>
-                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Tune" Margin="0,0,6,0"/><TextBlock Text="Indexes"/></StackPanel></TabItem.Header>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="Tune" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.Indexes}"/></StackPanel></TabItem.Header>
                 <DataGrid ItemsSource="{Binding Indexes}" AutoGenerateColumns="True" IsReadOnly="True"/>
             </TabItem>
             <TabItem>
-                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="ChartLine" Margin="0,0,6,0"/><TextBlock Text="Slow queries"/></StackPanel></TabItem.Header>
+                <TabItem.Header><StackPanel Orientation="Horizontal"><md:PackIcon Kind="ChartLine" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Admin.SlowQueries}"/></StackPanel></TabItem.Header>
                 <DataGrid ItemsSource="{Binding SlowQueries}" AutoGenerateColumns="True" IsReadOnly="True"/>
             </TabItem>
             <TabItem>

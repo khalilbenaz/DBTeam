@@ -112,6 +112,96 @@
     <sys:String x:Key="Tab.Debugger">Débogueur T-SQL</sys:String>
     <sys:String x:Key="Tab.Diagram">Diagramme</sys:String>
 
+    <sys:String x:Key="Qb.Title">Générateur de requêtes</sys:String>
+    <sys:String x:Key="Qb.Subtitle">Choisir tables + colonnes · WHERE / ORDER BY · générer le SELECT</sys:String>
+    <sys:String x:Key="Qb.Connection">Connexion</sys:String>
+    <sys:String x:Key="Qb.Database">Base de données</sys:String>
+    <sys:String x:Key="Qb.Build">Construire</sys:String>
+    <sys:String x:Key="Qb.OpenInEditor">Ouvrir dans l'éditeur</sys:String>
+    <sys:String x:Key="Qb.Distinct">DISTINCT</sys:String>
+    <sys:String x:Key="Qb.Where">WHERE</sys:String>
+    <sys:String x:Key="Qb.OrderBy">ORDER BY</sys:String>
+    <sys:String x:Key="Qb.GeneratedSql">SQL généré</sys:String>
+
+    <sys:String x:Key="Imp.Title">Importer un CSV</sys:String>
+    <sys:String x:Key="Imp.Subtitle">Choisir un fichier · aperçu + inférence de type · bulk insert</sys:String>
+    <sys:String x:Key="Imp.Connection">Connexion</sys:String>
+    <sys:String x:Key="Imp.Database">Base de données</sys:String>
+    <sys:String x:Key="Imp.Schema">Schéma</sys:String>
+    <sys:String x:Key="Imp.Table">Table</sys:String>
+    <sys:String x:Key="Imp.PickFile">Choisir un fichier</sys:String>
+    <sys:String x:Key="Imp.Browse">Parcourir</sys:String>
+    <sys:String x:Key="Imp.HasHeader">En-tête présent</sys:String>
+    <sys:String x:Key="Imp.Delimiter">Délimiteur :</sys:String>
+    <sys:String x:Key="Imp.ReloadPreview">Recharger l'aperçu</sys:String>
+    <sys:String x:Key="Imp.GenerateCreate">Générer le script CREATE TABLE</sys:String>
+    <sys:String x:Key="Imp.Import">Importer</sys:String>
+    <sys:String x:Key="Imp.Preview">Aperçu</sys:String>
+
+    <sys:String x:Key="Prof.FormatSql">Formater le SQL</sys:String>
+    <sys:String x:Key="Prof.Graph">Graphe</sys:String>
+    <sys:String x:Key="Prof.PlanTree">Arbre du plan</sys:String>
+    <sys:String x:Key="Prof.Col.Operator">Opérateur</sys:String>
+    <sys:String x:Key="Prof.Col.Cost">Coût</sys:String>
+    <sys:String x:Key="Prof.Col.ActualRows">Lignes réelles</sys:String>
+    <sys:String x:Key="Prof.Col.LogicalReads">Lectures logiques</sys:String>
+
+    <sys:String x:Key="Sc.Col.Kind">Type</sys:String>
+    <sys:String x:Key="Sc.Col.Object">Objet</sys:String>
+    <sys:String x:Key="Sc.Col.State">État</sys:String>
+
+    <sys:String x:Key="Git.RepoPath">Chemin du dépôt</sys:String>
+    <sys:String x:Key="Git.Browse">Parcourir</sys:String>
+    <sys:String x:Key="Git.Refresh">Rafraîchir</sys:String>
+    <sys:String x:Key="Git.Pull">Pull</sys:String>
+    <sys:String x:Key="Git.Push">Push</sys:String>
+    <sys:String x:Key="Git.SqlFiles">Fichiers SQL</sys:String>
+    <sys:String x:Key="Git.CommitMessage">Message du commit</sys:String>
+    <sys:String x:Key="Git.Commit">Valider</sys:String>
+
+    <sys:String x:Key="Term.StartShell">Démarrer le shell</sys:String>
+    <sys:String x:Key="Term.SendEnter">Envoyer (Entrée)</sys:String>
+
+    <sys:String x:Key="Dg.ZoomOut">Dézoomer</sys:String>
+    <sys:String x:Key="Dg.ZoomReset">Réinitialiser le zoom</sys:String>
+    <sys:String x:Key="Dg.ZoomIn">Zoomer</sys:String>
+    <sys:String x:Key="Dg.ExportPng">Exporter en PNG</sys:String>
+    <sys:String x:Key="Dg.Hint">Ctrl+Molette pour zoomer · Glisser les boîtes pour réarranger</sys:String>
+
+    <sys:String x:Key="Cn.Reload">Recharger</sys:String>
+    <sys:String x:Key="Cn.Connect">Se connecter</sys:String>
+    <sys:String x:Key="Cn.Delete">Supprimer</sys:String>
+    <sys:String x:Key="Cn.TestConnection">Tester la connexion</sys:String>
+    <sys:String x:Key="Cn.LoadDatabases">Charger les bases</sys:String>
+
+    <sys:String x:Key="Qe.EstimatedPlan">Plan d'exécution estimé</sys:String>
+    <sys:String x:Key="Qe.FormatSql">Formater le SQL (Ctrl+K)</sys:String>
+    <sys:String x:Key="Qe.Pivot">Générer un squelette PIVOT depuis les résultats</sys:String>
+    <sys:String x:Key="Qe.ExportResults">Exporter les résultats</sys:String>
+    <sys:String x:Key="Qe.ExportCsv">Exporter en CSV</sys:String>
+    <sys:String x:Key="Qe.ExportExcel">Exporter en Excel</sys:String>
+    <sys:String x:Key="Qe.ExportJson">Exporter en JSON</sys:String>
+    <sys:String x:Key="Qe.ExportXml">Exporter en XML</sys:String>
+    <sys:String x:Key="Qe.DbContext">Contexte de base de données pour cet onglet</sys:String>
+    <sys:String x:Key="Qe.RefreshDb">Rafraîchir la liste des bases</sys:String>
+
+    <sys:String x:Key="Dbg.AttachTip">Analyser le script + ouvrir la connexion</sys:String>
+    <sys:String x:Key="Dbg.ContinueTip">Continuer jusqu'au prochain point d'arrêt ou à la fin</sys:String>
+
+    <sys:String x:Key="Td.LoadExisting">Charger une table existante</sys:String>
+    <sys:String x:Key="Td.Load">Charger</sys:String>
+
+    <sys:String x:Key="Err.Title">Erreur inattendue</sys:String>
+    <sys:String x:Key="Err.Message">Une erreur est survenue</sys:String>
+    <sys:String x:Key="Err.Copy">Copier</sys:String>
+    <sys:String x:Key="Err.CopyTip">Copier les détails dans le presse-papiers</sys:String>
+    <sys:String x:Key="Err.OpenLogs">Ouvrir les logs</sys:String>
+    <sys:String x:Key="Err.OpenLogsTip">Ouvrir le dossier des logs</sys:String>
+    <sys:String x:Key="Err.Report">Signaler</sys:String>
+    <sys:String x:Key="Err.ReportTip">Signaler un problème sur GitHub</sys:String>
+    <sys:String x:Key="Err.Close">Fermer</sys:String>
+    <sys:String x:Key="Err.Details">Détails</sys:String>
+
     <sys:String x:Key="Ctx.NewQueryHere">Nouvelle requête ici</sys:String>
     <sys:String x:Key="Ctx.ScriptObject">Scripter l'objet</sys:String>
     <sys:String x:Key="Ctx.Disconnect">Déconnecter</sys:String>

@@ -30,7 +30,7 @@
                     <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" IsEditable="True"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
-                    <Button Command="{Binding AttachCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0" ToolTip="Parse script + open connection">
+                    <Button Command="{Binding AttachCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0" ToolTip="{DynamicResource Dbg.AttachTip}">
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="DebugStart" Margin="0,0,6,0"/>
                             <TextBlock Text="{DynamicResource Debugger.Attach}"/>
@@ -45,7 +45,7 @@
                         <md:PackIcon Kind="DebugStepInto"/>
                     </Button>
                     <Button Command="{Binding ContinueCommand}" Style="{StaticResource SuccessButton}" Margin="6,0,0,0"
-                            IsEnabled="{Binding IsAttached}" ToolTip="Continue until next breakpoint or end">
+                            IsEnabled="{Binding IsAttached}" ToolTip="{DynamicResource Dbg.ContinueTip}">
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="Play" Margin="0,0,6,0"/>
                             <TextBlock Text="{DynamicResource Debugger.Continue}"/>
