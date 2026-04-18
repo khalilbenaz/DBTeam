@@ -163,6 +163,73 @@ public partial class DebuggerViewModel : ObservableObject, IDisposable
         Status = "Stopped";
     }
 
+    /// <summary>
+    /// Step into: when the current step is <c>EXEC [schema].[proc] @p1 = …, @p2 = …</c>,
+    /// fetch the proc body, parse it into its own statements and splice them
+    /// into the Steps list right after the EXEC. The user can then step-over
+    /// each inner statement. A parameter binding comment header is injected so
+    /// the user sees which arguments were passed.
+    /// </summary>
+    [RelayCommand]
+    public async Task StepIntoAsync()
+    {
+        if (_executor is null || CurrentStep is null) { Status = "Attach and select an EXEC statement first"; return; }
+        var stmt = CurrentStep;
+        var sql = stmt.Sql.Trim();
+        if (!sql.StartsWith("EXEC", System.StringComparison.OrdinalIgnoreCase)
+            && !sql.StartsWith("EXECUTE", System.StringComparison.OrdinalIgnoreCase))
+        { Status = "Step into works only on EXEC statements"; return; }
+
+        var afterExec = System.Text.RegularExpressions.Regex.Replace(sql, @"^\s*EXEC(UTE)?\s+", "",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase).TrimEnd(';');
+        var spaceIdx = afterExec.IndexOf(' ');
+        string target = spaceIdx < 0 ? afterExec : afterExec[..spaceIdx].Trim();
+        string args = spaceIdx < 0 ? "" : afterExec[spaceIdx..].Trim();
+        var parts = target.Split('.');
+        string schema = parts.Length >= 2 ? parts[^2].Trim('[', ']', ' ') : "dbo";
+        string procName = parts[^1].Trim('[', ']', ' ');
+
+        string body;
+        try { body = await _meta.ScriptObjectAsync(Connection!, Database ?? "", schema, procName, DbObjectKind.StoredProcedure); }
+        catch (System.Exception ex) { Status = "Cannot fetch proc body: " + ex.Message; return; }
+        if (string.IsNullOrWhiteSpace(body)) { Status = $"[{schema}].[{procName}] has no readable body"; return; }
+
+        var asMatch = System.Text.RegularExpressions.Regex.Match(body, @"\bAS\b",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        var innerBody = asMatch.Success ? body[(asMatch.Index + 2)..].TrimStart('\r', '\n', ' ') : body;
+
+        var injected = new System.Text.StringBuilder();
+        injected.AppendLine($"-- [step-into] {schema}.{procName}");
+        if (!string.IsNullOrEmpty(args))
+        {
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(
+                args, @"(?<name>@\w+)\s*=\s*(?<val>N?'[^']*'|[\d\.\-]+|NULL)",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                injected.AppendLine($"-- bound {m.Groups["name"].Value} = {m.Groups["val"].Value}");
+        }
+        injected.AppendLine(innerBody);
+
+        var sub = new Engine.TSqlStepExecutor(Connection!, Database);
+        var errors = sub.Parse(injected.ToString());
+        if (errors.Count > 0) { Status = $"Parse errors in proc body: {errors.Count}"; return; }
+
+        int insertAt = NextIndex;
+        foreach (var sbstmt in sub.Statements)
+        {
+            var copy = new Engine.TSqlStatementInfo
+            {
+                Sql = sbstmt.Sql,
+                Kind = "↘ " + sbstmt.Kind,
+                StartLine = sbstmt.StartLine,
+                EndLine = sbstmt.EndLine,
+                Preview = sbstmt.Preview
+            };
+            Steps.Insert(insertAt++, copy);
+        }
+        for (int i = 0; i < Steps.Count; i++) Steps[i].Index = i;
+        Status = $"Stepped into [{schema}].[{procName}] — {sub.Statements.Count} inner statement(s) inserted";
+    }
+
     [RelayCommand]
     public void ToggleBreakpoint(TSqlStatementInfo? s)
     {

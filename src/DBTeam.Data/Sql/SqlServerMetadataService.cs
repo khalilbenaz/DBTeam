@@ -210,4 +210,73 @@ ORDER BY fk.name, fkc.constraint_column_id";
             _ => c.DataType
         };
     }
+
+    public async Task<IReadOnlyList<RoutineSignature>> GetRoutineSignaturesAsync(SqlConnectionInfo c, string database, CancellationToken ct = default)
+    {
+        const string sql = @"
+SELECT s.name  AS [Schema],
+       o.name  AS [Name],
+       o.type  AS [Kind],
+       p.parameter_id AS Ordinal,
+       CASE WHEN p.parameter_id = 0 THEN '@__returns' ELSE p.name END AS ParamName,
+       ty.name AS DataType,
+       p.max_length AS MaxLength,
+       p.precision  AS Precision,
+       p.scale      AS Scale,
+       p.is_output  AS IsOutput,
+       p.has_default_value AS HasDefault
+FROM sys.objects o
+JOIN sys.schemas s ON s.schema_id = o.schema_id
+LEFT JOIN sys.parameters p ON p.object_id = o.object_id
+LEFT JOIN sys.types ty ON ty.user_type_id = p.user_type_id
+WHERE o.type IN ('P','FN','IF','TF','FS','FT')
+ORDER BY s.name, o.name, p.parameter_id";
+        await using var conn = await OpenAsync(c, database, ct);
+        await using var cmd = new SqlCommand(sql, conn);
+        var dict = new System.Collections.Generic.Dictionary<string, RoutineSignature>();
+        await using var r = await cmd.ExecuteReaderAsync(ct);
+        while (await r.ReadAsync(ct))
+        {
+            var schema = r.GetString(0);
+            var name = r.GetString(1);
+            var kind = r.GetString(2).Trim();
+            var key = $"{schema}.{name}";
+            if (!dict.TryGetValue(key, out var sig))
+            {
+                sig = new RoutineSignature { Schema = schema, Name = name, Kind = kind };
+                dict[key] = sig;
+            }
+            if (r.IsDBNull(3)) continue;
+            var ordinal = r.GetInt32(3);
+            var paramName = r.GetString(4);
+            var dataType = r.IsDBNull(5) ? "" : r.GetString(5);
+            var maxLen   = r.IsDBNull(6) ? (int?)null : (int)r.GetInt16(6);
+            var precision = r.IsDBNull(7) ? (int?)null : (int)r.GetByte(7);
+            var scale    = r.IsDBNull(8) ? (int?)null : (int)r.GetByte(8);
+            var isOutput = !r.IsDBNull(9) && r.GetBoolean(9);
+            var hasDefault = !r.IsDBNull(10) && r.GetBoolean(10);
+            if (ordinal == 0)
+                sig.ReturnType = FormatTypeShort(dataType, maxLen, precision, scale);
+            else
+                sig.Parameters.Add(new RoutineParameter
+                {
+                    Ordinal = ordinal, Name = paramName, DataType = dataType,
+                    MaxLength = maxLen, Precision = precision, Scale = scale,
+                    IsOutput = isOutput, HasDefault = hasDefault
+                });
+        }
+        return dict.Values.OrderBy(x => x.QualifiedName).ToList();
+    }
+
+    private static string FormatTypeShort(string type, int? len, int? p, int? s)
+    {
+        var t = (type ?? "").ToLowerInvariant();
+        return t switch
+        {
+            "varchar" or "char" or "varbinary" or "binary" => $"{type}({(len == -1 ? "MAX" : (len?.ToString() ?? "?"))})",
+            "nvarchar" or "nchar" => $"{type}({(len == -1 ? "MAX" : ((len ?? 0) / 2).ToString())})",
+            "decimal" or "numeric" => $"{type}({p},{s})",
+            _ => type
+        };
+    }
 }

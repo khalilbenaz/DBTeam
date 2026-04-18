@@ -13,6 +13,7 @@ using DBTeam.Core.Models;
 using DBTeam.Modules.QueryEditor.Intellisense;
 using DBTeam.Modules.QueryEditor.ViewModels;
 using ICSharpCode.AvalonEdit.CodeCompletion;
+using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.SqlServer.TransactSql.ScriptDom;
 
@@ -182,10 +183,75 @@ public partial class QueryEditorView : UserControl
             ShowCompletion(afterDot: true);
             return;
         }
+        if (e.Text == "(")
+        {
+            _ = ShowSignatureAsync();
+            return;
+        }
         if (e.Text.Length == 1 && (char.IsLetter(e.Text[0]) || e.Text[0] == '_'))
         {
             if (_completionWindow is null) ShowCompletion(force: false);
         }
+    }
+
+    private OverloadInsightWindow? _insight;
+
+    private async System.Threading.Tasks.Task ShowSignatureAsync()
+    {
+        if (DataContext is not QueryEditorViewModel vm || vm.Connection is null || string.IsNullOrEmpty(vm.Database)) return;
+        if (_provider is null) return;
+        // Caret is just after '('. Pull the identifier before it.
+        int offset = Editor.CaretOffset - 1; // position of '('
+        if (offset <= 0) return;
+        int end = offset;
+        int start = end;
+        var doc = Editor.Document;
+        while (start > 0)
+        {
+            char ch = doc.GetCharAt(start - 1);
+            if (char.IsLetterOrDigit(ch) || ch == '_' || ch == '.' || ch == '[' || ch == ']') start--;
+            else break;
+        }
+        if (start == end) return;
+        var ident = doc.GetText(start, end - start);
+        var parts = ident.Split('.');
+        string schema = parts.Length >= 2 ? parts[^2].Trim('[', ']') : "dbo";
+        string name = parts[^1].Trim('[', ']');
+
+        var sig = await _provider.GetSignatureAsync(vm.Connection, vm.Database!, schema, name);
+        if (sig is null) return;
+
+        _insight?.Close();
+        _insight = new OverloadInsightWindow(Editor.TextArea)
+        {
+            Provider = new SimpleOverloadProvider(sig)
+        };
+        _insight.Show();
+    }
+
+    private sealed class SimpleOverloadProvider : IOverloadProvider
+    {
+        private readonly RoutineSignature _sig;
+        public SimpleOverloadProvider(RoutineSignature sig) { _sig = sig; }
+        public int SelectedIndex { get => 0; set { } }
+        public int Count => 1;
+        public string CurrentIndexText => "1 of 1";
+        public object CurrentHeader => _sig.Display;
+        public object CurrentContent
+        {
+            get
+            {
+                if (_sig.Parameters.Count == 0) return "(no parameters)";
+                var lines = new System.Collections.Generic.List<string>();
+                foreach (var p in _sig.Parameters)
+                {
+                    var arrow = p.IsOutput ? "⇄" : "→";
+                    lines.Add($"{arrow} {p.Name}  {p.DataType}" + (p.HasDefault ? "  [default]" : ""));
+                }
+                return string.Join("\n", lines);
+            }
+        }
+        public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;
     }
 
     private void TextArea_TextEntering(object sender, System.Windows.Input.TextCompositionEventArgs e)
