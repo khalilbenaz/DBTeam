@@ -237,24 +237,27 @@ Themes are managed by **ModernWpfUI**. The `ThemeService` persists the choice in
 - [x] **Accessibility** baseline (AutomationProperties, focus visual) — v1.3
 - [x] **CodeQL + Dependabot** — v1.0.1
 
-### Still to do (v1.6+ / v2)
-- [ ] **Query Builder visuel** (drag tables → generate SQL) — v1.6
-- [ ] **Data Compare** non-PK diff via `CHECKSUM`, chunking — v1.6
-- [ ] **IntelliSense advanced**: CTE / alias resolution, function signatures, snippet marketplace — v1.6
-- [ ] **Profiler graphical plan** (draw op boxes with arrows, not just tree) — v1.6
-- [ ] **Schema snapshot** and compare against snapshot — v1.6
-- [ ] **Per-tab DB selector** (currently shared with side pane) — v1.6
-- [ ] **Monitoring** real-time DMV polling + charts — v1.7
-- [ ] **Import CSV/Excel/JSON** with auto type detection — v1.7
-- [ ] **Master-detail** data explorer (follow FK relations) — v1.7
-- [ ] **Reports & pivots** (beyond raw export) — v1.7
-- [ ] **Git source control** integration (save/load .sql from repo) — v1.7
-- [ ] **Automated screenshots** (FlaUI) for release README — v1.8
-- [ ] **Code signing** (Azure Trusted Signing) — v1.8
-- [ ] **MSIX + winget** — v1.8 (requires signing)
-- [ ] **Auto-update** (Velopack) — v1.8 (requires signing)
-- [ ] **LocalDB integration tests** — v1.8
-- [ ] **AI assistant** inline panel (BYO-key OpenAI/Anthropic/Ollama) — v2 (partial workaround: Terminal embeds `claude` CLI today)
+### Shipped in v1.6 / v1.7 / v1.8
+- [x] **AI assistant** inline panel (BYO-key Anthropic / OpenAI / Azure / Ollama) — v1.6
+- [x] **Query Builder** (visual table + column picker with WHERE / ORDER BY / TOP / DISTINCT) — v1.7
+- [x] **Data Compare** `CHECKSUM` mode for tables without PK — v1.7
+- [x] **Schema snapshot** and offline compare against snapshot — v1.7
+- [x] **Monitoring** real-time DMV polling (sessions / requests / buffer cache hit % / PLE) + top waits — v1.7
+- [x] **Import CSV** with auto type detection and bulk insert — v1.7
+- [x] **Git source control** integration (repo picker, .sql list, commit / pull / push, log) — v1.7
+- [x] **MSIX manifest** scaffold — v1.8
+- [x] **winget manifests** ready for submission — v1.8
+- [x] **Code signing** workflow step (Azure Trusted Signing, gated on secret) — v1.8
+- [x] **LocalDB integration tests** — v1.8
+
+### Still to do (v1.9+ / v2)
+- [ ] **IntelliSense advanced**: CTE / alias resolution, function signatures, snippet marketplace
+- [ ] **Profiler graphical plan** (draw op boxes with arrows, not just tree)
+- [ ] **Per-tab DB selector** (currently shared with side pane)
+- [ ] **Master-detail** data explorer (follow FK relations)
+- [ ] **Reports & pivots** (beyond raw export)
+- [ ] **Auto-update** (Velopack) — requires signed releases
+- [ ] **Automated screenshots** (FlaUI) for release README
 - [ ] **Debugger step-into SPs** via full instrumentation — v2
 
 Detailed implementation plans: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md).
