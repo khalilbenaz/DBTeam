@@ -15,7 +15,7 @@
     <sys:String x:Key="Menu.About">À _propos de DB TEAM</sys:String>
     <sys:String x:Key="Menu.Shortcuts">_Raccourcis clavier</sys:String>
     <sys:String x:Key="About.Title">À propos de DB TEAM</sys:String>
-    <sys:String x:Key="About.Version">Version 2.1.0</sys:String>
+    <sys:String x:Key="About.Version">Version 2.1.1</sys:String>
     <sys:String x:Key="About.Description">IDE SQL Server professionnel développé en WPF.</sys:String>
     <sys:String x:Key="About.Close">Fermer</sys:String>
     <sys:String x:Key="About.Author">Auteur · Khalil Benazzouz</sys:String>

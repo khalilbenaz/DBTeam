@@ -4,6 +4,15 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [2.1.1] — 2026-04-18 — Release CI fix + dock pane live-switch
+
+### Fixed
+- **Release workflow** — `scripts/publish.ps1` was running `dotnet restore` without the target RID, which caused `dotnet publish --no-restore -r win-x64` to fail with `NETSDK1047: Assets file doesn't have a target for net8.0-windows/win-x64`. The GitHub Release for v2.0.0 and v2.1.0 never produced a binary. Restore is now scoped to the app project with `-r win-x64`.
+
+### Changed
+- **AvalonDock titles live-switch**: the four permanent panes (Connections, Object Explorer, History, Welcome) now retranslate on `LanguageChanged` just like on-demand tool tabs. WPF's DynamicResource does not propagate `ResourceDictionary` swaps to `LayoutContent` nodes (they are not in the visual tree), so they are now registered in the `LocalizedDockDocument` map from `MainWindow`'s constructor.
+- Version bumped to **2.1.1**.
+
 ## [2.1.0] — 2026-04-18 — Conditional breakpoints + full i18n polish
 
 ### Added — Conditional breakpoints

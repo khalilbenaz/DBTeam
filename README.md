@@ -1,6 +1,6 @@
 # DB TEAM
 
-> Professional SQL Server IDE built with WPF · **v2.1.0**
+> Professional SQL Server IDE built with WPF · **v2.1.1**
 
 [![.NET](https://img.shields.io/badge/.NET-8-blueviolet)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows-blue)](https://github.com/khalilbenaz/DBTeam/releases)
@@ -14,7 +14,7 @@
 
 Connection management · Object Explorer · T-SQL editor with autocomplete + format · Schema Compare with column-level ALTER · Data Compare · Table Designer (create + edit) · Query Profiler with plan tree · Data Generator · HTML Documenter · Interactive ER Diagram · Query History & favorites · Session restore.
 
-**📥 Download installer**: [DBTeam-Setup-2.1.0.exe](https://github.com/khalilbenaz/DBTeam/releases/latest) or [portable ZIP](https://github.com/khalilbenaz/DBTeam/releases/latest)
+**📥 Download installer**: [DBTeam-Setup-2.1.1.exe](https://github.com/khalilbenaz/DBTeam/releases/latest) or [portable ZIP](https://github.com/khalilbenaz/DBTeam/releases/latest)
 **🌐 Website**: <https://khalilbenaz.github.io/DBTeam/>
 **📚 Docs**: [Install](docs/INSTALL.md) · [User guide](docs/USER-GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Modules](docs/MODULES.md) · [Changelog](CHANGELOG.md)
 

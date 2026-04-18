@@ -15,7 +15,7 @@
     <sys:String x:Key="Menu.About">_About DB TEAM</sys:String>
     <sys:String x:Key="Menu.Shortcuts">Keyboard _Shortcuts</sys:String>
     <sys:String x:Key="About.Title">About DB TEAM</sys:String>
-    <sys:String x:Key="About.Version">Version 2.1.0</sys:String>
+    <sys:String x:Key="About.Version">Version 2.1.1</sys:String>
     <sys:String x:Key="About.Description">Professional SQL Server IDE built with WPF.</sys:String>
     <sys:String x:Key="About.Close">Close</sys:String>
     <sys:String x:Key="About.Author">Author · Khalil Benazzouz</sys:String>
