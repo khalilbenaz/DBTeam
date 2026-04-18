@@ -112,6 +112,96 @@
     <sys:String x:Key="Tab.Debugger">T-SQL Debugger</sys:String>
     <sys:String x:Key="Tab.Diagram">Database Diagram</sys:String>
 
+    <sys:String x:Key="Qb.Title">Query Builder</sys:String>
+    <sys:String x:Key="Qb.Subtitle">Pick tables + columns · add WHERE / ORDER BY · generate SELECT</sys:String>
+    <sys:String x:Key="Qb.Connection">Connection</sys:String>
+    <sys:String x:Key="Qb.Database">Database</sys:String>
+    <sys:String x:Key="Qb.Build">Build</sys:String>
+    <sys:String x:Key="Qb.OpenInEditor">Open in Editor</sys:String>
+    <sys:String x:Key="Qb.Distinct">DISTINCT</sys:String>
+    <sys:String x:Key="Qb.Where">WHERE</sys:String>
+    <sys:String x:Key="Qb.OrderBy">ORDER BY</sys:String>
+    <sys:String x:Key="Qb.GeneratedSql">Generated SQL</sys:String>
+
+    <sys:String x:Key="Imp.Title">Import CSV</sys:String>
+    <sys:String x:Key="Imp.Subtitle">Pick a file · preview + auto type inference · bulk insert</sys:String>
+    <sys:String x:Key="Imp.Connection">Connection</sys:String>
+    <sys:String x:Key="Imp.Database">Database</sys:String>
+    <sys:String x:Key="Imp.Schema">Schema</sys:String>
+    <sys:String x:Key="Imp.Table">Table</sys:String>
+    <sys:String x:Key="Imp.PickFile">Pick file</sys:String>
+    <sys:String x:Key="Imp.Browse">Browse</sys:String>
+    <sys:String x:Key="Imp.HasHeader">Has header</sys:String>
+    <sys:String x:Key="Imp.Delimiter">Delimiter:</sys:String>
+    <sys:String x:Key="Imp.ReloadPreview">Reload preview</sys:String>
+    <sys:String x:Key="Imp.GenerateCreate">Generate CREATE TABLE script</sys:String>
+    <sys:String x:Key="Imp.Import">Import</sys:String>
+    <sys:String x:Key="Imp.Preview">Preview</sys:String>
+
+    <sys:String x:Key="Prof.FormatSql">Format SQL</sys:String>
+    <sys:String x:Key="Prof.Graph">Graph</sys:String>
+    <sys:String x:Key="Prof.PlanTree">Plan tree</sys:String>
+    <sys:String x:Key="Prof.Col.Operator">Operator</sys:String>
+    <sys:String x:Key="Prof.Col.Cost">Cost</sys:String>
+    <sys:String x:Key="Prof.Col.ActualRows">Actual rows</sys:String>
+    <sys:String x:Key="Prof.Col.LogicalReads">Logical reads</sys:String>
+
+    <sys:String x:Key="Sc.Col.Kind">Kind</sys:String>
+    <sys:String x:Key="Sc.Col.Object">Object</sys:String>
+    <sys:String x:Key="Sc.Col.State">State</sys:String>
+
+    <sys:String x:Key="Git.RepoPath">Repository path</sys:String>
+    <sys:String x:Key="Git.Browse">Browse</sys:String>
+    <sys:String x:Key="Git.Refresh">Refresh</sys:String>
+    <sys:String x:Key="Git.Pull">Pull</sys:String>
+    <sys:String x:Key="Git.Push">Push</sys:String>
+    <sys:String x:Key="Git.SqlFiles">SQL files</sys:String>
+    <sys:String x:Key="Git.CommitMessage">Commit message</sys:String>
+    <sys:String x:Key="Git.Commit">Commit</sys:String>
+
+    <sys:String x:Key="Term.StartShell">Start shell</sys:String>
+    <sys:String x:Key="Term.SendEnter">Send (Enter)</sys:String>
+
+    <sys:String x:Key="Dg.ZoomOut">Zoom out</sys:String>
+    <sys:String x:Key="Dg.ZoomReset">Reset zoom</sys:String>
+    <sys:String x:Key="Dg.ZoomIn">Zoom in</sys:String>
+    <sys:String x:Key="Dg.ExportPng">Export as PNG</sys:String>
+    <sys:String x:Key="Dg.Hint">Ctrl+Wheel to zoom · Drag boxes to rearrange</sys:String>
+
+    <sys:String x:Key="Cn.Reload">Reload</sys:String>
+    <sys:String x:Key="Cn.Connect">Connect</sys:String>
+    <sys:String x:Key="Cn.Delete">Delete</sys:String>
+    <sys:String x:Key="Cn.TestConnection">Test connection</sys:String>
+    <sys:String x:Key="Cn.LoadDatabases">Load databases</sys:String>
+
+    <sys:String x:Key="Qe.EstimatedPlan">Estimated Execution Plan</sys:String>
+    <sys:String x:Key="Qe.FormatSql">Format SQL (Ctrl+K)</sys:String>
+    <sys:String x:Key="Qe.Pivot">Generate PIVOT skeleton from results</sys:String>
+    <sys:String x:Key="Qe.ExportResults">Export results</sys:String>
+    <sys:String x:Key="Qe.ExportCsv">Export to CSV</sys:String>
+    <sys:String x:Key="Qe.ExportExcel">Export to Excel</sys:String>
+    <sys:String x:Key="Qe.ExportJson">Export to JSON</sys:String>
+    <sys:String x:Key="Qe.ExportXml">Export to XML</sys:String>
+    <sys:String x:Key="Qe.DbContext">Database context for this tab</sys:String>
+    <sys:String x:Key="Qe.RefreshDb">Refresh database list</sys:String>
+
+    <sys:String x:Key="Dbg.AttachTip">Parse script + open connection</sys:String>
+    <sys:String x:Key="Dbg.ContinueTip">Continue until next breakpoint or end</sys:String>
+
+    <sys:String x:Key="Td.LoadExisting">Load existing table</sys:String>
+    <sys:String x:Key="Td.Load">Load</sys:String>
+
+    <sys:String x:Key="Err.Title">Unexpected error</sys:String>
+    <sys:String x:Key="Err.Message">Something went wrong</sys:String>
+    <sys:String x:Key="Err.Copy">Copy</sys:String>
+    <sys:String x:Key="Err.CopyTip">Copy details to clipboard</sys:String>
+    <sys:String x:Key="Err.OpenLogs">Open logs</sys:String>
+    <sys:String x:Key="Err.OpenLogsTip">Open logs folder</sys:String>
+    <sys:String x:Key="Err.Report">Report</sys:String>
+    <sys:String x:Key="Err.ReportTip">Report an issue on GitHub</sys:String>
+    <sys:String x:Key="Err.Close">Close</sys:String>
+    <sys:String x:Key="Err.Details">Details</sys:String>
+
     <sys:String x:Key="Ctx.NewQueryHere">New Query Here</sys:String>
     <sys:String x:Key="Ctx.ScriptObject">Script Object</sys:String>
     <sys:String x:Key="Ctx.Disconnect">Disconnect</sys:String>

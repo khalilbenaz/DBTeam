@@ -29,7 +29,7 @@
                     <TextBox Text="{Binding WorkingDirectory, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
-                    <Button Command="{Binding StartCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0" ToolTip="Start shell">
+                    <Button Command="{Binding StartCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0" ToolTip="{DynamicResource Term.StartShell}">
                         <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Play" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Terminal.Start}"/></StackPanel>
                     </Button>
                     <Button Command="{Binding StopCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Terminal.Stop}" IsEnabled="{Binding IsRunning}">
@@ -72,7 +72,7 @@
                     <TextBlock Grid.Column="0" Text="&gt;" FontFamily="Consolas" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource Brand.Success}"/>
                     <TextBox Grid.Column="1" x:Name="InputBox" Text="{Binding CurrentInput, UpdateSourceTrigger=PropertyChanged}"
                              FontFamily="Cascadia Code, Consolas" KeyDown="InputBox_KeyDown"/>
-                    <Button Grid.Column="2" Command="{Binding SendCommand}" Style="{StaticResource PrimaryButton}" Margin="6,0,0,0" ToolTip="Send (Enter)">
+                    <Button Grid.Column="2" Command="{Binding SendCommand}" Style="{StaticResource PrimaryButton}" Margin="6,0,0,0" ToolTip="{DynamicResource Term.SendEnter}">
                         <md:PackIcon Kind="Send"/>
                     </Button>
                 </Grid>

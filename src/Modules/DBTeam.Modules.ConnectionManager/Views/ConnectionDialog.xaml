@@ -25,7 +25,7 @@
             <DockPanel>
                 <md:PackIcon DockPanel.Dock="Left" Kind="InformationOutline" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource Brand.Muted}"/>
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Margin="4,0" Command="{Binding TestCommand}" ToolTip="Test connection" Padding="14,8">
+                    <Button Margin="4,0" Command="{Binding TestCommand}" ToolTip="{DynamicResource Cn.TestConnection}" Padding="14,8">
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="CheckNetwork" Margin="0,0,6,0"/>
                             <TextBlock Text="{DynamicResource Btn.Test}"/>
@@ -61,7 +61,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <ComboBox Grid.Column="0" IsEditable="True" ItemsSource="{Binding Databases}" Text="{Binding Model.Database, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Button Grid.Column="1" Margin="8,0,0,0" Command="{Binding LoadDatabasesCommand}" ToolTip="Load databases" Style="{StaticResource IconButton}">
+                            <Button Grid.Column="1" Margin="8,0,0,0" Command="{Binding LoadDatabasesCommand}" ToolTip="{DynamicResource Cn.LoadDatabases}" Style="{StaticResource IconButton}">
                                 <md:PackIcon Kind="Refresh" Width="18" Height="18"/>
                             </Button>
                         </Grid>

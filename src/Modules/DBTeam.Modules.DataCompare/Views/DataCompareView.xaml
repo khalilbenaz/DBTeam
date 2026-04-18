@@ -100,7 +100,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Key" Binding="{Binding KeyDisplay}" Width="*"/>
-                        <DataGridTextColumn Header="State" Binding="{Binding State}" Width="140"/>
+                        <DataGridTextColumn Header="{DynamicResource Sc.Col.State}" Binding="{Binding State}" Width="140"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>

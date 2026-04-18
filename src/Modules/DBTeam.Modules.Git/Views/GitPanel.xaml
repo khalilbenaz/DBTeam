@@ -7,8 +7,8 @@
             <StackPanel Orientation="Horizontal">
                 <md:PackIcon Kind="Git" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="Git" Style="{StaticResource H1}"/>
-                    <TextBlock Text="Version your .sql scripts directly from DB TEAM" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Tab.Git}" Style="{StaticResource H1}"/>
+                    <TextBlock Text="{DynamicResource Git.SqlFiles}" Style="{StaticResource Caption}"/>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -20,20 +20,20 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                    <TextBlock Text="Repository path" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Git.RepoPath}" Style="{StaticResource FieldLabel}"/>
                     <TextBox Text="{Binding RepoPath, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
-                    <Button Command="{Binding PickFolderCommand}" Style="{StaticResource IconButton}" ToolTip="Browse">
+                    <Button Command="{Binding PickFolderCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Git.Browse}">
                         <md:PackIcon Kind="FolderOpen"/>
                     </Button>
-                    <Button Command="{Binding RefreshCommand}" Style="{StaticResource IconButton}" ToolTip="Refresh">
+                    <Button Command="{Binding RefreshCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Git.Refresh}">
                         <md:PackIcon Kind="Refresh"/>
                     </Button>
-                    <Button Command="{Binding PullCommand}" Style="{StaticResource IconButton}" ToolTip="Pull">
+                    <Button Command="{Binding PullCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Git.Pull}">
                         <md:PackIcon Kind="SourcePull"/>
                     </Button>
-                    <Button Command="{Binding PushCommand}" Style="{StaticResource IconButton}" ToolTip="Push">
+                    <Button Command="{Binding PushCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Git.Push}">
                         <md:PackIcon Kind="SourceCommit"/>
                     </Button>
                 </StackPanel>
@@ -56,7 +56,7 @@
 
             <Border Grid.Column="0" Style="{StaticResource Card}" Padding="0">
                 <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="SQL files" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                    <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Git.SqlFiles}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                     <ListBox ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}">
                         <ListBox.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenFileCommand}" CommandParameter="{Binding SelectedFile}"/>
@@ -80,10 +80,10 @@
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" Style="{StaticResource Card}">
                     <StackPanel>
-                        <TextBlock Text="Commit message" Style="{StaticResource FieldLabel}"/>
+                        <TextBlock Text="{DynamicResource Git.CommitMessage}" Style="{StaticResource FieldLabel}"/>
                         <TextBox Text="{Binding CommitMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,6"/>
                         <Button Command="{Binding CommitCommand}" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Right">
-                            <StackPanel Orientation="Horizontal"><md:PackIcon Kind="SourceCommit" Margin="0,0,6,0"/><TextBlock Text="Commit"/></StackPanel>
+                            <StackPanel Orientation="Horizontal"><md:PackIcon Kind="SourceCommit" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Git.Commit}"/></StackPanel>
                         </Button>
                     </StackPanel>
                 </Border>

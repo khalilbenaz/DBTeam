@@ -39,10 +39,10 @@
                     <TextBox Text="{Binding TableName, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="8,0,0,0">
-                    <Button Command="{Binding LoadExistingCommand}" Style="{StaticResource IconButton}" ToolTip="Load existing table" Margin="0,0,6,0">
+                    <Button Command="{Binding LoadExistingCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Td.LoadExisting}" Margin="0,0,6,0">
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="Download" Margin="0,0,6,0"/>
-                            <TextBlock Text="Load"/>
+                            <TextBlock Text="{DynamicResource Td.Load}"/>
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding GenerateDdlCommand}" Style="{StaticResource PrimaryButton}">

@@ -6,44 +6,44 @@
     <DockPanel>
         <Border DockPanel.Dock="Top" Padding="8,6" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}">
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding ExecuteCommand}" Style="{StaticResource SuccessButton}" ToolTip="Execute (F5)" Margin="0,0,6,0">
+                <Button Command="{Binding ExecuteCommand}" Style="{StaticResource SuccessButton}" ToolTip="{DynamicResource Tip.Execute}" Margin="0,0,6,0">
                     <StackPanel Orientation="Horizontal">
                         <md:PackIcon Kind="Play" Width="16" Height="16" Margin="0,0,6,0"/>
                         <TextBlock Text="{DynamicResource Btn.Execute}"/>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding EstimatedPlanCommand}" Style="{StaticResource IconButton}" ToolTip="Estimated Execution Plan">
+                <Button Command="{Binding EstimatedPlanCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Qe.EstimatedPlan}">
                     <md:PackIcon Kind="SitemapOutline" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding FormatSqlCommand}" Style="{StaticResource IconButton}" ToolTip="Format SQL (Ctrl+K)">
+                <Button Command="{Binding FormatSqlCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Qe.FormatSql}">
                     <md:PackIcon Kind="FormatAlignLeft" Width="20" Height="20"/>
                 </Button>
-                <Button Command="{Binding GeneratePivotCommand}" Style="{StaticResource IconButton}" ToolTip="Generate PIVOT skeleton from results">
+                <Button Command="{Binding GeneratePivotCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Qe.Pivot}">
                     <md:PackIcon Kind="TableHeadersEye" Width="20" Height="20"/>
                 </Button>
                 <Menu Background="Transparent" Margin="0">
-                    <MenuItem ToolTip="Export results">
+                    <MenuItem ToolTip="{DynamicResource Qe.ExportResults}">
                         <MenuItem.Header>
                             <md:PackIcon Kind="FileExport" Width="20" Height="20"/>
                         </MenuItem.Header>
-                        <MenuItem Header="Export to CSV" Command="{Binding ExportCommand}" CommandParameter="Csv">
+                        <MenuItem Header="{DynamicResource Qe.ExportCsv}" Command="{Binding ExportCommand}" CommandParameter="Csv">
                             <MenuItem.Icon><md:PackIcon Kind="FileDelimited"/></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Export to Excel" Command="{Binding ExportCommand}" CommandParameter="Excel">
+                        <MenuItem Header="{DynamicResource Qe.ExportExcel}" Command="{Binding ExportCommand}" CommandParameter="Excel">
                             <MenuItem.Icon><md:PackIcon Kind="MicrosoftExcel" Foreground="#217346"/></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Export to JSON" Command="{Binding ExportCommand}" CommandParameter="Json">
+                        <MenuItem Header="{DynamicResource Qe.ExportJson}" Command="{Binding ExportCommand}" CommandParameter="Json">
                             <MenuItem.Icon><md:PackIcon Kind="CodeJson"/></MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Export to XML" Command="{Binding ExportCommand}" CommandParameter="Xml">
+                        <MenuItem Header="{DynamicResource Qe.ExportXml}" Command="{Binding ExportCommand}" CommandParameter="Xml">
                             <MenuItem.Icon><md:PackIcon Kind="CodeBraces"/></MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
                 </Menu>
                 <Border Width="1" Background="{DynamicResource SystemControlForegroundBaseLowBrush}" Margin="8,4"/>
                 <md:PackIcon Kind="Database" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.6"/>
-                <ComboBox Width="200" Margin="0,0,4,0" ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" ToolTip="Database context for this tab (per-tab)"/>
-                <Button Command="{Binding RefreshDatabasesCommand}" Style="{StaticResource IconButton}" ToolTip="Refresh database list" Margin="0,0,12,0">
+                <ComboBox Width="200" Margin="0,0,4,0" ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" ToolTip="{DynamicResource Qe.DbContext}"/>
+                <Button Command="{Binding RefreshDatabasesCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Qe.RefreshDb}" Margin="0,0,12,0">
                     <md:PackIcon Kind="Refresh" Width="14" Height="14"/>
                 </Button>
                 <Border Style="{StaticResource Pill}" Background="{StaticResource Brand.Info}">

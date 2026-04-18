@@ -36,7 +36,7 @@
                             <TextBlock Text="{DynamicResource Profiler.Estimated}"/>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding FormatSqlCommand}" Style="{StaticResource IconButton}" ToolTip="Format SQL" Margin="0,0,8,0">
+                    <Button Command="{Binding FormatSqlCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Prof.FormatSql}" Margin="0,0,8,0">
                         <md:PackIcon Kind="FormatAlignLeft" Width="20" Height="20"/>
                     </Button>
                     <Button Command="{Binding ActualCommand}" Style="{StaticResource SuccessButton}">
@@ -75,7 +75,7 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="GraphOutline" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                            <TextBlock Text="Graph"/>
+                            <TextBlock Text="{DynamicResource Prof.Graph}"/>
                         </StackPanel>
                     </TabItem.Header>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
@@ -118,7 +118,7 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="FileTree" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                            <TextBlock Text="Plan tree"/>
+                            <TextBlock Text="{DynamicResource Prof.PlanTree}"/>
                         </StackPanel>
                     </TabItem.Header>
                     <TreeView ItemsSource="{Binding RootTree}">
@@ -147,11 +147,11 @@
                     <DataGrid ItemsSource="{Binding Operators}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Node}" Width="50"/>
-                            <DataGridTextColumn Header="Operator" Binding="{Binding Name}" Width="*"/>
-                            <DataGridTextColumn Header="Cost" Binding="{Binding EstimatedCost, StringFormat=F4}" Width="100"/>
+                            <DataGridTextColumn Header="{DynamicResource Prof.Col.Operator}" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="{DynamicResource Prof.Col.Cost}" Binding="{Binding EstimatedCost, StringFormat=F4}" Width="100"/>
                             <DataGridTextColumn Header="Est. rows" Binding="{Binding EstimatedRows, StringFormat=F0}" Width="100"/>
-                            <DataGridTextColumn Header="Actual rows" Binding="{Binding ActualRows, StringFormat=F0}" Width="110"/>
-                            <DataGridTextColumn Header="Logical reads" Binding="{Binding LogicalReads, StringFormat=F0}" Width="110"/>
+                            <DataGridTextColumn Header="{DynamicResource Prof.Col.ActualRows}" Binding="{Binding ActualRows, StringFormat=F0}" Width="110"/>
+                            <DataGridTextColumn Header="{DynamicResource Prof.Col.LogicalReads}" Binding="{Binding LogicalReads, StringFormat=F0}" Width="110"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

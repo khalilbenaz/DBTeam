@@ -6,13 +6,13 @@
         <Border DockPanel.Dock="Top" Style="{StaticResource SectionHeader}">
             <DockPanel>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                    <Button Style="{StaticResource IconButton}" Command="{Binding ReloadCommand}" ToolTip="Reload">
+                    <Button Style="{StaticResource IconButton}" Command="{Binding ReloadCommand}" ToolTip="{DynamicResource Cn.Reload}">
                         <md:PackIcon Kind="Refresh" Width="18" Height="18"/>
                     </Button>
-                    <Button Style="{StaticResource IconButton}" Command="{Binding ConnectCommand}" CommandParameter="{Binding Selected}" ToolTip="Connect">
+                    <Button Style="{StaticResource IconButton}" Command="{Binding ConnectCommand}" CommandParameter="{Binding Selected}" ToolTip="{DynamicResource Cn.Connect}">
                         <md:PackIcon Kind="LanConnect" Width="18" Height="18" Foreground="{StaticResource Brand.Success}"/>
                     </Button>
-                    <Button Style="{StaticResource IconButton}" Command="{Binding DeleteCommand}" CommandParameter="{Binding Selected}" ToolTip="Delete">
+                    <Button Style="{StaticResource IconButton}" Command="{Binding DeleteCommand}" CommandParameter="{Binding Selected}" ToolTip="{DynamicResource Cn.Delete}">
                         <md:PackIcon Kind="Delete" Width="18" Height="18" Foreground="{StaticResource Brand.Danger}"/>
                     </Button>
                 </StackPanel>

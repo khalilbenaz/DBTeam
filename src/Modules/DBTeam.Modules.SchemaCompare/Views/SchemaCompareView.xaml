@@ -102,9 +102,9 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Kind" Binding="{Binding KindLabel}" Width="120"/>
-                            <DataGridTextColumn Header="Object" Binding="{Binding QualifiedName}" Width="*"/>
-                            <DataGridTextColumn Header="State" Binding="{Binding State}" Width="120"/>
+                            <DataGridTextColumn Header="{DynamicResource Sc.Col.Kind}" Binding="{Binding KindLabel}" Width="120"/>
+                            <DataGridTextColumn Header="{DynamicResource Sc.Col.Object}" Binding="{Binding QualifiedName}" Width="*"/>
+                            <DataGridTextColumn Header="{DynamicResource Sc.Col.State}" Binding="{Binding State}" Width="120"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

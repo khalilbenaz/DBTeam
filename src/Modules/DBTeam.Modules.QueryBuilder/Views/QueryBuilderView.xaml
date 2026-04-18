@@ -8,8 +8,8 @@
             <StackPanel Orientation="Horizontal">
                 <md:PackIcon Kind="TableLarge" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="Query Builder" Style="{StaticResource H1}"/>
-                    <TextBlock Text="Pick tables + columns · add WHERE / ORDER BY · generate SELECT" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Qb.Title}" Style="{StaticResource H1}"/>
+                    <TextBlock Text="{DynamicResource Qb.Subtitle}" Style="{StaticResource Caption}"/>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -22,19 +22,19 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                    <TextBlock Text="Connection" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Qb.Connection}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Connections}" DisplayMemberPath="Name" SelectedItem="{Binding Connection}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="0,0,8,0">
-                    <TextBlock Text="Database" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Qb.Database}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" IsEditable="True"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <Button Command="{Binding BuildCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0">
-                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Wrench" Margin="0,0,6,0"/><TextBlock Text="Build"/></StackPanel>
+                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Wrench" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Qb.Build}"/></StackPanel>
                     </Button>
                     <Button Command="{Binding OpenInEditorCommand}" Style="{StaticResource SuccessButton}">
-                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="OpenInNew" Margin="0,0,6,0"/><TextBlock Text="Open in Editor"/></StackPanel>
+                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="OpenInNew" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Qb.OpenInEditor}"/></StackPanel>
                     </Button>
                 </StackPanel>
             </Grid>
@@ -91,19 +91,19 @@
                 <Border Grid.Row="0" Style="{StaticResource Card}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                            <CheckBox Content="DISTINCT" IsChecked="{Binding Distinct}" Margin="0,0,12,0"/>
+                            <CheckBox Content="{DynamicResource Qb.Distinct}" IsChecked="{Binding Distinct}" Margin="0,0,12,0"/>
                             <TextBlock Text="TOP" VerticalAlignment="Center" Margin="0,0,4,0"/>
                             <TextBox Text="{Binding TopN, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" Width="60"/>
                         </StackPanel>
-                        <TextBlock Text="WHERE" Style="{StaticResource FieldLabel}"/>
+                        <TextBlock Text="{DynamicResource Qb.Where}" Style="{StaticResource FieldLabel}"/>
                         <TextBox Text="{Binding WhereClause, UpdateSourceTrigger=PropertyChanged}" FontFamily="Consolas" Margin="0,0,0,6"/>
-                        <TextBlock Text="ORDER BY" Style="{StaticResource FieldLabel}"/>
+                        <TextBlock Text="{DynamicResource Qb.OrderBy}" Style="{StaticResource FieldLabel}"/>
                         <TextBox Text="{Binding OrderBy, UpdateSourceTrigger=PropertyChanged}" FontFamily="Consolas"/>
                     </StackPanel>
                 </Border>
                 <Border Grid.Row="1" Style="{StaticResource Card}" Padding="0" Margin="0,8,0,0">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Text="Generated SQL" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Qb.GeneratedSql}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                         <TextBox Text="{Binding GeneratedSql, Mode=OneWay}" IsReadOnly="True" FontFamily="Consolas" BorderThickness="0"
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                  AcceptsReturn="True" TextWrapping="NoWrap"/>
