@@ -4,6 +4,20 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.4.0] — 2026-04-18
+
+### Added
+- **T-SQL Debugger — fully functional** (E13): the placeholder view is replaced by a real debugger.
+  - **Statement-level stepping** — the script is parsed with ScriptDom into individual statements (`TSqlStatementInfo`) and executed one by one on a persistent `SqlConnection` so `DECLARE`, `SET`, transaction state, temp tables survive between steps.
+  - **Breakpoints** — double-click a statement in the Steps list to toggle a breakpoint on its start line. Continue pauses before any step whose start line is flagged.
+  - **Controls** — Attach / Step Over / Continue / Stop / Restart / Detach.
+  - **Output** — per-step Results grid with streaming result sets, Messages tab with per-step timing (ms) + rows affected + `PRINT`/`RAISERROR` messages.
+  - **Session state panel** — live `@@ROWCOUNT`, `@@ERROR`, `@@TRANCOUNT`, `@@SPID`, current DB, login.
+  - **Parse errors** surfaced in Messages without aborting the UI.
+
+### Changed
+- `DBTeam.Modules.Debugger` gained runtime dependencies: `Microsoft.SqlServer.TransactSql.ScriptDom`, `Microsoft.Data.SqlClient`, `AvalonEdit`.
+
 ## [1.3.0] — 2026-04-18
 
 ### Added

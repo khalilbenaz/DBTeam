@@ -1,3 +1,4 @@
+using DBTeam.Modules.Debugger.ViewModels;
 using DBTeam.Modules.Debugger.Views;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,6 +8,7 @@ public static class ModuleRegistration
 {
     public static void Register(IServiceCollection s)
     {
+        s.AddTransient<DebuggerViewModel>();
         s.AddTransient<DebuggerView>();
     }
 }
