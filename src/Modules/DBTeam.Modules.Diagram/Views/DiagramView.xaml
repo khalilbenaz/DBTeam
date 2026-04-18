@@ -20,6 +20,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
                     <TextBlock Text="{DynamicResource Designer.Connection}" Style="{StaticResource FieldLabel}"/>
@@ -29,7 +30,21 @@
                     <TextBlock Text="{DynamicResource Designer.Database}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" IsEditable="True"/>
                 </StackPanel>
-                <StackPanel Grid.Column="2" VerticalAlignment="Bottom">
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,8,0">
+                    <Button Style="{StaticResource IconButton}" Click="ZoomOut_Click" ToolTip="Zoom out">
+                        <md:PackIcon Kind="MagnifyMinus"/>
+                    </Button>
+                    <Button Style="{StaticResource IconButton}" Click="ZoomReset_Click" ToolTip="Reset zoom">
+                        <md:PackIcon Kind="MagnifyExpand"/>
+                    </Button>
+                    <Button Style="{StaticResource IconButton}" Click="ZoomIn_Click" ToolTip="Zoom in">
+                        <md:PackIcon Kind="MagnifyPlus"/>
+                    </Button>
+                    <Button Style="{StaticResource IconButton}" Click="ExportPng_Click" ToolTip="Export as PNG">
+                        <md:PackIcon Kind="FileImage"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Column="3" VerticalAlignment="Bottom">
                     <Button Command="{Binding LoadDiagramCommand}" Style="{StaticResource PrimaryButton}">
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="Refresh" Margin="0,0,6,0"/>
@@ -43,10 +58,17 @@
         <StatusBar DockPanel.Dock="Bottom">
             <md:PackIcon Kind="InformationOutline" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.6"/>
             <StatusBarItem><TextBlock Text="{Binding Status}"/></StatusBarItem>
+            <Separator/>
+            <StatusBarItem><TextBlock Text="Ctrl+Wheel to zoom · Drag boxes to rearrange" Opacity="0.6" FontSize="11"/></StatusBarItem>
         </StatusBar>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
-            <Grid Width="3000" Height="3000">
+        <ScrollViewer x:Name="Surface" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                      Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                      PreviewMouseWheel="Surface_MouseWheel">
+            <Grid x:Name="CanvasRoot" Width="3000" Height="3000" Background="Transparent">
+                <Grid.LayoutTransform>
+                    <ScaleTransform x:Name="ZoomTransform" ScaleX="1" ScaleY="1"/>
+                </Grid.LayoutTransform>
                 <ItemsControl x:Name="LinesControl" ItemsSource="{Binding Lines}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -56,10 +78,10 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Line Stroke="#90A4AE" StrokeThickness="1.5">
-                                <Line.X1><Binding Path="From.X"/></Line.X1>
-                                <Line.Y1><Binding Path="From.Y"/></Line.Y1>
-                                <Line.X2><Binding Path="To.X"/></Line.X2>
-                                <Line.Y2><Binding Path="To.Y"/></Line.Y2>
+                                <Line.X1><Binding Path="From.X" Converter="{StaticResource OffsetConverter}" ConverterParameter="110"/></Line.X1>
+                                <Line.Y1><Binding Path="From.Y" Converter="{StaticResource OffsetConverter}" ConverterParameter="40"/></Line.Y1>
+                                <Line.X2><Binding Path="To.X" Converter="{StaticResource OffsetConverter}" ConverterParameter="110"/></Line.X2>
+                                <Line.Y2><Binding Path="To.Y" Converter="{StaticResource OffsetConverter}" ConverterParameter="40"/></Line.Y2>
                             </Line>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -79,7 +101,11 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:TableBoxViewModel}">
                             <Border Width="220" BorderBrush="#1565C0" BorderThickness="1" CornerRadius="6"
-                                    Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
+                                    Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                                    Cursor="SizeAll"
+                                    MouseLeftButtonDown="Box_MouseDown"
+                                    MouseLeftButtonUp="Box_MouseUp"
+                                    MouseMove="Box_MouseMove">
                                 <DockPanel>
                                     <Border DockPanel.Dock="Top" Background="#1E88E5" Padding="8,4" CornerRadius="6,6,0,0">
                                         <StackPanel Orientation="Horizontal">
@@ -102,4 +128,7 @@
             </Grid>
         </ScrollViewer>
     </DockPanel>
+    <UserControl.Resources>
+        <vm:OffsetConverter x:Key="OffsetConverter"/>
+    </UserControl.Resources>
 </UserControl>

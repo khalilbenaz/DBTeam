@@ -77,12 +77,42 @@ public partial class SchemaCompareViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void GenerateScript()
+    private async Task GenerateScriptAsync()
     {
-        if (Items.Count == 0 || TargetConnection is null) return;
-        var nonIdentical = Items.Where(i => i.State != DiffState.Identical);
-        var script = SchemaCompareEngine.GenerateSyncScript(nonIdentical);
-        _bus.Publish(new OpenQueryEditorRequest { Connection = TargetConnection, Database = TargetDatabase, InitialSql = script });
+        if (Items.Count == 0 || TargetConnection is null || SourceConnection is null
+            || string.IsNullOrEmpty(SourceDatabase) || string.IsNullOrEmpty(TargetDatabase)) return;
+        var sb = new System.Text.StringBuilder();
+        sb.AppendLine("-- Schema sync script (Source -> Target)");
+        sb.AppendLine("SET XACT_ABORT ON;");
+        sb.AppendLine("BEGIN TRAN;");
+        foreach (var item in Items.Where(i => i.State != DiffState.Identical))
+        {
+            sb.AppendLine($"-- {item.KindLabel}: {item.QualifiedName}  [{item.State}]");
+            switch (item.State)
+            {
+                case DiffState.OnlyInSource:
+                    if (!string.IsNullOrWhiteSpace(item.SourceScript))
+                    { sb.AppendLine(item.SourceScript); sb.AppendLine("GO"); }
+                    break;
+                case DiffState.OnlyInTarget:
+                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} [{item.Schema}].[{item.Name}];");
+                    sb.AppendLine("GO");
+                    break;
+                case DiffState.Different when item.Kind == DBTeam.Core.Models.DbObjectKind.Table:
+                    sb.AppendLine(await TableAlterGenerator.BuildAsync(
+                        _meta, SourceConnection!, SourceDatabase!, TargetConnection!, TargetDatabase!, item.Schema, item.Name));
+                    break;
+                case DiffState.Different:
+                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} [{item.Schema}].[{item.Name}];");
+                    sb.AppendLine("GO");
+                    if (!string.IsNullOrWhiteSpace(item.SourceScript))
+                    { sb.AppendLine(item.SourceScript); sb.AppendLine("GO"); }
+                    break;
+            }
+            sb.AppendLine();
+        }
+        sb.AppendLine("COMMIT;");
+        _bus.Publish(new OpenQueryEditorRequest { Connection = TargetConnection, Database = TargetDatabase, InitialSql = sb.ToString() });
         Status = "Script generated in new tab";
     }
 }

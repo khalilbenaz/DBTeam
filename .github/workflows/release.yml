@@ -19,12 +19,12 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.0.x
 
@@ -45,6 +45,14 @@ jobs:
         shell: pwsh
         run: ./scripts/publish.ps1 -Version ${{ steps.ver.outputs.version }} -Runtime win-x64
 
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup -y --no-progress
+
+      - name: Build installer
+        shell: pwsh
+        run: ./scripts/build-installer.ps1 -Version ${{ steps.ver.outputs.version }} -Runtime win-x64
+
       - name: List artifacts
         shell: pwsh
         run: Get-ChildItem dist -Recurse | Select-Object FullName, Length
@@ -57,17 +65,23 @@ jobs:
           body: |
             ## DB TEAM ${{ steps.ver.outputs.version }}
 
-            Self-contained Windows x64 build. Download the zip, extract, and run `DBTeam.App.exe`.
+            **Two download options:**
 
-            See [INSTALL.md](https://github.com/${{ github.repository }}/blob/main/docs/INSTALL.md) and [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+            - 🚀 **`DBTeam-Setup-${{ steps.ver.outputs.version }}.exe`** — installer (recommended). Double-click, installs to your profile, Start menu entry, clean uninstall via *Apps & features*.
+            - 📦 **`DBTeam-${{ steps.ver.outputs.version }}-win-x64.zip`** — portable ZIP. Extract, run `DBTeam.App.exe` from anywhere.
+
+            No .NET install required — self-contained. See [INSTALL.md](https://github.com/${{ github.repository }}/blob/main/docs/INSTALL.md) and [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md).
           files: |
             dist/DBTeam-${{ steps.ver.outputs.version }}-win-x64.zip
+            dist/DBTeam-Setup-${{ steps.ver.outputs.version }}.exe
           draft: false
           prerelease: false
 
       - name: Upload artifact (manual runs)
         if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: DBTeam-${{ steps.ver.outputs.version }}-win-x64
-          path: dist/DBTeam-${{ steps.ver.outputs.version }}-win-x64.zip
+          name: DBTeam-${{ steps.ver.outputs.version }}
+          path: |
+            dist/DBTeam-${{ steps.ver.outputs.version }}-win-x64.zip
+            dist/DBTeam-Setup-${{ steps.ver.outputs.version }}.exe
