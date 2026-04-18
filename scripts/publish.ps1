@@ -41,8 +41,8 @@ $appProj   = Join-Path $repo "src/DBTeam.App/DBTeam.App.csproj"
 if (Test-Path $output)  { Remove-Item $output  -Recurse -Force }
 if (Test-Path $archive) { Remove-Item $archive -Force }
 
-Write-Host "==> dotnet restore (with RID)" -ForegroundColor Cyan
-dotnet restore $appProj -r $Runtime --source https://api.nuget.org/v3/index.json
+Write-Host "==> dotnet restore (with RID + R2R)" -ForegroundColor Cyan
+dotnet restore $appProj -r $Runtime -p:IsPublishing=true --source https://api.nuget.org/v3/index.json
 if ($LASTEXITCODE -ne 0) { throw "restore failed" }
 
 Write-Host "==> dotnet publish" -ForegroundColor Cyan
