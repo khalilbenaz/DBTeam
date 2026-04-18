@@ -12,7 +12,7 @@ Overview of each feature module, its entry point, and current state.
 | DataCompare | `Database → Data Compare` | ✅ | PK-based row diff + merge script |
 | TableDesigner | `Database → New Table` | ✅ | Visual column editor + DDL; ALTER TODO |
 | Profiler | `Tools → Query Profiler` | ✅ | Estimated + actual plan, operator stats |
-| Debugger | `Tools → Debugger` | 🚧 | Placeholder |
+| Debugger | `Tools → Debugger` | ✅ | Statement-level stepping · breakpoints · session state (v1.4) |
 | Diagram | `Tools → Database Diagram` | ✅ (basic) | Grid layout, FK lines center-to-center |
 | DataGenerator | `Database → Data Generator` | ✅ | Bogus-backed, preview/script/insert |
 | Documenter | `Database → Documenter` | ✅ | HTML output to `Documents\DBTeam-Docs\` |
@@ -95,11 +95,22 @@ Overview of each feature module, its entry point, and current state.
 - Renders a single self-contained HTML file with embedded CSS, sticky nav, pills for PK/IDENTITY/NOT NULL, 3-column list for views/procs/funcs
 - Saves to `%USERPROFILE%\Documents\DBTeam-Docs\{db}-{yyyyMMdd-HHmmss}.html` and opens it via the default browser
 
-## Debugger (stub)
+## Debugger
 
-Currently shows a placeholder message. T-SQL debugging requires either:
-- The legacy **SQL Server Debugger API** (deprecated since SSMS 18)
-- A custom instrumentation approach (rewrite stored procs with checkpoint markers)
-- Integrating an external third-party debugger
+Functional since v1.4 via **statement-level execution on a persistent connection**:
 
-Design decision pending.
+- `TSqlStepExecutor` parses the script with ScriptDom into `TSqlStatements` (start offset, line, kind) and executes them one by one on a single `SqlConnection` so `DECLARE`, `SET`, `BEGIN TRAN` and temp tables persist across steps.
+- Breakpoints are stored as line numbers; **Continue** pauses before any step whose start line is flagged.
+- Controls: Attach / Step Over / Continue / Stop / Restart / Detach.
+- **Session state** panel shows live `@@ROWCOUNT`, `@@ERROR`, `@@TRANCOUNT`, `@@SPID`, current DB, login after each step.
+- `PRINT` and `RAISERROR` are captured via `SqlInfoMessage` and displayed in the Messages tab with per-step timing.
+
+Limitations: no interruption mid-statement, no step-into of stored procedures (would require full instrumentation — see `docs/bmad/DESIGN-NOTES.md#e13`).
+
+## Terminal
+
+New in v1.5. Embeds an interactive shell process (`pwsh`, `powershell`, `cmd`, or any CLI) in a document tab. Input box with send-on-Enter, Quick snippets sidebar (Claude Code, gh, sqlcmd examples), start/stop/clear controls. Output is piped from the process's stdout/stderr.
+
+## Administration
+
+New in v1.5. 8 tabs: Databases (size, recovery model), Logins, Users, Roles, Permissions, Index fragmentation (with OK/REORGANIZE/REBUILD recommendation), Slow queries (top 50), Active sessions. Script generators for `BACKUP DATABASE`, `RESTORE DATABASE`, and index rebuild.
