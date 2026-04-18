@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\DBTeam.Core\DBTeam.Core.csproj" />
     <ProjectReference Include="..\..\DBTeam.Data\DBTeam.Data.csproj" />
     <ProjectReference Include="..\..\DBTeam.UI\DBTeam.UI.csproj" />
+    <ProjectReference Include="..\DBTeam.Modules.ResultsGrid\DBTeam.Modules.ResultsGrid.csproj" />
   </ItemGroup>
 
 </Project>

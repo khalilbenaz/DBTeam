@@ -94,7 +94,13 @@ public partial class MainViewModel : ObservableObject
         var bus = App.Services.GetRequiredService<IEventBus>();
         bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Query Profiler", Content = view });
     }
-    [RelayCommand] private void Debugger() => MessageBox.Show("Debugger - TODO");
+    [RelayCommand]
+    private void Debugger()
+    {
+        var view = App.Services.GetRequiredService<DBTeam.Modules.Debugger.Views.DebuggerView>();
+        var bus = App.Services.GetRequiredService<IEventBus>();
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "T-SQL Debugger", Content = view });
+    }
     [RelayCommand]
     private void Diagram()
     {

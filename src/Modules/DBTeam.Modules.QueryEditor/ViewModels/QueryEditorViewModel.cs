@@ -4,9 +4,13 @@ using System.Data;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.IO;
+using System.Windows;
 using DBTeam.Core.Abstractions;
 using DBTeam.Core.Models;
 using DBTeam.Modules.QueryEditor.Formatting;
+using DBTeam.Modules.ResultsGrid.Export;
+using Microsoft.Win32;
 
 namespace DBTeam.Modules.QueryEditor.ViewModels;
 
@@ -84,6 +88,34 @@ public partial class QueryEditorViewModel : ObservableObject
         }
         Sql = formatted;
         StatusText = "Formatted";
+    }
+
+    [RelayCommand]
+    public void Export(string? format)
+    {
+        if (Results.Count == 0) { StatusText = "Nothing to export"; return; }
+        var fmt = (format ?? "Csv").ToLowerInvariant() switch
+        {
+            "excel" or "xlsx" => ExportFormat.Excel,
+            "json" => ExportFormat.Json,
+            _ => ExportFormat.Csv
+        };
+        var exporter = ResultExporterFactory.Create(fmt);
+        var suggested = $"query-{DateTime.Now:yyyyMMdd-HHmmss}.{exporter.Extension}";
+        var dlg = new SaveFileDialog { FileName = suggested, Filter = exporter.Filter };
+        if (dlg.ShowDialog() != true) return;
+
+        try
+        {
+            using var fs = File.Create(dlg.FileName);
+            exporter.Export(Results[0], fs);
+            StatusText = $"Exported: {dlg.FileName}";
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Export failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            StatusText = "Export failed";
+        }
     }
 
     [RelayCommand]

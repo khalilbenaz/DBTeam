@@ -1,0 +1,54 @@
+<UserControl x:Class="DBTeam.Modules.Debugger.Views.DebuggerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid>
+        <StackPanel MaxWidth="640" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
+            <md:PackIcon Kind="BugOutline" Width="72" Height="72" HorizontalAlignment="Center" Foreground="{StaticResource Brand.Warning}" Margin="0,0,0,16"/>
+            <TextBlock Text="T-SQL Debugger" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Text="Coming in v2" FontSize="14" HorizontalAlignment="Center" Opacity="0.7" Margin="0,0,0,24"/>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="What it will do" Style="{StaticResource H2}"/>
+                    <StackPanel Margin="0,4">
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <md:PackIcon Kind="Check" Foreground="{StaticResource Brand.Success}" Margin="0,0,8,0"/>
+                            <TextBlock Text="Step-through stored procedure execution"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <md:PackIcon Kind="Check" Foreground="{StaticResource Brand.Success}" Margin="0,0,8,0"/>
+                            <TextBlock Text="Breakpoints on SQL statements"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <md:PackIcon Kind="Check" Foreground="{StaticResource Brand.Success}" Margin="0,0,8,0"/>
+                            <TextBlock Text="Watch variables and parameters"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <md:PackIcon Kind="Check" Foreground="{StaticResource Brand.Success}" Margin="0,0,8,0"/>
+                            <TextBlock Text="Step over / into / out"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Track progress" Style="{StaticResource H2}"/>
+                    <TextBlock TextWrapping="Wrap" Opacity="0.85">
+                        Implementation is tracked on GitHub as Epic E13. Your feedback on the design approach
+                        (instrumentation vs external debugger integration) is welcome on the issue.
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                        <Button Style="{StaticResource PrimaryButton}" Click="OpenIssue_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon Kind="Github" Margin="0,0,6,0"/>
+                                <TextBlock Text="View Epic E13 on GitHub"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -4,13 +4,18 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.0.1] — 2026-04-18
+
 ### Added
-- BMad project artefacts: `docs/bmad/{project-context,PRD,EPICS}.md`
-- `Directory.Build.props` centralizing version/metadata
-- `scripts/publish.ps1` — self-contained single-file Windows publish
-- GitHub Actions: `ci.yml` (build on push/PR), `release.yml` (publish + Release on tag `v*`)
-- End-user docs: `docs/INSTALL.md`, `docs/USER-GUIDE.md`
-- Global exception handlers + friendly error dialog (Copy details / Open logs / Report issue)
+- **Results export**: CSV (UTF-8 BOM, RFC 4180), Excel (EPPlus, auto-filter + frozen header), JSON (System.Text.Json) — toolbar splitbutton in Query Editor
+- **T-SQL Debugger** stub replaced with a proper "Coming in v2" view (accessible via Tools → Debugger)
+- **Auto-format** of generated scripts: Schema Compare / Data Compare / Table Designer / Data Generator outputs arrive pre-formatted in the editor
+- **Format SQL** button added to the Query Profiler
+- **GitHub Pages**: landing page at https://khalilbenaz.github.io/DBTeam/
+- **Dependabot**: weekly NuGet + monthly GitHub Actions updates with grouped PRs
+- **CodeQL** security analysis workflow (push/PR + weekly schedule)
+- **12 Epic issues** on GitHub tracking the full roadmap (E1–E13)
+- **25 unit tests** covering TSqlFormatter, DataCompare script gen, DataGenerator, EventBus, ConnectionStringFactory
 
 ### Changed
 - Log file format enriched (version, OS, properties)
@@ -18,6 +23,8 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 ## [1.0.0] — 2026-04-18
 
 Initial tagged release.
+
+## [1.0.0] — 2026-04-18
 
 ### Added
 - Shell + AvalonDock + DI + theme/language services

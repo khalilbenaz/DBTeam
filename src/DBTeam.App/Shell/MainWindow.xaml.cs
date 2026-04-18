@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using AvalonDock.Layout;
 using DBTeam.Core.Events;
+using DBTeam.Modules.QueryEditor.Formatting;
 using DBTeam.Modules.QueryEditor.ViewModels;
 using DBTeam.Modules.QueryEditor.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,7 +52,15 @@ public partial class MainWindow : Window
             var vm = App.Services.GetRequiredService<QueryEditorViewModel>();
             vm.Connection = req.Connection;
             vm.Database = req.Database;
-            if (!string.IsNullOrEmpty(req.InitialSql)) vm.Sql = req.InitialSql!;
+            if (!string.IsNullOrEmpty(req.InitialSql))
+            {
+                try
+                {
+                    var formatted = TSqlFormatter.Format(req.InitialSql!, null, out var errors);
+                    vm.Sql = (errors is { Count: > 0 }) ? req.InitialSql! : formatted;
+                }
+                catch { vm.Sql = req.InitialSql!; }
+            }
             var view = new QueryEditorView { DataContext = vm };
             var doc = new LayoutDocument { Title = $"Query - {req.Connection.Name}" + (req.Database is null ? "" : $" [{req.Database}]"), Content = view };
             DocumentsPane.Children.Add(doc);
