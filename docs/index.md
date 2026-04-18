@@ -132,40 +132,45 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
 </section>
 
 <section class="section">
-  <h2>Module status</h2>
-  <p class="section-sub">Everything shippable is shipped. Advanced items have technical design ready to pick up.</p>
+  <h2>Module status — v2.0.0</h2>
+  <p class="section-sub">Roadmap complete. 21 modules shipped across 12 tagged releases.</p>
   <div class="status-grid">
-    <div class="label">Connection Manager</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Object Explorer</div>    <div><span class="pill done">Shipped</span></div>
-    <div class="label">Query Editor + autocomplete + format</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Results export (CSV/Excel/JSON/XML)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Schema Compare + column-level ALTER</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Data Compare + merge script</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Table Designer (create + edit)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Query Profiler (plan tree + stats)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Data Generator (Bogus)</div>    <div><span class="pill done">Shipped</span></div>
-    <div class="label">Documenter (HTML)</div>          <div><span class="pill done">Shipped</span></div>
-    <div class="label">ER Diagram (drag, zoom, PNG)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Query History + favorites</div>  <div><span class="pill done">Shipped</span></div>
-    <div class="label">Session restore</div>            <div><span class="pill done">Shipped</span></div>
-    <div class="label">Accessibility (AutomationProperties + focus)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Theme (Light / Dark / System)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Localization (EN / FR)</div>      <div><span class="pill done">Shipped</span></div>
-    <div class="label">Installer (.exe, portable zip)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Snippets · F12 · real-time validation</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Administration panel</div>       <div><span class="pill done">Shipped</span></div>
-    <div class="label">Embedded Terminal</div>          <div><span class="pill done">Shipped</span></div>
-    <div class="label">T-SQL Debugger (statement-level)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">AI Assistant (BYO-key)</div>     <div><span class="pill done">Shipped</span></div>
-    <div class="label">Code signing</div>                <div><span class="pill soon">v1.8</span></div>
-    <div class="label">MSIX + winget</div>               <div><span class="pill soon">v1.8</span></div>
-    <div class="label">Auto-update (Velopack)</div>      <div><span class="pill soon">v1.8</span></div>
-    <div class="label">IntelliSense CTE/alias/signatures</div> <div><span class="pill soon">v1.6</span></div>
-    <div class="label">Query Builder visuel</div>        <div><span class="pill soon">v1.6</span></div>
-    <div class="label">Monitoring + charts</div>         <div><span class="pill soon">v1.7</span></div>
-    <div class="label">Import CSV/Excel/JSON</div>       <div><span class="pill soon">v1.7</span></div>
-    <div class="label">Git integration</div>             <div><span class="pill soon">v1.7</span></div>
-    <div class="label">Debugger step-into SPs</div>      <div><span class="pill soon">v2</span></div>
+    <div class="label">Connection Manager</div>                 <div><span class="pill done">v1.0</span></div>
+    <div class="label">Object Explorer</div>                    <div><span class="pill done">v1.0</span></div>
+    <div class="label">Query Editor + autocomplete + format</div> <div><span class="pill done">v1.0</span></div>
+    <div class="label">Schema Compare + column-level ALTER</div>  <div><span class="pill done">v1.2</span></div>
+    <div class="label">Data Compare + PK merge + CHECKSUM</div>   <div><span class="pill done">v1.7</span></div>
+    <div class="label">Table Designer (create + edit)</div>       <div><span class="pill done">v1.3</span></div>
+    <div class="label">Query Profiler (tree + graph + stats)</div><div><span class="pill done">v1.9</span></div>
+    <div class="label">Data Generator (Bogus)</div>               <div><span class="pill done">v1.0</span></div>
+    <div class="label">Documenter (HTML)</div>                    <div><span class="pill done">v1.0</span></div>
+    <div class="label">ER Diagram (drag, zoom, PNG)</div>          <div><span class="pill done">v1.2</span></div>
+    <div class="label">Query History + favorites</div>            <div><span class="pill done">v1.1</span></div>
+    <div class="label">Results export (CSV/Excel/JSON/XML)</div>   <div><span class="pill done">v1.5</span></div>
+    <div class="label">Session restore</div>                      <div><span class="pill done">v1.3</span></div>
+    <div class="label">Accessibility baseline</div>               <div><span class="pill done">v1.3</span></div>
+    <div class="label">Theme Light / Dark / System</div>          <div><span class="pill done">v1.0</span></div>
+    <div class="label">Localization EN / FR</div>                 <div><span class="pill done">v1.0</span></div>
+    <div class="label">Installer (.exe, portable zip)</div>       <div><span class="pill done">v1.2</span></div>
+    <div class="label">Snippets · F12 · real-time validation</div> <div><span class="pill done">v1.5</span></div>
+    <div class="label">Administration panel</div>                 <div><span class="pill done">v1.5</span></div>
+    <div class="label">Embedded Terminal</div>                    <div><span class="pill done">v1.5</span></div>
+    <div class="label">AI Assistant (BYO-key)</div>               <div><span class="pill done">v1.6</span></div>
+    <div class="label">Monitoring (live DMV)</div>                <div><span class="pill done">v1.7</span></div>
+    <div class="label">Import CSV</div>                           <div><span class="pill done">v1.7</span></div>
+    <div class="label">Query Builder visual</div>                 <div><span class="pill done">v1.7</span></div>
+    <div class="label">Git integration</div>                      <div><span class="pill done">v1.7</span></div>
+    <div class="label">Schema snapshot</div>                      <div><span class="pill done">v1.7</span></div>
+    <div class="label">MSIX + winget manifests</div>              <div><span class="pill done">v1.8</span></div>
+    <div class="label">Code signing workflow + self-signed scripts</div><div><span class="pill done">v1.8</span></div>
+    <div class="label">LocalDB integration tests</div>            <div><span class="pill done">v1.8</span></div>
+    <div class="label">IntelliSense alias resolution</div>        <div><span class="pill done">v1.9</span></div>
+    <div class="label">Profiler graphical plan</div>              <div><span class="pill done">v1.9</span></div>
+    <div class="label">Master-detail · Pivot · per-tab DB</div>   <div><span class="pill done">v1.9</span></div>
+    <div class="label">T-SQL Debugger (statement-level + step-into)</div> <div><span class="pill done">v2.0</span></div>
+    <div class="label">Function signatures in autocomplete</div>  <div><span class="pill done">v2.0</span></div>
+    <div class="label">Auto-update (Velopack)</div>               <div><span class="pill soon">scaffold — awaiting signed releases</span></div>
+    <div class="label">Automated screenshots (FlaUI)</div>        <div><span class="pill soon">scaffold — awaiting visuals</span></div>
   </div>
 </section>
 
