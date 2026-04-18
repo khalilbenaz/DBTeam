@@ -77,6 +77,7 @@ public partial class App : System.Windows.Application
         DBTeam.Modules.Debugger.ModuleRegistration.Register(s);
         DBTeam.Modules.Admin.ModuleRegistration.Register(s);
         DBTeam.Modules.Terminal.ModuleRegistration.Register(s);
+        DBTeam.Modules.AiAssistant.ModuleRegistration.Register(s);
     }
 
     protected override void OnExit(ExitEventArgs e)

@@ -93,7 +93,27 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
     <div class="card orange">
       <div class="icon">📤</div>
       <h3>Export Results</h3>
-      <p>CSV (RFC 4180, UTF-8 BOM) · Excel (header + filter + frozen row) · JSON. One click from the editor toolbar.</p>
+      <p>CSV (RFC 4180, UTF-8 BOM) · Excel (header + filter + frozen row) · JSON · XML. One click from the editor toolbar.</p>
+    </div>
+    <div class="card red">
+      <div class="icon">🛡️</div>
+      <h3>Administration</h3>
+      <p>Logins · users · roles · permissions · index fragmentation with REORGANIZE/REBUILD recommendations · slow queries · active sessions · BACKUP / RESTORE script generators.</p>
+    </div>
+    <div class="card purple">
+      <div class="icon">🐞</div>
+      <h3>T-SQL Debugger</h3>
+      <p>Statement-level stepping on a persistent connection so DECLARE / SET / transactions survive between steps. Breakpoints, step over, continue, session state inspection.</p>
+    </div>
+    <div class="card green">
+      <div class="icon">⚡</div>
+      <h3>Terminal</h3>
+      <p>Embedded PowerShell / cmd / claude / gh / sqlcmd / any CLI inside a document tab. Quick snippets sidebar.</p>
+    </div>
+    <div class="card yellow">
+      <div class="icon">🤖</div>
+      <h3>AI Assistant</h3>
+      <p>Bring your own key — Anthropic · OpenAI · Azure OpenAI · Ollama. Chat, quick SQL prompts, DPAPI-encrypted key storage.</p>
     </div>
   </div>
 </section>
@@ -118,7 +138,7 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
     <div class="label">Connection Manager</div> <div><span class="pill done">Shipped</span></div>
     <div class="label">Object Explorer</div>    <div><span class="pill done">Shipped</span></div>
     <div class="label">Query Editor + autocomplete + format</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Results export (CSV/Excel/JSON)</div> <div><span class="pill done">Shipped</span></div>
+    <div class="label">Results export (CSV/Excel/JSON/XML)</div> <div><span class="pill done">Shipped</span></div>
     <div class="label">Schema Compare + column-level ALTER</div> <div><span class="pill done">Shipped</span></div>
     <div class="label">Data Compare + merge script</div> <div><span class="pill done">Shipped</span></div>
     <div class="label">Table Designer (create + edit)</div> <div><span class="pill done">Shipped</span></div>
@@ -132,12 +152,20 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
     <div class="label">Theme (Light / Dark / System)</div> <div><span class="pill done">Shipped</span></div>
     <div class="label">Localization (EN / FR)</div>      <div><span class="pill done">Shipped</span></div>
     <div class="label">Installer (.exe, portable zip)</div> <div><span class="pill done">Shipped</span></div>
-    <div class="label">Code signing</div>                <div><span class="pill soon">Planned</span></div>
-    <div class="label">MSIX + winget</div>               <div><span class="pill soon">Planned</span></div>
-    <div class="label">Auto-update (Velopack)</div>      <div><span class="pill soon">Planned</span></div>
-    <div class="label">IntelliSense CTE/alias/signatures</div> <div><span class="pill soon">Planned</span></div>
-    <div class="label">T-SQL Debugger (step-through)</div> <div><span class="pill soon">v2</span></div>
-    <div class="label">AI assistant (BYO-key)</div>      <div><span class="pill soon">v2</span></div>
+    <div class="label">Snippets · F12 · real-time validation</div> <div><span class="pill done">Shipped</span></div>
+    <div class="label">Administration panel</div>       <div><span class="pill done">Shipped</span></div>
+    <div class="label">Embedded Terminal</div>          <div><span class="pill done">Shipped</span></div>
+    <div class="label">T-SQL Debugger (statement-level)</div> <div><span class="pill done">Shipped</span></div>
+    <div class="label">AI Assistant (BYO-key)</div>     <div><span class="pill done">Shipped</span></div>
+    <div class="label">Code signing</div>                <div><span class="pill soon">v1.8</span></div>
+    <div class="label">MSIX + winget</div>               <div><span class="pill soon">v1.8</span></div>
+    <div class="label">Auto-update (Velopack)</div>      <div><span class="pill soon">v1.8</span></div>
+    <div class="label">IntelliSense CTE/alias/signatures</div> <div><span class="pill soon">v1.6</span></div>
+    <div class="label">Query Builder visuel</div>        <div><span class="pill soon">v1.6</span></div>
+    <div class="label">Monitoring + charts</div>         <div><span class="pill soon">v1.7</span></div>
+    <div class="label">Import CSV/Excel/JSON</div>       <div><span class="pill soon">v1.7</span></div>
+    <div class="label">Git integration</div>             <div><span class="pill soon">v1.7</span></div>
+    <div class="label">Debugger step-into SPs</div>      <div><span class="pill soon">v2</span></div>
   </div>
 </section>
 

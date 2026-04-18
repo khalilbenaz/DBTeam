@@ -4,6 +4,20 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [1.6.0] — 2026-04-18
+
+### Added
+- **AI Assistant module** — chat panel with BYO-key for Anthropic / OpenAI / Azure OpenAI / Ollama. Provider presets, DPAPI-encrypted key storage, quick SQL prompt buttons (explain, optimize, generate INSERTs, convert to CTE…), configurable system prompt and model. Menu: *Tools → AI Assistant*.
+- **Full i18n coverage** for new modules (Admin, Terminal, Debugger, AI Assistant) in both `en-US` and `fr-FR`.
+
+### Changed
+- README roadmap: 16 items moved from "todo" to "Shipped" with version tags; remaining items bucketed by target version (v1.6 / v1.7 / v1.8 / v2).
+- Pages landing page (`docs/index.md`) expanded: new feature cards for Administration, Debugger, Terminal, AI Assistant; status grid updated with accurate shipping state.
+
+### Fixed
+- `DBTeam.Modules.Terminal`: removed invalid `-NonInteractive:$false` argument that broke `pwsh` / `powershell` on start.
+- `docs/MODULES.md`, `docs/bmad/project-context.md`, `README.md`: removed remaining "stub — future" wording for the Debugger module, now accurately reflects v1.4 functionality.
+
 ## [1.5.0] — 2026-04-18
 
 ### Added

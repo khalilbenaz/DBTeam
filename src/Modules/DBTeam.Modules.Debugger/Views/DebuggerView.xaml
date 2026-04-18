@@ -8,8 +8,8 @@
             <StackPanel Orientation="Horizontal">
                 <md:PackIcon Kind="Bug" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="T-SQL Debugger" Style="{StaticResource H1}"/>
-                    <TextBlock Text="Statement-level stepping · breakpoints · session state inspection" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Debugger.Title}" Style="{StaticResource H1}"/>
+                    <TextBlock Text="{DynamicResource Debugger.Subtitle}" Style="{StaticResource Caption}"/>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -33,10 +33,10 @@
                     <Button Command="{Binding AttachCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0" ToolTip="Parse script + open connection">
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="DebugStart" Margin="0,0,6,0"/>
-                            <TextBlock Text="Attach"/>
+                            <TextBlock Text="{DynamicResource Debugger.Attach}"/>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding StepOverCommand}" Style="{StaticResource IconButton}" ToolTip="Step over (next statement)"
+                    <Button Command="{Binding StepOverCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Debugger.StepOver}"
                             IsEnabled="{Binding IsAttached}">
                         <md:PackIcon Kind="DebugStepOver"/>
                     </Button>
@@ -44,18 +44,18 @@
                             IsEnabled="{Binding IsAttached}" ToolTip="Continue until next breakpoint or end">
                         <StackPanel Orientation="Horizontal">
                             <md:PackIcon Kind="Play" Margin="0,0,6,0"/>
-                            <TextBlock Text="Continue"/>
+                            <TextBlock Text="{DynamicResource Debugger.Continue}"/>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding StopCommand}" Style="{StaticResource IconButton}" ToolTip="Stop" Margin="6,0,0,0"
+                    <Button Command="{Binding StopCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Debugger.Stop}" Margin="6,0,0,0"
                             IsEnabled="{Binding IsRunning}">
                         <md:PackIcon Kind="Stop" Foreground="{StaticResource Brand.Danger}"/>
                     </Button>
-                    <Button Command="{Binding RestartCommand}" Style="{StaticResource IconButton}" ToolTip="Restart"
+                    <Button Command="{Binding RestartCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Debugger.Restart}"
                             IsEnabled="{Binding IsAttached}">
                         <md:PackIcon Kind="Restart"/>
                     </Button>
-                    <Button Command="{Binding DetachCommand}" Style="{StaticResource IconButton}" ToolTip="Detach (close connection)"
+                    <Button Command="{Binding DetachCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Debugger.Detach}"
                             IsEnabled="{Binding IsAttached}">
                         <md:PackIcon Kind="DebugStepOut"/>
                     </Button>
@@ -85,7 +85,7 @@
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" Style="{StaticResource Card}" Padding="0">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Text="Script" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Debugger.Script}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                         <ae:TextEditor x:Name="Editor" FontFamily="Consolas" FontSize="13" ShowLineNumbers="True" SyntaxHighlighting="TSQL"/>
                     </DockPanel>
                 </Border>
@@ -131,7 +131,7 @@
 
                 <Border Grid.Row="0" Style="{StaticResource Card}" Padding="0">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Text="Steps (double-click to toggle breakpoint)" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Debugger.Steps}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                         <ListBox ItemsSource="{Binding Steps}" SelectedItem="{Binding CurrentStep}" Background="Transparent" BorderThickness="0"
                                  HorizontalContentAlignment="Stretch">
                             <ListBox.InputBindings>
@@ -171,7 +171,7 @@
 
                 <Border Grid.Row="2" Style="{StaticResource Card}" Padding="0">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Text="Session state" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Debugger.SessionState}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                         <DataGrid ItemsSource="{Binding SessionInfo}" AutoGenerateColumns="True" IsReadOnly="True"
                                   HeadersVisibility="Column" CanUserSortColumns="False"/>
                     </DockPanel>

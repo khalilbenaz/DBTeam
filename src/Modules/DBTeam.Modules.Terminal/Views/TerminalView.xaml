@@ -7,8 +7,8 @@
             <StackPanel Orientation="Horizontal">
                 <md:PackIcon Kind="Console" Width="28" Height="28" VerticalAlignment="Center" Foreground="{StaticResource Brand.Primary}" Margin="0,0,12,0"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="Terminal" Style="{StaticResource H1}"/>
-                    <TextBlock Text="PowerShell · Claude Code · gh · sqlcmd · any CLI" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{DynamicResource Terminal.Title}" Style="{StaticResource H1}"/>
+                    <TextBlock Text="{DynamicResource Terminal.Subtitle}" Style="{StaticResource Caption}"/>
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -21,21 +21,21 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                    <TextBlock Text="Shell" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Terminal.Shell}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding ShellChoices}" Text="{Binding Shell}" IsEditable="True"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="0,0,8,0">
-                    <TextBlock Text="Working directory" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Terminal.WorkDir}" Style="{StaticResource FieldLabel}"/>
                     <TextBox Text="{Binding WorkingDirectory, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <Button Command="{Binding StartCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0" ToolTip="Start shell">
-                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Play" Margin="0,0,6,0"/><TextBlock Text="Start"/></StackPanel>
+                        <StackPanel Orientation="Horizontal"><md:PackIcon Kind="Play" Margin="0,0,6,0"/><TextBlock Text="{DynamicResource Terminal.Start}"/></StackPanel>
                     </Button>
-                    <Button Command="{Binding StopCommand}" Style="{StaticResource IconButton}" ToolTip="Stop" IsEnabled="{Binding IsRunning}">
+                    <Button Command="{Binding StopCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Terminal.Stop}" IsEnabled="{Binding IsRunning}">
                         <md:PackIcon Kind="Stop" Foreground="{StaticResource Brand.Danger}"/>
                     </Button>
-                    <Button Command="{Binding ClearCommand}" Style="{StaticResource IconButton}" ToolTip="Clear output">
+                    <Button Command="{Binding ClearCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Terminal.Clear}">
                         <md:PackIcon Kind="Broom"/>
                     </Button>
                 </StackPanel>
@@ -79,7 +79,7 @@
             </Grid>
             <Border Grid.Column="1" Style="{StaticResource Card}" Padding="0" Margin="8,0,0,0">
                 <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="Quick commands" Style="{StaticResource H2}" Margin="12,8,12,4"/>
+                    <TextBlock DockPanel.Dock="Top" Text="{DynamicResource Terminal.Snippets}" Style="{StaticResource H2}" Margin="12,8,12,4"/>
                     <ListBox ItemsSource="{Binding QuickSnippets}" Background="Transparent" BorderThickness="0"
                              HorizontalContentAlignment="Stretch">
                         <ListBox.ItemTemplate>

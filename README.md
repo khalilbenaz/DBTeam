@@ -62,18 +62,21 @@ DBTeam.sln
     ├── DBTeam.UI              → shared WPF controls
     ├── DBTeam.App             → WPF shell, DI, theme + localization services, AvalonDock layout
     └── Modules/
-        ├── DBTeam.Modules.ConnectionManager
-        ├── DBTeam.Modules.ObjectExplorer
-        ├── DBTeam.Modules.QueryEditor
-        ├── DBTeam.Modules.ResultsGrid
-        ├── DBTeam.Modules.SchemaCompare
-        ├── DBTeam.Modules.DataCompare
-        ├── DBTeam.Modules.TableDesigner
-        ├── DBTeam.Modules.Profiler
-        ├── DBTeam.Modules.Debugger          (stub — future)
-        ├── DBTeam.Modules.Diagram
-        ├── DBTeam.Modules.DataGenerator
-        └── DBTeam.Modules.Documenter
+        ├── DBTeam.Modules.ConnectionManager   connect, save, encrypt
+        ├── DBTeam.Modules.ObjectExplorer      lazy tree, script, disconnect
+        ├── DBTeam.Modules.QueryEditor         AvalonEdit + autocomplete + F12 + snippets + validation
+        ├── DBTeam.Modules.ResultsGrid         CSV / Excel / JSON / XML export
+        ├── DBTeam.Modules.SchemaCompare       column-level ALTER + FK/index diff
+        ├── DBTeam.Modules.DataCompare         PK-based row diff + merge script
+        ├── DBTeam.Modules.TableDesigner       create + load existing
+        ├── DBTeam.Modules.Profiler            plan tree + operator stats
+        ├── DBTeam.Modules.Debugger            statement-level stepping + breakpoints + session state
+        ├── DBTeam.Modules.Diagram             drag + zoom + PNG export
+        ├── DBTeam.Modules.DataGenerator       Bogus-powered fake data
+        ├── DBTeam.Modules.Documenter          HTML schema documentation
+        ├── DBTeam.Modules.Admin               logins / users / indexes / backup / restore
+        ├── DBTeam.Modules.Terminal            embedded CLI (pwsh / claude / gh / sqlcmd / …)
+        └── DBTeam.Modules.AiAssistant         BYO-key chat (Anthropic / OpenAI / Ollama / Azure)
 ```
 
 **Pattern**: MVVM with `CommunityToolkit.Mvvm` (ObservableObject, RelayCommand, ObservableProperty). **DI**: `Microsoft.Extensions.DependencyInjection`. **Messaging**: custom in-memory `IEventBus` (`ConnectionOpenedEvent`, `OpenQueryEditorRequest`, `OpenDocumentRequest`, `ShowPaneRequest`, `ConnectionsChangedEvent`).
