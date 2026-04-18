@@ -20,9 +20,10 @@
                     <TextBlock Text="{DynamicResource About.Version}" Style="{StaticResource Caption}"/>
                 </StackPanel>
             </StackPanel>
-            <TextBlock Text="{DynamicResource About.Description}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+            <TextBlock Text="{DynamicResource About.Description}" TextWrapping="Wrap" Margin="0,0,0,8"/>
+            <TextBlock Text="{DynamicResource About.Author}" FontWeight="SemiBold" Opacity="0.85" Margin="0,0,0,12"/>
             <Border Style="{StaticResource Divider}"/>
-            <TextBlock Text="Stack" FontWeight="SemiBold" Margin="0,8,0,4"/>
+            <TextBlock Text="{DynamicResource About.Stack}" FontWeight="SemiBold" Margin="0,8,0,4"/>
             <TextBlock Text="WPF · .NET 8 · AvalonDock · AvalonEdit · ModernWpfUI · MaterialDesign · Microsoft.Data.SqlClient · ScriptDom · Bogus" TextWrapping="Wrap" Opacity="0.75"/>
         </StackPanel>
     </DockPanel>

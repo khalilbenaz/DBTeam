@@ -126,6 +126,25 @@ public sealed class TSqlStepExecutor : IDisposable
         return result;
     }
 
+    /// <summary>
+    /// Evaluates a boolean T-SQL expression on the live debug session so it can
+    /// reference DECLARE'd variables and @@STATE. Returns true on any non-zero
+    /// result, false on 0/NULL/error.
+    /// </summary>
+    public async Task<(bool value, string? error)> EvaluateConditionAsync(string expression, CancellationToken ct = default)
+    {
+        if (_connection is null) return (false, "not attached");
+        if (string.IsNullOrWhiteSpace(expression)) return (true, null);
+        try
+        {
+            await using var cmd = new SqlCommand(
+                $"SELECT CASE WHEN ({expression}) THEN 1 ELSE 0 END", _connection) { CommandTimeout = 10 };
+            var r = await cmd.ExecuteScalarAsync(ct);
+            return (r is int i && i == 1, null);
+        }
+        catch (Exception ex) { return (false, ex.Message); }
+    }
+
     public async Task<DataTable?> GetSessionVariablesAsync(CancellationToken ct = default)
     {
         if (_connection is null) return null;

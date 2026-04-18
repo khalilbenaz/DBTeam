@@ -31,7 +31,7 @@ public partial class DebuggerViewModel : ObservableObject, IDisposable
     public ObservableCollection<SqlConnectionInfo> Connections { get; }
     public ObservableCollection<string> Databases { get; }
     public ObservableCollection<TSqlStatementInfo> Steps { get; } = new();
-    public ObservableCollection<int> Breakpoints { get; } = new();
+    public ObservableCollection<Breakpoint> Breakpoints { get; } = new();
     public ObservableCollection<DataTable> Results { get; } = new();
 
     [ObservableProperty] private SqlConnectionInfo? connection;
@@ -143,11 +143,31 @@ public partial class DebuggerViewModel : ObservableObject, IDisposable
                 if (r.Error is not null) { Status = "Paused on error"; break; }
                 NextIndex++;
                 // Breakpoint check: pause BEFORE the next step if its start line ∈ breakpoints
-                if (NextIndex < Steps.Count && Breakpoints.Contains(Steps[NextIndex].StartLine))
+                if (NextIndex < Steps.Count)
                 {
-                    CurrentStep = Steps[NextIndex];
-                    Status = $"Breakpoint hit at line {CurrentStep.StartLine}";
-                    break;
+                    var nextLine = Steps[NextIndex].StartLine;
+                    var bp = Breakpoints.FirstOrDefault(b => b.Line == nextLine);
+                    if (bp is not null)
+                    {
+                        bool hit = true; string? evalErr = null;
+                        if (bp.IsConditional)
+                        {
+                            var (val, err) = await _executor.EvaluateConditionAsync(bp.Condition!, ct);
+                            hit = val; evalErr = err;
+                        }
+                        if (hit)
+                        {
+                            bp.HitCount++;
+                            CurrentStep = Steps[NextIndex];
+                            Status = bp.IsConditional
+                                ? $"Conditional breakpoint hit at line {nextLine} (hits: {bp.HitCount})"
+                                : $"Breakpoint hit at line {nextLine}";
+                            if (evalErr is not null) Messages += Environment.NewLine + "[bp eval error] " + evalErr;
+                            break;
+                        }
+                        else if (evalErr is not null)
+                            Messages += Environment.NewLine + $"[bp line {nextLine}] condition error: {evalErr}";
+                    }
                 }
             }
             if (NextIndex >= Steps.Count) Status = "Finished";
@@ -234,8 +254,35 @@ public partial class DebuggerViewModel : ObservableObject, IDisposable
     public void ToggleBreakpoint(TSqlStatementInfo? s)
     {
         if (s is null) return;
-        if (Breakpoints.Contains(s.StartLine)) Breakpoints.Remove(s.StartLine);
-        else Breakpoints.Add(s.StartLine);
+        var existing = Breakpoints.FirstOrDefault(b => b.Line == s.StartLine);
+        if (existing is not null) Breakpoints.Remove(existing);
+        else Breakpoints.Add(new Breakpoint { Line = s.StartLine });
+    }
+
+    [RelayCommand]
+    public void SetBreakpointCondition(TSqlStatementInfo? s)
+    {
+        if (s is null) return;
+        var bp = Breakpoints.FirstOrDefault(b => b.Line == s.StartLine);
+        if (bp is null) { bp = new Breakpoint { Line = s.StartLine }; Breakpoints.Add(bp); }
+        var dlg = new Views.BreakpointConditionWindow(bp.Line, bp.Condition) { Owner = Application.Current?.MainWindow };
+        if (dlg.ShowDialog() == true)
+        {
+            bp.Condition = string.IsNullOrWhiteSpace(dlg.Condition) ? null : dlg.Condition;
+            Status = bp.IsConditional
+                ? $"Condition set on line {bp.Line}"
+                : $"Condition cleared on line {bp.Line}";
+        }
+    }
+
+    [RelayCommand]
+    public void ClearBreakpointCondition(TSqlStatementInfo? s)
+    {
+        if (s is null) return;
+        var bp = Breakpoints.FirstOrDefault(b => b.Line == s.StartLine);
+        if (bp is null) return;
+        bp.Condition = null;
+        Status = $"Condition cleared on line {bp.Line}";
     }
 
     [RelayCommand]

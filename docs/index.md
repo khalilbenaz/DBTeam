@@ -132,8 +132,8 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
 </section>
 
 <section class="section">
-  <h2>Module status — v2.0.0</h2>
-  <p class="section-sub">Roadmap complete. 21 modules shipped across 12 tagged releases.</p>
+  <h2>Module status — v2.1.0</h2>
+  <p class="section-sub">Roadmap complete. 21 modules shipped across 13 tagged releases. Conditional breakpoints and full i18n polish landed in v2.1.</p>
   <div class="status-grid">
     <div class="label">Connection Manager</div>                 <div><span class="pill done">v1.0</span></div>
     <div class="label">Object Explorer</div>                    <div><span class="pill done">v1.0</span></div>
@@ -169,6 +169,8 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
     <div class="label">Master-detail · Pivot · per-tab DB</div>   <div><span class="pill done">v1.9</span></div>
     <div class="label">T-SQL Debugger (statement-level + step-into)</div> <div><span class="pill done">v2.0</span></div>
     <div class="label">Function signatures in autocomplete</div>  <div><span class="pill done">v2.0</span></div>
+    <div class="label">Conditional breakpoints (T-SQL expression)</div> <div><span class="pill done">v2.1</span></div>
+    <div class="label">Live language switch (status bar, tab titles)</div> <div><span class="pill done">v2.1</span></div>
     <div class="label">Auto-update (Velopack)</div>               <div><span class="pill soon">scaffold — awaiting signed releases</span></div>
     <div class="label">Automated screenshots (FlaUI)</div>        <div><span class="pill soon">scaffold — awaiting visuals</span></div>
   </div>

@@ -55,10 +55,10 @@
                 <MenuItem Header="{DynamicResource Menu.Documenter}" Command="{Binding DocumenterCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="FileDocument"/></MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Query Builder..." Command="{Binding QueryBuilderCommand}">
+                <MenuItem Header="{DynamicResource Menu.QueryBuilder}" Command="{Binding QueryBuilderCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="TableLarge"/></MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Import CSV..." Command="{Binding ImportDataCommand}">
+                <MenuItem Header="{DynamicResource Menu.ImportCsv}" Command="{Binding ImportDataCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="FileImportOutline"/></MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -82,10 +82,10 @@
                 <MenuItem Header="{DynamicResource Menu.AiAssistant}" Command="{Binding AiAssistantCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="RobotOutline"/></MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Monitoring" Command="{Binding MonitoringCommand}">
-                    <MenuItem.Icon><md:PackIcon Kind="PulseOutline"/></MenuItem.Icon>
+                <MenuItem Header="{DynamicResource Menu.Monitoring}" Command="{Binding MonitoringCommand}">
+                    <MenuItem.Icon><md:PackIcon Kind="Pulse"/></MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Git" Command="{Binding GitCommand}">
+                <MenuItem Header="{DynamicResource Menu.Git}" Command="{Binding GitCommand}">
                     <MenuItem.Icon><md:PackIcon Kind="Git"/></MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -174,13 +174,13 @@
                         <ad:LayoutAnchorable x:Name="ObjectExplorerPane" Title="{DynamicResource Panel.ObjectExplorer}" CanClose="False" CanHide="False" ContentId="OBJECT_EXPLORER">
                             <oe:ObjectExplorerView/>
                         </ad:LayoutAnchorable>
-                        <ad:LayoutAnchorable x:Name="HistoryPane" Title="History" CanClose="False" CanHide="False" ContentId="HISTORY">
+                        <ad:LayoutAnchorable x:Name="HistoryPane" Title="{DynamicResource Panel.History}" CanClose="False" CanHide="False" ContentId="HISTORY">
                             <qh:QueryHistoryPanel/>
                         </ad:LayoutAnchorable>
                     </ad:LayoutAnchorablePane>
                     <ad:LayoutDocumentPaneGroup>
                         <ad:LayoutDocumentPane x:Name="DocumentsPane">
-                            <ad:LayoutDocument Title="Welcome" CanClose="True">
+                            <ad:LayoutDocument Title="{DynamicResource Welcome.Title}" CanClose="True">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <StackPanel MaxWidth="900" Margin="48,32" HorizontalAlignment="Center">
                                         <StackPanel Orientation="Horizontal" Margin="0,0,0,16">

@@ -11,14 +11,35 @@ namespace DBTeam.App.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty] private string statusMessage = "Ready";
-    [ObservableProperty] private string activeConnectionName = "No connection";
+    [ObservableProperty] private string statusMessage = DBTeam.App.Services.LocalizationService.T("Status.Ready", "Ready");
+    [ObservableProperty] private string activeConnectionName = DBTeam.App.Services.LocalizationService.T("Status.NoConnection", "No connection");
     [ObservableProperty] private SqlConnectionInfo? activeConnection;
+
+    private string _statusKey = "Status.Ready";
+    private string? _statusFallback = "Ready";
 
     public MainViewModel()
     {
         var bus = ServiceLocator.TryGet<IEventBus>();
         bus?.Subscribe<ConnectionOpenedEvent>(OnConnectionOpened);
+        var loc = ServiceLocator.TryGet<DBTeam.App.Services.LocalizationService>();
+        if (loc is not null) loc.LanguageChanged += RefreshLocalizedTexts;
+    }
+
+    private void SetStatusKey(string key, string? fallback = null)
+    {
+        _statusKey = key; _statusFallback = fallback;
+        StatusMessage = DBTeam.App.Services.LocalizationService.T(key, fallback);
+    }
+
+    private void RefreshLocalizedTexts()
+    {
+        Application.Current?.Dispatcher.Invoke(() =>
+        {
+            StatusMessage = DBTeam.App.Services.LocalizationService.T(_statusKey, _statusFallback);
+            if (ActiveConnection is null)
+                ActiveConnectionName = DBTeam.App.Services.LocalizationService.T("Status.NoConnection", "No connection");
+        });
     }
 
     private void OnConnectionOpened(ConnectionOpenedEvent e)
@@ -27,7 +48,7 @@ public partial class MainViewModel : ObservableObject
         {
             ActiveConnection = e.Connection;
             ActiveConnectionName = $"{e.Connection.Name} ({e.Connection.Server})";
-            StatusMessage = "Connected";
+            SetStatusKey("Status.Connected", "Connected");
         });
     }
 
@@ -42,7 +63,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void NewQuery()
     {
-        if (ActiveConnection is null) { StatusMessage = "Select or create a connection first"; return; }
+        if (ActiveConnection is null) { SetStatusKey("Status.PickConnection", "Select or create a connection first"); return; }
         var bus = App.Services.GetRequiredService<IEventBus>();
         bus.Publish(new OpenQueryEditorRequest { Connection = ActiveConnection });
     }
@@ -54,7 +75,7 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.SchemaCompare.Views.SchemaCompareView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Schema Compare", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.SchemaCompare", "Schema Compare"), Content = view });
     }
 
     [RelayCommand]
@@ -62,7 +83,7 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.DataCompare.Views.DataCompareView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Data Compare", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.DataCompare", "Data Compare"), Content = view });
     }
 
     [RelayCommand]
@@ -70,7 +91,7 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.TableDesigner.Views.TableDesignerView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "New Table", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.NewTable", "New Table"), Content = view });
     }
 
     [RelayCommand]
@@ -78,84 +99,84 @@ public partial class MainViewModel : ObservableObject
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.DataGenerator.Views.DataGeneratorView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Data Generator", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.DataGenerator", "Data Generator"), Content = view });
     }
     [RelayCommand]
     private void Documenter()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Documenter.Views.DocumenterView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Documenter", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Documenter", "Documenter"), Content = view });
     }
     [RelayCommand]
     private void Profiler()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Profiler.Views.ProfilerView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Query Profiler", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Profiler", "Query Profiler"), Content = view });
     }
     [RelayCommand]
     private void Administration()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Admin.Views.AdminView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Administration", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Administration", "Administration"), Content = view });
     }
     [RelayCommand]
     private void Terminal()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Terminal.Views.TerminalView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Terminal", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Terminal", "Terminal"), Content = view });
     }
     [RelayCommand]
     private void AiAssistant()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.AiAssistant.Views.AiAssistantView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "AI Assistant", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.AiAssistant", "AI Assistant"), Content = view });
     }
     [RelayCommand]
     private void Monitoring()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Monitoring.Views.MonitoringView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Monitoring", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Monitoring", "Monitoring"), Content = view });
     }
     [RelayCommand]
     private void ImportData()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Import.Views.ImportView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Import", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Import", "Import"), Content = view });
     }
     [RelayCommand]
     private void QueryBuilder()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.QueryBuilder.Views.QueryBuilderView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Query Builder", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.QueryBuilder", "Query Builder"), Content = view });
     }
     [RelayCommand]
     private void Git()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Git.Views.GitPanel>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Git", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Git", "Git"), Content = view });
     }
     [RelayCommand]
     private void Debugger()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Debugger.Views.DebuggerView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "T-SQL Debugger", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Debugger", "T-SQL Debugger"), Content = view });
     }
     [RelayCommand]
     private void Diagram()
     {
         var view = App.Services.GetRequiredService<DBTeam.Modules.Diagram.Views.DiagramView>();
         var bus = App.Services.GetRequiredService<IEventBus>();
-        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = "Database Diagram", Content = view });
+        bus.Publish(new DBTeam.Core.Events.OpenDocumentRequest { Title = DBTeam.App.Services.LocalizationService.T("Tab.Diagram", "Database Diagram"), Content = view });
     }
     [RelayCommand]
     private void ShowObjectExplorer() => App.Services.GetRequiredService<IEventBus>().Publish(new DBTeam.Core.Events.ShowPaneRequest { PaneId = "OBJECT_EXPLORER" });
@@ -169,7 +190,7 @@ public partial class MainViewModel : ObservableObject
     {
         if (!System.Enum.TryParse<DBTeam.App.Services.AppTheme>(name, true, out var t)) return;
         App.Services.GetRequiredService<DBTeam.App.Services.ThemeService>().Apply(t);
-        StatusMessage = $"Theme: {t}";
+        SetStatusKey("Status.Ready", "Ready"); StatusMessage = $"{DBTeam.App.Services.LocalizationService.T("Status.Theme", "Theme")}: {t}";
     }
 
     [RelayCommand]
@@ -192,6 +213,6 @@ public partial class MainViewModel : ObservableObject
     {
         if (string.IsNullOrEmpty(code)) return;
         App.Services.GetRequiredService<DBTeam.App.Services.LocalizationService>().SetLanguage(code);
-        StatusMessage = $"Language: {code}";
+        SetStatusKey("Status.Ready", "Ready"); StatusMessage = $"{DBTeam.App.Services.LocalizationService.T("Status.Language", "Language")}: {code}";
     }
 }

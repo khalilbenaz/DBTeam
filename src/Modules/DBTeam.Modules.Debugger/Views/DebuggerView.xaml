@@ -22,11 +22,11 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                    <TextBlock Text="Connection" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Debugger.Connection}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Connections}" DisplayMemberPath="Name" SelectedItem="{Binding Connection}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="0,0,8,0">
-                    <TextBlock Text="Database" Style="{StaticResource FieldLabel}"/>
+                    <TextBlock Text="{DynamicResource Debugger.Database}" Style="{StaticResource FieldLabel}"/>
                     <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding Database}" IsEditable="True"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
@@ -40,7 +40,7 @@
                             IsEnabled="{Binding IsAttached}">
                         <md:PackIcon Kind="DebugStepOver"/>
                     </Button>
-                    <Button Command="{Binding StepIntoCommand}" Style="{StaticResource IconButton}" ToolTip="Step into stored procedure (expand EXEC)"
+                    <Button Command="{Binding StepIntoCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Debugger.StepInto}"
                             IsEnabled="{Binding IsAttached}">
                         <md:PackIcon Kind="DebugStepInto"/>
                     </Button>
@@ -99,7 +99,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <md:PackIcon Kind="TableLarge" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                <TextBlock Text="Results"/>
+                                <TextBlock Text="{DynamicResource Debugger.Results}"/>
                             </StackPanel>
                         </TabItem.Header>
                         <ItemsControl ItemsSource="{Binding Results}">
@@ -114,7 +114,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <md:PackIcon Kind="MessageTextOutline" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                <TextBlock Text="Messages"/>
+                                <TextBlock Text="{DynamicResource Debugger.Messages}"/>
                             </StackPanel>
                         </TabItem.Header>
                         <TextBox Text="{Binding Messages}" IsReadOnly="True" FontFamily="Consolas" BorderThickness="0"
@@ -162,8 +162,14 @@
                             </ListBox.ItemTemplate>
                             <ListBox.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Toggle breakpoint" Command="{Binding ToggleBreakpointCommand}" CommandParameter="{Binding CurrentStep}">
+                                    <MenuItem Header="{DynamicResource Debugger.ToggleBreakpoint}" Command="{Binding ToggleBreakpointCommand}" CommandParameter="{Binding CurrentStep}">
                                         <MenuItem.Icon><md:PackIcon Kind="CircleOutline" Foreground="{StaticResource Brand.Danger}"/></MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource Debugger.SetCondition}" Command="{Binding SetBreakpointConditionCommand}" CommandParameter="{Binding CurrentStep}">
+                                        <MenuItem.Icon><md:PackIcon Kind="CodeBraces" Foreground="{StaticResource Brand.Primary}"/></MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource Debugger.ClearCondition}" Command="{Binding ClearBreakpointConditionCommand}" CommandParameter="{Binding CurrentStep}">
+                                        <MenuItem.Icon><md:PackIcon Kind="CloseCircleOutline"/></MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
                             </ListBox.ContextMenu>
