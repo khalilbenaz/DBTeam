@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DBTeam.Core.Abstractions;
 using DBTeam.Core.Models;
+using DBTeam.Modules.QueryEditor.Formatting;
 
 namespace DBTeam.Modules.Profiler.ViewModels;
 
@@ -58,6 +59,16 @@ public partial class ProfilerViewModel : ObservableObject
         Databases.Clear();
         if (Connection is null) return;
         try { foreach (var d in await _meta.GetDatabasesAsync(Connection)) Databases.Add(d); } catch { }
+    }
+
+    [RelayCommand]
+    private void FormatSql()
+    {
+        if (string.IsNullOrWhiteSpace(Sql)) return;
+        var formatted = TSqlFormatter.Format(Sql, null, out var errors);
+        if (errors is { Count: > 0 }) { Status = "Format: parse errors"; return; }
+        Sql = formatted;
+        Status = "Formatted";
     }
 
     [RelayCommand]

@@ -72,6 +72,7 @@ public partial class App : System.Windows.Application
         DBTeam.Modules.DataGenerator.ModuleRegistration.Register(s);
         DBTeam.Modules.Documenter.ModuleRegistration.Register(s);
         DBTeam.Modules.Diagram.ModuleRegistration.Register(s);
+        DBTeam.Modules.Debugger.ModuleRegistration.Register(s);
     }
 
     protected override void OnExit(ExitEventArgs e)

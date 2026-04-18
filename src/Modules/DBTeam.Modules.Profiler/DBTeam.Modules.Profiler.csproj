@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\DBTeam.Core\DBTeam.Core.csproj" />
     <ProjectReference Include="..\..\DBTeam.Data\DBTeam.Data.csproj" />
     <ProjectReference Include="..\..\DBTeam.UI\DBTeam.UI.csproj" />
+    <ProjectReference Include="..\DBTeam.Modules.QueryEditor\DBTeam.Modules.QueryEditor.csproj" />
   </ItemGroup>
 
 </Project>
