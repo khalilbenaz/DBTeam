@@ -215,26 +215,51 @@ Themes are managed by **ModernWpfUI**. The `ThemeService` persists the choice in
 - [x] Theming (Light/Dark/System)
 - [x] i18n (EN/FR)
 
-### In progress / todo
-- [ ] **T-SQL Debugger** (step-through, breakpoints, watches) — currently stubbed
-- [ ] Export Results to Excel / CSV / JSON
-- [ ] Improved Schema Compare (`CREATE`/`ALTER` column-level diff instead of `DROP`+`CREATE`)
-- [ ] Data Compare: non-PK diff (`CHECKSUM`), chunking for large tables
-- [ ] Diagram: draw FK arrows between table box borders (not center-to-center), drag tables, zoom
-- [ ] Table Designer: edit existing tables (generate ALTER), FK/Index editors
-- [ ] SQL IntelliSense: CTE / alias resolution, function signatures, inline docs
-- [ ] Query history + favorites
-- [ ] Multiple query tabs with per-tab DB selector (currently shared)
-- [ ] Schema snapshot & compare against snapshot
-- [ ] Profiler: graphical tree view of execution plan
-- [ ] Unit tests (xUnit)
-- [ ] Installer (MSIX / WiX)
+### Shipped since v1.0
+- [x] **T-SQL Debugger** (statement-level stepping, breakpoints, session state) — v1.4
+- [x] **Results export** CSV / Excel / JSON / XML — v1.0.1 / v1.5
+- [x] **Schema Compare** column-level `ALTER` (ADD/DROP/ALTER COLUMN, FK diff, index diff) — v1.2
+- [x] **Diagram** drag, `Ctrl`+wheel zoom, PNG export — v1.2
+- [x] **Table Designer**: create + **load existing** tables — v1.3
+- [x] **Query History & favorites** — v1.1
+- [x] **Profiler plan tree** with icons per physical op — v1.3
+- [x] **25 unit tests** on CI — v1.0
+- [x] **Installer** `.exe` (Inno Setup) + portable ZIP — v1.2
+- [x] **Snippets** (16 Tab-triggered templates) — v1.5
+- [x] **Go to Definition** (F12) — v1.5
+- [x] **Real-time validation** (ScriptDom squiggles) — v1.5
+- [x] **Administration panel** (logins, users, roles, permissions, indexes, slow queries, sessions, backup/restore scripts) — v1.5
+- [x] **Terminal** (pwsh / claude / gh / sqlcmd / any CLI, embedded) — v1.5
+- [x] **Session save/restore** of open tabs — v1.3
+- [x] **Accessibility** baseline (AutomationProperties, focus visual) — v1.3
+- [x] **CodeQL + Dependabot** — v1.0.1
+
+### Still to do (v1.6+ / v2)
+- [ ] **Query Builder visuel** (drag tables → generate SQL) — v1.6
+- [ ] **Data Compare** non-PK diff via `CHECKSUM`, chunking — v1.6
+- [ ] **IntelliSense advanced**: CTE / alias resolution, function signatures, snippet marketplace — v1.6
+- [ ] **Profiler graphical plan** (draw op boxes with arrows, not just tree) — v1.6
+- [ ] **Schema snapshot** and compare against snapshot — v1.6
+- [ ] **Per-tab DB selector** (currently shared with side pane) — v1.6
+- [ ] **Monitoring** real-time DMV polling + charts — v1.7
+- [ ] **Import CSV/Excel/JSON** with auto type detection — v1.7
+- [ ] **Master-detail** data explorer (follow FK relations) — v1.7
+- [ ] **Reports & pivots** (beyond raw export) — v1.7
+- [ ] **Git source control** integration (save/load .sql from repo) — v1.7
+- [ ] **Automated screenshots** (FlaUI) for release README — v1.8
+- [ ] **Code signing** (Azure Trusted Signing) — v1.8
+- [ ] **MSIX + winget** — v1.8 (requires signing)
+- [ ] **Auto-update** (Velopack) — v1.8 (requires signing)
+- [ ] **LocalDB integration tests** — v1.8
+- [ ] **AI assistant** inline panel (BYO-key OpenAI/Anthropic/Ollama) — v2 (partial workaround: Terminal embeds `claude` CLI today)
+- [ ] **Debugger step-into SPs** via full instrumentation — v2
+
+Detailed implementation plans: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md).
 
 ### Known limitations
-- No tests yet
-- The Debugger module is a placeholder
-- Diagram auto-layout is naive (grid) — no force-directed graph
-- Schema Compare `ALTER TABLE` generation is a TODO (currently emits `-- TODO: manual ALTER TABLE`)
+- Diagram auto-layout is a naive grid — no force-directed graph yet.
+- Debugger cannot interrupt mid-statement or step into stored procedures (statement-level only).
+- Binary is not yet code-signed → SmartScreen warns on first download.
 
 ---
 

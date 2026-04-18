@@ -43,7 +43,7 @@ DBTeam.sln
         ├── DBTeam.Modules.DataCompare        ✅
         ├── DBTeam.Modules.TableDesigner      ✅ (create only — ALTER TODO)
         ├── DBTeam.Modules.Profiler           ✅
-        ├── DBTeam.Modules.Debugger           🚧 stub
+        ├── DBTeam.Modules.Debugger           ✅ (v1.4 — statement-level stepping, breakpoints, session state)
         ├── DBTeam.Modules.Diagram            ✅ (basic grid layout)
         ├── DBTeam.Modules.DataGenerator      ✅
         └── DBTeam.Modules.Documenter         ✅ (HTML)
@@ -86,7 +86,7 @@ DBTeam.sln
 
 - **Not installable yet** — run via `dotnet run` only. No MSIX/WiX/MSI, no auto-update, no signing, not in Microsoft Store.
 - **No test project** — 0 % coverage.
-- **T-SQL Debugger** = stub placeholder.
+- **T-SQL Debugger** — functional since v1.4 (statement-level stepping, breakpoints, session state, PRINT/error capture). Step-into stored procedures is not implemented (would require full instrumentation — see DESIGN-NOTES).
 - **Schema Compare ALTER** — column-level ALTER generation is a TODO (currently emits `-- TODO: manual ALTER TABLE`).
 - **Results export** — no CSV / Excel / JSON export yet.
 - **Table Designer** — create only, no edit-existing, no FK/Index editors.
