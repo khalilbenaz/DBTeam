@@ -85,13 +85,43 @@
                             <TextBlock Text="{DynamicResource Label.Results}"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <ItemsControl ItemsSource="{Binding Results}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="True" IsReadOnly="True" Margin="0,0,0,8"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top" Padding="6,4" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource Qe.Zoom}" VerticalAlignment="Center" Margin="0,0,6,0" Opacity="0.7"/>
+                                <Button Command="{Binding ZoomOutCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Qe.ZoomOut}" Padding="4">
+                                    <md:PackIcon Kind="MagnifyMinus" Width="14" Height="14"/>
+                                </Button>
+                                <TextBlock Text="{Binding ZoomFactor, StringFormat={}{0:P0}}" VerticalAlignment="Center" Margin="4,0" MinWidth="40" TextAlignment="Center"/>
+                                <Button Command="{Binding ZoomInCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Qe.ZoomIn}" Padding="4">
+                                    <md:PackIcon Kind="MagnifyPlus" Width="14" Height="14"/>
+                                </Button>
+                                <Button Command="{Binding ZoomResetCommand}" Style="{StaticResource IconButton}" ToolTip="{DynamicResource Qe.ZoomReset}" Padding="4" Margin="0,0,12,0">
+                                    <md:PackIcon Kind="Restore" Width="14" Height="14"/>
+                                </Button>
+                                <TextBlock Text="{DynamicResource Qe.Timeout}" VerticalAlignment="Center" Opacity="0.7" Margin="0,0,6,0"/>
+                                <TextBox Text="{Binding CommandTimeoutSeconds, UpdateSourceTrigger=PropertyChanged}" Width="60" VerticalAlignment="Center" ToolTip="{DynamicResource Qe.TimeoutTip}"/>
+                                <TextBlock Text="s" VerticalAlignment="Center" Margin="2,0,0,0" Opacity="0.6"/>
+                            </StackPanel>
+                        </Border>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Results}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="True" IsReadOnly="True" Margin="0,0,0,8"
+                                                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                                                  MaxHeight="500" ColumnWidth="SizeToHeader"
+                                                  EnableRowVirtualization="True" EnableColumnVirtualization="True">
+                                            <DataGrid.LayoutTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.ZoomFactor, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                ScaleY="{Binding DataContext.ZoomFactor, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                            </DataGrid.LayoutTransform>
+                                        </DataGrid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </DockPanel>
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>

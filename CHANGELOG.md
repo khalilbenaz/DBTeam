@@ -4,6 +4,20 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [2.1.2] — 2026-04-20 — Results grid polish + reserved-keyword bracketing + configurable timeout
+
+### Added
+- **Configurable query timeout** — Query Editor result pane gains a `Timeout` box (default **120 s**, was 30 s). `0` = unlimited. Applies to the current tab only.
+- **Results zoom** — `-` / reset / `+` buttons above the grid bind to a `ScaleTransform` so the whole result set can be shrunk to fit a wide table or enlarged for readability. Percentage is displayed.
+- **Horizontal scrolling** — the results host is now a `ScrollViewer` with `HorizontalScrollBarVisibility=Auto`, and each inner `DataGrid` has its own horizontal scrollbar plus `MaxHeight=500`, `ColumnWidth=SizeToHeader` and row/column virtualisation. Wide result sets no longer clip their rightmost columns off-screen.
+
+### Fixed
+- **Reserved-keyword collisions** — `SqlCompletionItem.Complete` now brackets identifiers on insertion. Tables/views/procedures/functions are always qualified as `[schema].[name]`; columns get bracketed only when they collide with a T-SQL reserved word (`transaction`, `user`, `order`, …) or contain a non-identifier character. A user table named `transaction` no longer parses as the `TRANSACTION` keyword.
+- **Button content alignment** — `PrimaryButton` (and every style that inherits from it, e.g. `SuccessButton`, `DangerButton`) explicitly sets `HorizontalContentAlignment=Center` and `VerticalContentAlignment=Center`. The Connect/Execute/Build buttons now render their text centred when padding or layout stretched them before.
+
+### Changed
+- Version bumped to **2.1.2**.
+
 ## [2.1.1] — 2026-04-18 — Release CI fix + dock pane live-switch
 
 ### Fixed

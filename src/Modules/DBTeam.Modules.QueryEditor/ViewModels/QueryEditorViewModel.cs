@@ -36,6 +36,12 @@ public partial class QueryEditorViewModel : ObservableObject
     [ObservableProperty] private string messages = string.Empty;
     [ObservableProperty] private TimeSpan elapsed;
     [ObservableProperty] private int rowCount;
+    [ObservableProperty] private int commandTimeoutSeconds = 120;
+    [ObservableProperty] private double zoomFactor = 1.0;
+
+    [RelayCommand] private void ZoomIn()  => ZoomFactor = System.Math.Min(2.5, System.Math.Round(ZoomFactor + 0.1, 2));
+    [RelayCommand] private void ZoomOut() => ZoomFactor = System.Math.Max(0.5, System.Math.Round(ZoomFactor - 0.1, 2));
+    [RelayCommand] private void ZoomReset() => ZoomFactor = 1.0;
 
     public ObservableCollection<string> Databases { get; }
     public ObservableCollection<DataTable> Results { get; } = new();
@@ -69,7 +75,7 @@ public partial class QueryEditorViewModel : ObservableObject
         Results.Clear();
         Messages = string.Empty;
         StatusText = "Executing...";
-        var req = new QueryRequest { Sql = Sql, Database = Database };
+        var req = new QueryRequest { Sql = Sql, Database = Database, CommandTimeoutSeconds = CommandTimeoutSeconds };
         var r = await _exec.ExecuteAsync(Connection, req);
         foreach (var ds in r.ResultSets) Results.Add(ds);
         Messages = string.Join(Environment.NewLine, r.Messages);
