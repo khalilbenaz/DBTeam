@@ -15,7 +15,7 @@
     <sys:String x:Key="Menu.About">_About DB TEAM</sys:String>
     <sys:String x:Key="Menu.Shortcuts">Keyboard _Shortcuts</sys:String>
     <sys:String x:Key="About.Title">About DB TEAM</sys:String>
-    <sys:String x:Key="About.Version">Version 2.1.1</sys:String>
+    <sys:String x:Key="About.Version">Version 2.1.2</sys:String>
     <sys:String x:Key="About.Description">Professional SQL Server IDE built with WPF.</sys:String>
     <sys:String x:Key="About.Close">Close</sys:String>
     <sys:String x:Key="About.Author">Author · Khalil Benazzouz</sys:String>
@@ -184,6 +184,12 @@
     <sys:String x:Key="Qe.ExportXml">Export to XML</sys:String>
     <sys:String x:Key="Qe.DbContext">Database context for this tab</sys:String>
     <sys:String x:Key="Qe.RefreshDb">Refresh database list</sys:String>
+    <sys:String x:Key="Qe.Zoom">Zoom</sys:String>
+    <sys:String x:Key="Qe.ZoomIn">Zoom in</sys:String>
+    <sys:String x:Key="Qe.ZoomOut">Zoom out</sys:String>
+    <sys:String x:Key="Qe.ZoomReset">Reset zoom</sys:String>
+    <sys:String x:Key="Qe.Timeout">Timeout</sys:String>
+    <sys:String x:Key="Qe.TimeoutTip">Query execution timeout in seconds (0 = unlimited)</sys:String>
 
     <sys:String x:Key="Dbg.AttachTip">Parse script + open connection</sys:String>
     <sys:String x:Key="Dbg.ContinueTip">Continue until next breakpoint or end</sys:String>
