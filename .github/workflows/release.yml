@@ -62,7 +62,7 @@ jobs:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        uses: azure/trusted-signing-action@v0.4.0
+        uses: azure/trusted-signing-action@v1.2.0
         continue-on-error: true
         with:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
