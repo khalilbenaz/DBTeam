@@ -171,8 +171,7 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
     <div class="label">Function signatures in autocomplete</div>  <div><span class="pill done">v2.0</span></div>
     <div class="label">Conditional breakpoints (T-SQL expression)</div> <div><span class="pill done">v2.1</span></div>
     <div class="label">Live language switch (status bar, tab titles)</div> <div><span class="pill done">v2.1</span></div>
-    <div class="label">Auto-update (Velopack)</div>               <div><span class="pill soon">scaffold — awaiting signed releases</span></div>
-    <div class="label">Automated screenshots (FlaUI)</div>        <div><span class="pill soon">scaffold — awaiting visuals</span></div>
+    <div class="label">Automated screenshots (FlaUI)</div>        <div><span class="pill soon">not started — scaffold only</span></div>
   </div>
 </section>
 
