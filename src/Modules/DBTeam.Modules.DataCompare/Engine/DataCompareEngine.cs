@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -51,7 +52,7 @@ public sealed class DataCompareEngine
         var d = new Dictionary<int, int>();
         await using var conn = new SqlConnection(ConnectionStringFactory.Build(c, db));
         await conn.OpenAsync(ct);
-        await using var cmd = new SqlCommand($"SELECT BINARY_CHECKSUM(*) AS h, COUNT(*) AS c FROM [{schema}].[{table}] GROUP BY BINARY_CHECKSUM(*)", conn) { CommandTimeout = 180 };
+        await using var cmd = new SqlCommand($"SELECT BINARY_CHECKSUM(*) AS h, COUNT(*) AS c FROM {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} GROUP BY BINARY_CHECKSUM(*)", conn) { CommandTimeout = 180 };
         await using var r = await cmd.ExecuteReaderAsync(ct);
         while (await r.ReadAsync(ct)) d[r.GetInt32(0)] = r.GetInt32(1);
         return d;
@@ -91,10 +92,10 @@ public sealed class DataCompareEngine
 
     private static async Task<DataTable> LoadAsync(SqlConnectionInfo c, string db, string schema, string table, IReadOnlyList<string> cols, CancellationToken ct)
     {
-        var colList = string.Join(",", cols.Select(n => $"[{n}]"));
+        var colList = string.Join(",", cols.Select(n => $"{SqlIdentifier.Quote(n)}"));
         await using var conn = new SqlConnection(ConnectionStringFactory.Build(c, db));
         await conn.OpenAsync(ct);
-        await using var cmd = new SqlCommand($"SELECT {colList} FROM [{schema}].[{table}]", conn) { CommandTimeout = 120 };
+        await using var cmd = new SqlCommand($"SELECT {colList} FROM {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}", conn) { CommandTimeout = 120 };
         await using var r = await cmd.ExecuteReaderAsync(ct);
         var dt = new DataTable();
         dt.Load(r);
@@ -104,7 +105,7 @@ public sealed class DataCompareEngine
     public static string GenerateSyncScript(string schema, string table, IEnumerable<RowDiff> diffs, IReadOnlyList<string> keyCols, IReadOnlyList<string> allCols)
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"-- Data sync for [{schema}].[{table}]");
+        sb.AppendLine($"-- Data sync for {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}");
         sb.AppendLine("SET XACT_ABORT ON;");
         sb.AppendLine("BEGIN TRAN;");
         foreach (var d in diffs)
@@ -112,14 +113,14 @@ public sealed class DataCompareEngine
             switch (d.State)
             {
                 case RowState.OnlyInSource:
-                    sb.AppendLine($"INSERT INTO [{schema}].[{table}] ({string.Join(",", allCols.Select(c => $"[{c}]"))}) VALUES ({string.Join(",", allCols.Select(c => Lit(d.Source[c])))});");
+                    sb.AppendLine($"INSERT INTO {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} ({string.Join(",", allCols.Select(c => $"{SqlIdentifier.Quote(c)}"))}) VALUES ({string.Join(",", allCols.Select(c => Lit(d.Source[c])))});");
                     break;
                 case RowState.OnlyInTarget:
-                    sb.AppendLine($"DELETE FROM [{schema}].[{table}] WHERE {string.Join(" AND ", keyCols.Select(k => $"[{k}]={Lit(d.Target[k])}"))};");
+                    sb.AppendLine($"DELETE FROM {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} WHERE {string.Join(" AND ", keyCols.Select(k => $"{SqlIdentifier.Quote(k)}={Lit(d.Target[k])}"))};");
                     break;
                 case RowState.Different:
                     var nonKey = allCols.Where(c => !keyCols.Contains(c)).ToList();
-                    sb.AppendLine($"UPDATE [{schema}].[{table}] SET {string.Join(",", nonKey.Select(c => $"[{c}]={Lit(d.Source[c])}"))} WHERE {string.Join(" AND ", keyCols.Select(k => $"[{k}]={Lit(d.Source[k])}"))};");
+                    sb.AppendLine($"UPDATE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} SET {string.Join(",", nonKey.Select(c => $"{SqlIdentifier.Quote(c)}={Lit(d.Source[c])}"))} WHERE {string.Join(" AND ", keyCols.Select(k => $"{SqlIdentifier.Quote(k)}={Lit(d.Source[k])}"))};");
                     break;
             }
         }

@@ -1,4 +1,5 @@
 using System;
+using DBTeam.Core.Sql;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
@@ -52,11 +53,11 @@ public sealed class SqlCompletionItem : ICompletionData
             case CompletionKind.Function:
             {
                 var parts = Text.Split('.');
-                if (parts.Length == 2) return $"[{parts[0]}].[{parts[1]}]";
-                return IsReserved(Text) || NeedsQuoting(Text) ? $"[{Text}]" : Text;
+                if (parts.Length == 2) return SqlIdentifier.Quote(parts[0], parts[1]);
+                return IsReserved(Text) || NeedsQuoting(Text) ? SqlIdentifier.Quote(Text) : Text;
             }
             case CompletionKind.Column:
-                return IsReserved(Text) || NeedsQuoting(Text) ? $"[{Text}]" : Text;
+                return IsReserved(Text) || NeedsQuoting(Text) ? SqlIdentifier.Quote(Text) : Text;
             default:
                 return Text;
         }

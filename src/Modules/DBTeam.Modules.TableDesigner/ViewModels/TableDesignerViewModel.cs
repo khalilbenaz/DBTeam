@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -112,18 +113,18 @@ public partial class TableDesignerViewModel : ObservableObject
     public string BuildDdl()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"CREATE TABLE [{Schema}].[{TableName}] (");
+        sb.AppendLine($"CREATE TABLE {SqlIdentifier.Quote(Schema)}.{SqlIdentifier.Quote(TableName)} (");
         for (int i = 0; i < Columns.Count; i++)
         {
             var c = Columns[i];
-            sb.Append($"    [{c.Name}] {FormatType(c)}");
+            sb.Append($"    {SqlIdentifier.Quote(c.Name)} {FormatType(c)}");
             if (c.IsIdentity) sb.Append(" IDENTITY(1,1)");
             sb.Append(c.IsNullable ? " NULL" : " NOT NULL");
             if (!string.IsNullOrWhiteSpace(c.DefaultExpression)) sb.Append($" DEFAULT {c.DefaultExpression}");
             if (i < Columns.Count - 1 || Columns.Any(x => x.IsPrimaryKey)) sb.Append(',');
             sb.AppendLine();
         }
-        var pks = Columns.Where(x => x.IsPrimaryKey).Select(x => $"[{x.Name}]").ToList();
+        var pks = Columns.Where(x => x.IsPrimaryKey).Select(x => $"{SqlIdentifier.Quote(x.Name)}").ToList();
         if (pks.Count > 0)
             sb.AppendLine($"    CONSTRAINT [PK_{TableName}] PRIMARY KEY ({string.Join(",", pks)})");
         sb.AppendLine(");");

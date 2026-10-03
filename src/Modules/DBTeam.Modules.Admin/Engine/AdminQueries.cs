@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,27 +66,27 @@ ORDER BY size_mb DESC", ct);
     public static string GenerateBackupScript(string db, string? path = null)
     {
         path ??= $@"C:\Backup\{db}_{{DATE}}.bak";
-        return $@"-- Full backup of [{db}]
-DECLARE @path NVARCHAR(500) = REPLACE(N'{path}', N'{{DATE}}', CONVERT(NVARCHAR(20), SYSUTCDATETIME(), 112) + '_' + REPLACE(CONVERT(NVARCHAR(20), SYSUTCDATETIME(), 108), ':', ''));
-BACKUP DATABASE [{db}] TO DISK = @path
-WITH FORMAT, INIT, COMPRESSION, STATS = 10, NAME = N'{db} Full backup';";
+        return $@"-- Full backup of {SqlIdentifier.Quote(db)}
+DECLARE @path NVARCHAR(500) = REPLACE(N'{path.Replace("'", "''")}', N'{{DATE}}', CONVERT(NVARCHAR(20), SYSUTCDATETIME(), 112) + '_' + REPLACE(CONVERT(NVARCHAR(20), SYSUTCDATETIME(), 108), ':', ''));
+BACKUP DATABASE {SqlIdentifier.Quote(db)} TO DISK = @path
+WITH FORMAT, INIT, COMPRESSION, STATS = 10, NAME = N'{db.Replace("'", "''")} Full backup';";
     }
 
     public static string GenerateRestoreScript(string db, string backupFile)
     {
-        return $@"-- Restore [{db}] from a .bak (review file paths first)
+        return $@"-- Restore {SqlIdentifier.Quote(db)} from a .bak (review file paths first)
 USE master;
-ALTER DATABASE [{db}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-RESTORE DATABASE [{db}]
-    FROM DISK = N'{backupFile}'
+ALTER DATABASE {SqlIdentifier.Quote(db)} SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+RESTORE DATABASE {SqlIdentifier.Quote(db)}
+    FROM DISK = N'{backupFile.Replace("'", "''")}'
     WITH REPLACE, STATS = 10;
-ALTER DATABASE [{db}] SET MULTI_USER;";
+ALTER DATABASE {SqlIdentifier.Quote(db)} SET MULTI_USER;";
     }
 
     public static string GenerateIndexRebuildScript(string schema, string table, string indexName, string recommendation)
     {
         var op = recommendation == "REBUILD" ? "REBUILD" : "REORGANIZE";
-        return $"ALTER INDEX [{indexName}] ON [{schema}].[{table}] {op};";
+        return $"ALTER INDEX {SqlIdentifier.Quote(indexName)} ON {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} {op};";
     }
 
     private static async Task<DataTable> QueryAsync(SqlConnectionInfo c, string db, string sql, CancellationToken ct)

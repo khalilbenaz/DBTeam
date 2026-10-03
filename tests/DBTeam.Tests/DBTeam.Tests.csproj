@@ -28,6 +28,8 @@
     <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.DataGenerator\DBTeam.Modules.DataGenerator.csproj" />
     <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.QueryEditor\DBTeam.Modules.QueryEditor.csproj" />
     <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.Documenter\DBTeam.Modules.Documenter.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.Admin\DBTeam.Modules.Admin.csproj" />
+    <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.Import\DBTeam.Modules.Import.csproj" />
     <ProjectReference Include="..\..\src\Modules\DBTeam.Modules.TableDesigner\DBTeam.Modules.TableDesigner.csproj" />
   </ItemGroup>
 

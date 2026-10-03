@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -95,7 +96,7 @@ public partial class SchemaCompareViewModel : ObservableObject
                     { sb.AppendLine(item.SourceScript); sb.AppendLine("GO"); }
                     break;
                 case DiffState.OnlyInTarget:
-                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} [{item.Schema}].[{item.Name}];");
+                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} {SqlIdentifier.Quote(item.Schema)}.{SqlIdentifier.Quote(item.Name)};");
                     sb.AppendLine("GO");
                     break;
                 case DiffState.Different when item.Kind == DBTeam.Core.Models.DbObjectKind.Table:
@@ -103,7 +104,7 @@ public partial class SchemaCompareViewModel : ObservableObject
                         _meta, SourceConnection!, SourceDatabase!, TargetConnection!, TargetDatabase!, item.Schema, item.Name));
                     break;
                 case DiffState.Different:
-                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} [{item.Schema}].[{item.Name}];");
+                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} {SqlIdentifier.Quote(item.Schema)}.{SqlIdentifier.Quote(item.Name)};");
                     sb.AppendLine("GO");
                     if (!string.IsNullOrWhiteSpace(item.SourceScript))
                     { sb.AppendLine(item.SourceScript); sb.AppendLine("GO"); }

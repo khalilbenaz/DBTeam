@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -116,11 +117,11 @@ public partial class QueryBuilderViewModel : ObservableObject
         if (TopN is > 0) sb.Append($"TOP {TopN} ");
         var cols = selectedTables.SelectMany(t =>
             t.Columns.Where(c => c.IsSelected)
-                .Select(c => $"[{t.Alias ?? t.Name}].[{c.Name}]")).ToList();
+                .Select(c => $"{SqlIdentifier.Quote(t.Alias ?? t.Name)}.{SqlIdentifier.Quote(c.Name)}")).ToList();
         sb.Append(cols.Count == 0 ? "*" : string.Join(", ", cols));
         sb.AppendLine();
         sb.AppendLine("FROM " + string.Join(" CROSS JOIN ", selectedTables.Select(t =>
-            $"[{t.Schema}].[{t.Name}]" + (string.IsNullOrEmpty(t.Alias) ? "" : $" AS [{t.Alias}]"))));
+            $"{SqlIdentifier.Quote(t.Schema)}.{SqlIdentifier.Quote(t.Name)}" + (string.IsNullOrEmpty(t.Alias) ? "" : $" AS {SqlIdentifier.Quote(t.Alias)}"))));
         if (!string.IsNullOrWhiteSpace(WhereClause)) sb.AppendLine("WHERE " + WhereClause);
         if (!string.IsNullOrWhiteSpace(OrderBy)) sb.AppendLine("ORDER BY " + OrderBy);
         sb.Append(";");

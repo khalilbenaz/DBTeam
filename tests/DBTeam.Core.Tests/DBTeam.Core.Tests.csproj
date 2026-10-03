@@ -21,6 +21,11 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <!-- Fichiers sources purs (dépendent uniquement de DBTeam.Core) compilés ici pour être testés hors Windows. -->
+  <ItemGroup>
+    <Compile Include="..\..\src\Modules\DBTeam.Modules.SchemaCompare\Engine\TableAlterGenerator.cs" Link="Linked\TableAlterGenerator.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\DBTeam.Core\DBTeam.Core.csproj" />
   </ItemGroup>

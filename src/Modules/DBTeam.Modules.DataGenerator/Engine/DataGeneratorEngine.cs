@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,9 +49,9 @@ public sealed class DataGeneratorEngine
             .Where(col => !(opts.SkipIdentity && col.IsIdentity))
             .ToList();
         var faker = new Faker();
-        var colList = string.Join(",", cols.Select(x => $"[{x.Name}]"));
+        var colList = string.Join(",", cols.Select(x => $"{SqlIdentifier.Quote(x.Name)}"));
         var paramList = string.Join(",", cols.Select(x => $"@{x.Name}"));
-        var sql = $"INSERT INTO [{schema}].[{table}] ({colList}) VALUES ({paramList})";
+        var sql = $"INSERT INTO {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} ({colList}) VALUES ({paramList})";
 
         await using var conn = new SqlConnection(ConnectionStringFactory.Build(c, db));
         await conn.OpenAsync(ct);
@@ -121,10 +122,10 @@ public sealed class DataGeneratorEngine
         if (rows.Count == 0) return "";
         var cols = rows[0].Keys.ToList();
         var sb = new StringBuilder();
-        sb.AppendLine($"-- {rows.Count} row(s) for [{schema}].[{table}]");
+        sb.AppendLine($"-- {rows.Count} row(s) for {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}");
         foreach (var r in rows)
         {
-            sb.Append($"INSERT INTO [{schema}].[{table}] ({string.Join(",", cols.Select(x => $"[{x}]"))}) VALUES (");
+            sb.Append($"INSERT INTO {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} ({string.Join(",", cols.Select(x => $"{SqlIdentifier.Quote(x)}"))}) VALUES (");
             sb.Append(string.Join(",", cols.Select(c => Lit(r[c]))));
             sb.AppendLine(");");
         }

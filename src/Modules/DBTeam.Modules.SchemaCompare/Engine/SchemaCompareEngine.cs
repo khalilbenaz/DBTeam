@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -96,15 +97,15 @@ public sealed class SchemaCompareEngine
                     sb.AppendLine("GO");
                     break;
                 case DiffState.OnlyInTarget when sourceToTarget:
-                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} [{item.Schema}].[{item.Name}];");
+                    sb.AppendLine($"DROP {item.KindLabel.ToUpper()} {SqlIdentifier.Quote(item.Schema)}.{SqlIdentifier.Quote(item.Name)};");
                     sb.AppendLine("GO");
                     break;
                 case DiffState.Different when sourceToTarget:
                     if (item.Kind == DbObjectKind.Table)
-                        sb.AppendLine($"-- TODO: manual ALTER TABLE [{item.Schema}].[{item.Name}]");
+                        sb.AppendLine($"-- TODO: manual ALTER TABLE {SqlIdentifier.Quote(item.Schema)}.{SqlIdentifier.Quote(item.Name)}");
                     else
                     {
-                        sb.AppendLine($"DROP {item.KindLabel.ToUpper()} [{item.Schema}].[{item.Name}];");
+                        sb.AppendLine($"DROP {item.KindLabel.ToUpper()} {SqlIdentifier.Quote(item.Schema)}.{SqlIdentifier.Quote(item.Name)};");
                         sb.AppendLine("GO");
                         sb.AppendLine(item.SourceScript);
                         sb.AppendLine("GO");
