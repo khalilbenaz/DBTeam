@@ -207,7 +207,7 @@ public partial class QueryEditorViewModel : ObservableObject
         {
             string s => $"N'{s.Replace("'", "''")}'",
             System.Guid g => $"'{g}'",
-            System.DateTime dt => $"'{dt:yyyy-MM-dd HH:mm:ss.fff}'",
+            System.DateTime dt => $"'{dt.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)}'",
             _ => System.Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture) ?? "NULL"
         };
         var sql = $"SELECT TOP 100 *\nFROM [dbo].{SqlIdentifier.Quote(target)}\nWHERE {SqlIdentifier.Quote(column)} = {lit}\n   OR [Id] = {lit};";
