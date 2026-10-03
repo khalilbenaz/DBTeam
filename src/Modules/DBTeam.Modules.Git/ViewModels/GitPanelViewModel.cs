@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DBTeam.Core.Abstractions;
 using DBTeam.Core.Events;
+using DBTeam.Core.Infrastructure;
 
 namespace DBTeam.Modules.Git.ViewModels;
 
@@ -32,23 +32,23 @@ public partial class GitPanelViewModel : ObservableObject
     [ObservableProperty] private string gitLog = "";
 
     [RelayCommand]
-    public void PickFolder()
+    public async Task PickFolderAsync()
     {
         var dlg = new Microsoft.Win32.OpenFolderDialog { Title = "Select Git repository" };
-        if (dlg.ShowDialog() == true) { RepoPath = dlg.FolderName; Refresh(); }
+        if (dlg.ShowDialog() == true) { RepoPath = dlg.FolderName; await RefreshAsync(); }
     }
 
     [RelayCommand]
-    public void Refresh()
+    public async Task RefreshAsync()
     {
         Files.Clear();
         if (!Directory.Exists(RepoPath)) { Status = "Folder does not exist"; return; }
         try
         {
-            Branch = RunGit("rev-parse --abbrev-ref HEAD").Trim();
-            foreach (var f in Directory.GetFiles(RepoPath, "*.sql", SearchOption.AllDirectories))
+            Branch = (await RunGitAsync("rev-parse", "--abbrev-ref", "HEAD")).Trim();
+            foreach (var f in await Task.Run(() => Directory.GetFiles(RepoPath, "*.sql", SearchOption.AllDirectories)))
                 Files.Add(Path.GetRelativePath(RepoPath, f));
-            GitLog = RunGit("log --oneline -15");
+            GitLog = await RunGitAsync("log", "--oneline", "-15");
             Status = $"Branch: {Branch} · {Files.Count} .sql file(s)";
         }
         catch (System.Exception ex) { Status = ex.Message; }
@@ -67,41 +67,33 @@ public partial class GitPanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void Commit()
+    public async Task CommitAsync()
     {
         if (string.IsNullOrWhiteSpace(CommitMessage) || !Directory.Exists(RepoPath)) return;
         try
         {
-            RunGit("add -A");
-            var result = RunGit($"commit -m \"{CommitMessage.Replace("\"", "'")}\"");
+            await RunGitAsync("add", "-A");
+            // Le message est un argument à part entière (ArgumentList) : guillemets, $, \ et retours ligne sont conservés tels quels.
+            var result = await RunGitAsync("commit", "-m", CommitMessage);
             Status = result.Trim();
             CommitMessage = "";
-            GitLog = RunGit("log --oneline -15");
+            GitLog = await RunGitAsync("log", "--oneline", "-15");
         }
         catch (System.Exception ex) { Status = ex.Message; }
     }
 
-    [RelayCommand] public void Pull() => Status = RunGitSafe("pull");
-    [RelayCommand] public void Push() => Status = RunGitSafe("push");
+    [RelayCommand] public async Task PullAsync() => Status = await RunGitSafeAsync("pull");
+    [RelayCommand] public async Task PushAsync() => Status = await RunGitSafeAsync("push");
 
-    private string RunGit(string args)
+    private async Task<string> RunGitAsync(params string[] args)
     {
-        var psi = new ProcessStartInfo("git", args)
-        {
-            WorkingDirectory = RepoPath,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-        using var p = Process.Start(psi);
-        if (p is null) throw new Exception("git process failed to start");
-        var stdout = p.StandardOutput.ReadToEnd();
-        var stderr = p.StandardError.ReadToEnd();
-        p.WaitForExit();
-        if (p.ExitCode != 0 && string.IsNullOrEmpty(stdout)) throw new Exception(stderr);
-        return stdout + stderr;
+        var r = await ProcessRunner.RunAsync("git", args, RepoPath);
+        if (r.ExitCode != 0 && string.IsNullOrEmpty(r.StdOut)) throw new Exception(r.StdErr);
+        return r.StdOut + r.StdErr;
     }
 
-    private string RunGitSafe(string args) { try { return RunGit(args).Trim(); } catch (Exception ex) { return ex.Message; } }
+    private async Task<string> RunGitSafeAsync(params string[] args)
+    {
+        try { return (await RunGitAsync(args)).Trim(); } catch (Exception ex) { return ex.Message; }
+    }
 }
