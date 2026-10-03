@@ -4,6 +4,8 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+## [2.2.0] — 2026-10-03 — Security hardening, GO batches, atomic stores
+
 ### Security
 - **TLS**: `SqlConnectionInfo.TrustServerCertificate` now defaults to `false`; the server certificate is validated unless the user ticks *Trust server certificate* in the connection dialog. Connections saved earlier keep their stored value.
 - **SQL generation**: every identifier interpolated into generated SQL (DataCompare, DataGenerator, SchemaCompare, Table Designer, CSV import, Admin scripts, pivot / master-detail, completion, metadata) goes through `SqlIdentifier.Quote`, which doubles `]`. An object named `a]b` no longer breaks the script, and a hostile name can no longer inject SQL.
