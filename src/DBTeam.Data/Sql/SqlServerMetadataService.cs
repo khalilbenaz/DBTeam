@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
@@ -78,7 +79,7 @@ WHERE c.object_id = OBJECT_ID(@obj)
 ORDER BY c.column_id";
         await using var conn = await OpenAsync(c, database, ct);
         await using var cmd = new SqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@obj", $"[{schema}].[{table}]");
+        cmd.Parameters.AddWithValue("@obj", $"{SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}");
         var list = new List<ColumnInfo>();
         await using var r = await cmd.ExecuteReaderAsync(ct);
         while (await r.ReadAsync(ct))
@@ -113,7 +114,7 @@ WHERE i.object_id = OBJECT_ID(@obj) AND i.type > 0
 ORDER BY i.index_id";
         await using var conn = await OpenAsync(c, database, ct);
         await using var cmd = new SqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@obj", $"[{schema}].[{table}]");
+        cmd.Parameters.AddWithValue("@obj", $"{SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}");
         var list = new List<IndexInfo>();
         await using var r = await cmd.ExecuteReaderAsync(ct);
         while (await r.ReadAsync(ct))
@@ -147,7 +148,7 @@ WHERE fk.parent_object_id = OBJECT_ID(@obj)
 ORDER BY fk.name, fkc.constraint_column_id";
         await using var conn = await OpenAsync(c, database, ct);
         await using var cmd = new SqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@obj", $"[{schema}].[{table}]");
+        cmd.Parameters.AddWithValue("@obj", $"{SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}");
         var dict = new Dictionary<string, ForeignKeyInfo>();
         await using var r = await cmd.ExecuteReaderAsync(ct);
         while (await r.ReadAsync(ct))
@@ -174,7 +175,7 @@ ORDER BY fk.name, fkc.constraint_column_id";
     {
         await using var conn = await OpenAsync(c, database, ct);
         await using var cmd = new SqlCommand("SELECT OBJECT_DEFINITION(OBJECT_ID(@o))", conn);
-        cmd.Parameters.AddWithValue("@o", $"[{schema}].[{name}]");
+        cmd.Parameters.AddWithValue("@o", $"{SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(name)}");
         var result = await cmd.ExecuteScalarAsync(ct);
         if (result is string s && !string.IsNullOrWhiteSpace(s)) return s;
         return await ScriptTableAsync(c, database, schema, name, ct);
@@ -184,11 +185,11 @@ ORDER BY fk.name, fkc.constraint_column_id";
     {
         var cols = await GetColumnsAsync(c, database, schema, table, ct);
         var sb = new System.Text.StringBuilder();
-        sb.AppendLine($"CREATE TABLE [{schema}].[{table}] (");
+        sb.AppendLine($"CREATE TABLE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} (");
         for (int i = 0; i < cols.Count; i++)
         {
             var col = cols[i];
-            sb.Append($"    [{col.Name}] {FormatType(col)}");
+            sb.Append($"    {SqlIdentifier.Quote(col.Name)} {FormatType(col)}");
             if (col.IsIdentity) sb.Append(" IDENTITY(1,1)");
             sb.Append(col.IsNullable ? " NULL" : " NOT NULL");
             if (col.DefaultExpression is not null) sb.Append($" DEFAULT {col.DefaultExpression}");

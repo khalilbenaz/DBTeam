@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -171,12 +172,12 @@ public partial class QueryEditorViewModel : ObservableObject
         sb.AppendLine("-- PIVOT skeleton. Adjust source, axis columns, aggregator, and value list.");
         sb.AppendLine("SELECT *");
         sb.AppendLine("FROM (");
-        sb.AppendLine($"    SELECT [{rowCol}], [{colCol}], [{valCol}]");
+        sb.AppendLine($"    SELECT {SqlIdentifier.Quote(rowCol)}, {SqlIdentifier.Quote(colCol)}, {SqlIdentifier.Quote(valCol)}");
         sb.AppendLine("    FROM (<your-source-query>)");
         sb.AppendLine(") src");
         sb.AppendLine("PIVOT (");
-        sb.AppendLine($"    SUM([{valCol}])");
-        sb.AppendLine($"    FOR [{colCol}] IN ({string.Join(", ", System.Linq.Enumerable.Select(distinctVals, v => $"[{v}]"))})");
+        sb.AppendLine($"    SUM({SqlIdentifier.Quote(valCol)})");
+        sb.AppendLine($"    FOR {SqlIdentifier.Quote(colCol)} IN ({string.Join(", ", System.Linq.Enumerable.Select(distinctVals, v => $"{SqlIdentifier.Quote(v)}"))})");
         sb.AppendLine(") p;");
         var bus = ServiceLocator.TryGet<IEventBus>();
         bus?.Publish(new OpenQueryEditorRequest { Connection = Connection, Database = Database, InitialSql = sb.ToString() });
@@ -209,7 +210,7 @@ public partial class QueryEditorViewModel : ObservableObject
             System.DateTime dt => $"'{dt:yyyy-MM-dd HH:mm:ss.fff}'",
             _ => System.Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture) ?? "NULL"
         };
-        var sql = $"SELECT TOP 100 *\nFROM [dbo].[{target}]\nWHERE [{column}] = {lit}\n   OR [Id] = {lit};";
+        var sql = $"SELECT TOP 100 *\nFROM [dbo].{SqlIdentifier.Quote(target)}\nWHERE {SqlIdentifier.Quote(column)} = {lit}\n   OR [Id] = {lit};";
         var bus = ServiceLocator.TryGet<IEventBus>();
         bus?.Publish(new OpenQueryEditorRequest { Connection = Connection, Database = Database, InitialSql = sql });
     }

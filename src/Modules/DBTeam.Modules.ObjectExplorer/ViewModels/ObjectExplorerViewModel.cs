@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -126,8 +127,8 @@ public partial class ObjectExplorerViewModel : ObservableObject
         if (n?.Connection is null) return;
         string? sql = n.Kind switch
         {
-            DbObjectKind.Table => $"SELECT TOP 100 * FROM [{n.Schema}].[{n.ObjectName}];",
-            DbObjectKind.View => $"SELECT TOP 100 * FROM [{n.Schema}].[{n.ObjectName}];",
+            DbObjectKind.Table => $"SELECT TOP 100 * FROM {SqlIdentifier.Quote(n.Schema)}.{SqlIdentifier.Quote(n.ObjectName)};",
+            DbObjectKind.View => $"SELECT TOP 100 * FROM {SqlIdentifier.Quote(n.Schema)}.{SqlIdentifier.Quote(n.ObjectName)};",
             _ => null
         };
         _bus.Publish(new OpenQueryEditorRequest { Connection = n.Connection, Database = n.Database, InitialSql = sql });

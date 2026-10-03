@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -55,7 +56,7 @@ public sealed class CsvImporter
     {
         await using var conn = new SqlConnection(ConnectionStringFactory.Build(c, db));
         await conn.OpenAsync(ct);
-        using var bulk = new SqlBulkCopy(conn) { DestinationTableName = $"[{schema}].[{table}]", BatchSize = 500, BulkCopyTimeout = 300 };
+        using var bulk = new SqlBulkCopy(conn) { DestinationTableName = $"{SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}", BatchSize = 500, BulkCopyTimeout = 300 };
         foreach (DataColumn col in data.Columns) bulk.ColumnMappings.Add(col.ColumnName, col.ColumnName);
         bulk.NotifyAfter = 500;
         bulk.SqlRowsCopied += (_, e) => progress?.Report((int)e.RowsCopied);
@@ -66,11 +67,11 @@ public sealed class CsvImporter
     public static string GenerateCreateTableScript(string schema, string table, DataTable data)
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"CREATE TABLE [{schema}].[{table}] (");
+        sb.AppendLine($"CREATE TABLE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} (");
         for (int i = 0; i < data.Columns.Count; i++)
         {
             var col = data.Columns[i];
-            sb.Append($"    [{col.ColumnName}] {GetSqlType(col.DataType)} NULL");
+            sb.Append($"    {SqlIdentifier.Quote(col.ColumnName)} {GetSqlType(col.DataType)} NULL");
             if (i < data.Columns.Count - 1) sb.Append(',');
             sb.AppendLine();
         }

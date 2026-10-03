@@ -1,3 +1,4 @@
+using DBTeam.Core.Sql;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,20 +25,20 @@ public static class TableAlterGenerator
         var tMap = tCols.ToDictionary(c => c.Name, System.StringComparer.OrdinalIgnoreCase);
 
         var sb = new StringBuilder();
-        sb.AppendLine($"-- Column diff for [{schema}].[{table}]");
+        sb.AppendLine($"-- Column diff for {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)}");
 
         // Columns only in source → ADD
         foreach (var col in sCols)
         {
             if (!tMap.ContainsKey(col.Name))
-                sb.AppendLine($"ALTER TABLE [{schema}].[{table}] ADD [{col.Name}] {FormatType(col)}{(col.IsNullable ? " NULL" : " NOT NULL")}{DefaultClause(col)};");
+                sb.AppendLine($"ALTER TABLE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} ADD {SqlIdentifier.Quote(col.Name)} {FormatType(col)}{(col.IsNullable ? " NULL" : " NOT NULL")}{DefaultClause(col)};");
         }
 
         // Columns only in target → DROP
         foreach (var col in tCols)
         {
             if (!sMap.ContainsKey(col.Name))
-                sb.AppendLine($"ALTER TABLE [{schema}].[{table}] DROP COLUMN [{col.Name}];");
+                sb.AppendLine($"ALTER TABLE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} DROP COLUMN {SqlIdentifier.Quote(col.Name)};");
         }
 
         // Columns in both but different → ALTER
@@ -45,7 +46,7 @@ public static class TableAlterGenerator
         {
             if (!tMap.TryGetValue(s.Name, out var t)) continue;
             if (ColumnEquals(s, t)) continue;
-            sb.AppendLine($"ALTER TABLE [{schema}].[{table}] ALTER COLUMN [{s.Name}] {FormatType(s)}{(s.IsNullable ? " NULL" : " NOT NULL")};");
+            sb.AppendLine($"ALTER TABLE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} ALTER COLUMN {SqlIdentifier.Quote(s.Name)} {FormatType(s)}{(s.IsNullable ? " NULL" : " NOT NULL")};");
         }
 
         // Foreign keys diff
@@ -56,14 +57,14 @@ public static class TableAlterGenerator
 
         foreach (var fk in tFks)
             if (!sFkMap.ContainsKey(fk.Name))
-                sb.AppendLine($"ALTER TABLE [{schema}].[{table}] DROP CONSTRAINT [{fk.Name}];");
+                sb.AppendLine($"ALTER TABLE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} DROP CONSTRAINT {SqlIdentifier.Quote(fk.Name)};");
 
         foreach (var fk in sFks)
         {
             if (tFkMap.ContainsKey(fk.Name)) continue;
-            var cols = string.Join(",", fk.Columns.Select(c => $"[{c.Column}]"));
-            var refCols = string.Join(",", fk.Columns.Select(c => $"[{c.ReferencedColumn}]"));
-            sb.AppendLine($"ALTER TABLE [{schema}].[{table}] ADD CONSTRAINT [{fk.Name}] FOREIGN KEY ({cols}) REFERENCES [{fk.ReferencedSchema}].[{fk.ReferencedTable}] ({refCols});");
+            var cols = string.Join(",", fk.Columns.Select(c => $"{SqlIdentifier.Quote(c.Column)}"));
+            var refCols = string.Join(",", fk.Columns.Select(c => $"{SqlIdentifier.Quote(c.ReferencedColumn)}"));
+            sb.AppendLine($"ALTER TABLE {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} ADD CONSTRAINT {SqlIdentifier.Quote(fk.Name)} FOREIGN KEY ({cols}) REFERENCES {SqlIdentifier.Quote(fk.ReferencedSchema)}.{SqlIdentifier.Quote(fk.ReferencedTable)} ({refCols});");
         }
 
         // Indexes diff
@@ -74,16 +75,16 @@ public static class TableAlterGenerator
 
         foreach (var ix in tIdx)
             if (!sIdxMap.ContainsKey(ix.Name) && !ix.IsPrimaryKey)
-                sb.AppendLine($"DROP INDEX [{ix.Name}] ON [{schema}].[{table}];");
+                sb.AppendLine($"DROP INDEX {SqlIdentifier.Quote(ix.Name)} ON {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)};");
 
         foreach (var ix in sIdx)
         {
             if (tIdxMap.ContainsKey(ix.Name) || ix.IsPrimaryKey) continue;
-            var cols = string.Join(",", ix.Columns.Select(c => $"[{c}]"));
+            var cols = string.Join(",", ix.Columns.Select(c => $"{SqlIdentifier.Quote(c)}"));
             var unique = ix.IsUnique ? "UNIQUE " : "";
             var clustered = ix.IsClustered ? "CLUSTERED" : "NONCLUSTERED";
-            var included = ix.IncludedColumns.Count > 0 ? $" INCLUDE ({string.Join(",", ix.IncludedColumns.Select(c => $"[{c}]"))})" : "";
-            sb.AppendLine($"CREATE {unique}{clustered} INDEX [{ix.Name}] ON [{schema}].[{table}] ({cols}){included};");
+            var included = ix.IncludedColumns.Count > 0 ? $" INCLUDE ({string.Join(",", ix.IncludedColumns.Select(c => $"{SqlIdentifier.Quote(c)}"))})" : "";
+            sb.AppendLine($"CREATE {unique}{clustered} INDEX {SqlIdentifier.Quote(ix.Name)} ON {SqlIdentifier.Quote(schema)}.{SqlIdentifier.Quote(table)} ({cols}){included};");
         }
 
         return sb.ToString();
