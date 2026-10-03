@@ -84,7 +84,7 @@ DBTeam.sln
 
 ## Known gaps (roadmap anchors)
 
-- **Not installable yet** — run via `dotnet run` only. No MSIX/WiX/MSI, no auto-update, no signing, not in Microsoft Store.
+- **Not installable yet** — run via `dotnet run` only. No MSIX/WiX/MSI, no auto-update (still not implemented: `UpdateService` is an inactive stub), no signing, not in Microsoft Store.
 - **No test project** — 0 % coverage.
 - **T-SQL Debugger** — functional since v1.4 (statement-level stepping, breakpoints, session state, PRINT/error capture). Step-into stored procedures is not implemented (would require full instrumentation — see DESIGN-NOTES).
 - **Schema Compare ALTER** — column-level ALTER generation is a TODO (currently emits `-- TODO: manual ALTER TABLE`).

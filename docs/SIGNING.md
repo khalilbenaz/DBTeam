@@ -147,5 +147,4 @@ pwsh ./scripts/sign.ps1 -PfxPath path/to/cert.pfx -Password <pwd>
 | SmartScreen download | "Éditeur inconnu" | idem unless user trusts cert | No warning |
 | UAC dialog | "Éditeur: Inconnu" (yellow) | "DB TEAM Dev" (blue, if trusted) | "Khalil Benazzouz" (blue) |
 | winget submission | Rejected | Rejected | Accepted |
-| Auto-update (Velopack) | Fails silently | Works inside trusting users | Works for everyone |
 | Enterprise GPO rollout | Blocked | Blocked | Unblocked |

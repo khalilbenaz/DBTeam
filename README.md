@@ -256,16 +256,13 @@ Themes are managed by **ModernWpfUI**. The `ThemeService` persists the choice in
 - [x] **Per-tab DB selector** — explicit refresh button next to each Query Editor's database combo
 - [x] **Master-detail** — right-click cell → `FollowRelation` command infers FK target table and opens a filtered `SELECT` in a new tab
 - [x] **Reports & pivots** — one-click `PIVOT` skeleton generator from the active result set
-- [x] **Auto-update scaffold** — `UpdateService` ready for Velopack (activation blocked on signing)
-- [x] **Automated screenshots** — `DBTeam.Screenshots` console project scaffold for FlaUI.UIA3
 
 ### Shipped in v2.0
 - [x] **Function signatures in autocomplete** — typing `(` after a proc/function opens an `OverloadInsightWindow` with parameter list (name, type, direction) and return type
 - [x] **Debugger step-into** — `EXEC` statements expand inline: the proc body is fetched, parsed, and its statements spliced into the Steps list so you can step through them
 
 ### Waiting on external credentials
-- [ ] **Velopack auto-update activation** — scaffold `UpdateService` ready; activation requires a code-signed release (see `docs/SIGNING.md`)
-- [ ] **FlaUI automated screenshots** — scaffold `DBTeam.Screenshots` ready; activation requires actually capturing images (manual for now)
+- [ ] **FlaUI automated screenshots** — `DBTeam.Screenshots` is only a console scaffold (nothing is captured yet); no screenshots are published for now
 
 All scaffolds + design notes: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTES.md) · signing paths in [docs/SIGNING.md](docs/SIGNING.md).
 
@@ -275,6 +272,9 @@ Detailed implementation plans: [docs/bmad/DESIGN-NOTES.md](docs/bmad/DESIGN-NOTE
 - Diagram auto-layout is a naive grid — no force-directed graph yet.
 - Debugger cannot interrupt mid-statement or step into stored procedures (statement-level only).
 - Binary is not yet code-signed → SmartScreen warns on first download.
+- **No auto-update**: updates are manual (download the new release from GitHub). `UpdateService` is an inactive stub (`IsEnabled => false`).
+- SQL Server only, Windows only.
+- Security: see [SECURITY.md](SECURITY.md) (certificate trust, local secret storage, AI endpoint, terminal).
 
 ---
 

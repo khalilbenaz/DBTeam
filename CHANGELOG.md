@@ -4,6 +4,25 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ## [Unreleased]
 
+### Security
+- **TLS**: `SqlConnectionInfo.TrustServerCertificate` now defaults to `false`; the server certificate is validated unless the user ticks *Trust server certificate* in the connection dialog. Connections saved earlier keep their stored value.
+- **SQL generation**: every identifier interpolated into generated SQL (DataCompare, DataGenerator, SchemaCompare, Table Designer, CSV import, Admin scripts, pivot / master-detail, completion, metadata) goes through `SqlIdentifier.Quote`, which doubles `]`. An object named `a]b` no longer breaks the script, and a hostile name can no longer inject SQL.
+- **Dependencies**: `System.Security.Cryptography.Xml` 8.0.3 (transitive via EPPlus, 5 high CVEs) raised to 8.0.4; legacy 4.3.0 transitives removed from the integration-test project.
+- Added `SECURITY.md`.
+
+### Fixed
+- `connections.json` and `ai.json` are written atomically (temp file + replace): a crash no longer truncates them.
+- An unreadable DPAPI secret (other Windows profile / machine) is reported to the user instead of being silently blanked and then overwritten on the next save; the original ciphertext is preserved until a new value is entered. A corrupt `connections.json` is set aside as `connections.json.corrupt-<date>` instead of throwing. Failing to write `ai.json` is no longer silent.
+- Query Editor splits scripts on `GO` (alone on its line, case-insensitive, `GO n`, ignored inside strings, quoted identifiers and comments) before execution.
+- Git panel / Terminal: arguments go through `ArgumentList` (commit messages with quotes, `$`, `\` or newlines are preserved), stdout/stderr are read asynchronously and git no longer freezes the UI.
+- Literal dates in generated scripts use `CultureInfo.InvariantCulture`.
+
+### CI
+- Integration tests are now provably executed (LocalDB prepared, `DBTEAM_REQUIRE_LOCALDB=1` turns a silent skip into a failure, TRX check); `dotnet list package --vulnerable --include-transitive` fails the build; every `uses:` is pinned to a 40-char commit SHA (`# vX.Y.Z`), enforced by a `pins` job; new Linux job running the portable `DBTeam.Core.Tests`.
+
+### Documentation
+- Removed the auto-update claims (the feature is not implemented) and the contradictory "Automated screenshots" tick.
+
 ## [2.1.2] — 2026-04-20 — Results grid polish + reserved-keyword bracketing + configurable timeout
 
 ### Added
