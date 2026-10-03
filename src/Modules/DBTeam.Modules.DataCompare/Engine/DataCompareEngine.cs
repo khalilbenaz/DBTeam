@@ -133,7 +133,7 @@ public sealed class DataCompareEngine
         null => "NULL",
         string s => $"N'{s.Replace("'", "''")}'",
         bool b => b ? "1" : "0",
-        DateTime dt => $"'{dt:yyyy-MM-dd HH:mm:ss.fff}'",
+        DateTime dt => $"'{dt.ToString("yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture)}'",
         Guid g => $"'{g}'",
         byte[] ba => "0x" + Convert.ToHexString(ba),
         _ => Convert.ToString(v, System.Globalization.CultureInfo.InvariantCulture) ?? "NULL"
