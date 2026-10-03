@@ -13,6 +13,13 @@ namespace DBTeam.IntegrationTests;
 /// </summary>
 public sealed class LocalDbFixture : IAsyncLifetime
 {
+    /// <summary>
+    /// En CI, DBTEAM_REQUIRE_LOCALDB=1 transforme « LocalDB absent » en ÉCHEC au lieu d'un skip
+    /// silencieux : sinon les tests d'intégration peuvent « passer » sans avoir rien exécuté.
+    /// </summary>
+    public static bool LocalDbRequired =>
+        Environment.GetEnvironmentVariable("DBTEAM_REQUIRE_LOCALDB") is "1" or "true";
+
     public SqlConnectionInfo Connection { get; private set; } = null!;
     public string DatabaseName { get; } = "DBTeam_IT_" + Guid.NewGuid().ToString("N");
     public bool IsAvailable { get; private set; }
@@ -36,10 +43,12 @@ public sealed class LocalDbFixture : IAsyncLifetime
             await cmd.ExecuteNonQueryAsync();
             IsAvailable = true;
         }
-        catch
+        catch (Exception ex)
         {
-            // LocalDB not present or not startable — tests should skip themselves.
+            // LocalDB not present or not startable — tests should skip themselves (sauf en CI : voir LocalDbRequired).
             IsAvailable = false;
+            if (LocalDbRequired)
+                throw new InvalidOperationException("DBTEAM_REQUIRE_LOCALDB est positionné mais LocalDB est indisponible : " + ex.Message, ex);
         }
     }
 
@@ -63,6 +72,7 @@ public sealed class SkipIfLocalDbUnavailableAttribute : FactAttribute
 {
     public SkipIfLocalDbUnavailableAttribute()
     {
+        if (LocalDbFixture.LocalDbRequired) return; // ne jamais skipper : l'échec doit être visible
         try
         {
             using var c = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=true;Connect Timeout=3");

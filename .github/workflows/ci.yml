@@ -6,16 +6,56 @@ on:
   pull_request:
     branches: [main]
 
-jobs:
-  build:
-    runs-on: windows-latest
-    timeout-minutes: 15
+permissions:
+  contents: read
 
+jobs:
+  pins:
+    name: Actions épinglées sur un SHA
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      # Chaque `uses:` externe doit pointer sur un SHA de 40 caractères (supply chain).
+      # Dependabot (github-actions) met les pins à jour.
+      - name: Vérifier les pins
+        run: |
+          bad=$(grep -rnE '^\s*-?\s*uses:' .github/workflows \
+            | grep -vE 'uses:\s*\./' \
+            | grep -vE 'uses:\s*[^@ ]+@[0-9a-f]{40}(\s|$)' || true)
+          if [ -n "$bad" ]; then
+            echo "::error::Actions non épinglées sur un SHA de 40 caractères :"
+            echo "$bad"
+            exit 1
+          fi
+          echo "Toutes les actions sont épinglées."
+
+  portable-tests:
+    name: Tests portables (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
       - name: Setup .NET 8
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        with:
+          dotnet-version: 8.0.x
+
+      # Logique pure de DBTeam.Core (échappement SQL, découpe GO, écriture atomique, ProcessRunner...).
+      - name: Test DBTeam.Core.Tests
+        run: dotnet test tests/DBTeam.Core.Tests --nologo --verbosity minimal
+
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
         with:
           dotnet-version: 8.0.x
 
@@ -25,12 +65,67 @@ jobs:
       - name: Build
         run: dotnet build DBTeam.sln -c Release --no-restore --nologo /p:TreatWarningsAsErrors=false
 
-      - name: Test (if any test project)
+      # Vulnérabilités connues, y compris transitives. `dotnet list package` sort 0 même quand il en
+      # trouve : on lit sa sortie JSON (indépendante de la langue) et on échoue s'il y a un résultat.
+      - name: Audit des dépendances (vulnérables)
         shell: pwsh
         run: |
-          $tests = Get-ChildItem -Recurse -Filter *.Tests.csproj -ErrorAction SilentlyContinue
-          if ($tests) {
-            dotnet test DBTeam.sln -c Release --no-build --nologo --verbosity minimal
-          } else {
-            Write-Host "No test projects yet — skipping."
+          $json = dotnet list DBTeam.sln package --vulnerable --include-transitive --format json | Out-String
+          $report = $json | ConvertFrom-Json
+          $found = @()
+          foreach ($p in $report.projects) {
+            foreach ($fw in $p.frameworks) {
+              foreach ($pkg in @($fw.topLevelPackages) + @($fw.transitivePackages)) {
+                if ($pkg) { $found += "$($p.path) : $($pkg.id) $($pkg.resolvedVersion) ($(($pkg.vulnerabilities | ForEach-Object severity) -join ', '))" }
+              }
+            }
           }
+          if ($found.Count -gt 0) {
+            $found | ForEach-Object { Write-Host "::error::Paquet vulnérable : $_" }
+            exit 1
+          }
+          Write-Host 'Aucun paquet vulnérable.'
+
+      # LocalDB sert aux tests d'intégration (DBTeam.IntegrationTests). On s'assure qu'elle existe et qu'elle démarre.
+      - name: Préparer SQL Server LocalDB
+        shell: pwsh
+        run: |
+          if (-not (Get-Command sqllocaldb -ErrorAction SilentlyContinue)) {
+            choco install sqllocaldb -y --no-progress
+          }
+          sqllocaldb create MSSQLLocalDB -s 2>$null
+          sqllocaldb start MSSQLLocalDB
+          sqllocaldb info MSSQLLocalDB
+
+      # `dotnet test` sur la solution exécute TOUS les projets de tests (unitaires, portables, intégration) :
+      # plus de filtre sur le nom des .csproj. DBTEAM_REQUIRE_LOCALDB=1 interdit le « skip silencieux ».
+      - name: Test
+        env:
+          DBTEAM_REQUIRE_LOCALDB: "1"
+        run: dotnet test DBTeam.sln -c Release --no-build --nologo --verbosity minimal --logger "trx;LogFileName=results.trx" --results-directory TestResults
+
+      # Garde-fou : prouver que les tests d'intégration ont réellement été exécutés (et pas ignorés).
+      - name: Vérifier que les tests d'intégration ont tourné
+        shell: pwsh
+        run: |
+          $executed = 0; $notExecuted = 0
+          foreach ($f in Get-ChildItem -Recurse -Filter *.trx -Path TestResults) {
+            [xml]$x = Get-Content $f.FullName
+            $ns = New-Object System.Xml.XmlNamespaceManager($x.NameTable)
+            $ns.AddNamespace('t', 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010')
+            foreach ($r in $x.SelectNodes('//t:UnitTestResult[contains(@testName, "IntegrationTests")]', $ns)) {
+              if ($r.outcome -eq 'Passed') { $executed++ } else { $notExecuted++ }
+            }
+          }
+          Write-Host "Tests d'intégration réussis : $executed ; non réussis/ignorés : $notExecuted"
+          if ($executed -eq 0 -or $notExecuted -gt 0) {
+            Write-Error "Les tests d'intégration n'ont pas tous été exécutés avec succès."
+            exit 1
+          }
+
+      - name: Publier les résultats de test
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: test-results
+          path: TestResults
