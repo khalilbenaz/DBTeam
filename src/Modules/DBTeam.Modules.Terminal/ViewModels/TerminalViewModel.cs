@@ -65,7 +65,10 @@ public partial class TerminalViewModel : ObservableObject, IDisposable
             };
             // Interactive / no logo where supported
             if (Shell.Contains("pwsh") || Shell.Contains("powershell"))
-                psi.Arguments = "-NoLogo -NoProfile";
+            {
+                psi.ArgumentList.Add("-NoLogo");
+                psi.ArgumentList.Add("-NoProfile");
+            }
             _process = new Process { StartInfo = psi, EnableRaisingEvents = true };
             _process.OutputDataReceived += (_, e) => Append(e.Data ?? "");
             _process.ErrorDataReceived  += (_, e) => Append(e.Data ?? "");
