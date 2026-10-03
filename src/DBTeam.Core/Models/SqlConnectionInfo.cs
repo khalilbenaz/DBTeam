@@ -13,7 +13,7 @@ public sealed class SqlConnectionInfo
     public SqlAuthMode AuthMode { get; set; } = SqlAuthMode.SqlLogin;
     public string? User { get; set; }
     public string? Password { get; set; }
-    public bool TrustServerCertificate { get; set; } = true;
+    public bool TrustServerCertificate { get; set; } = false;
     public bool Encrypt { get; set; } = true;
     public int ConnectTimeoutSeconds { get; set; } = 15;
     public string? ApplicationName { get; set; } = "DBTeam";
