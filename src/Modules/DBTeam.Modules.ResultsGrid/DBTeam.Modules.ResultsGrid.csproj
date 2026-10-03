@@ -10,6 +10,8 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="EPPlus" Version="8.5.3" />
+    <!-- Relevé de la dépendance transitive d'EPPlus : 8.0.3 porte 5 CVE de gravité haute (audit NuGet). -->
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>
