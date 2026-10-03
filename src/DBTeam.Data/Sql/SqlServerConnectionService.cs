@@ -19,6 +19,8 @@ public sealed class SqlServerConnectionService : IConnectionService
 
     public IReadOnlyList<SqlConnectionInfo> Saved => _saved;
 
+    public IReadOnlyList<string> LastLoadWarnings => _store.LastLoadWarnings;
+
     public string BuildConnectionString(SqlConnectionInfo info) => ConnectionStringFactory.Build(info);
 
     public async Task<bool> TestAsync(SqlConnectionInfo info, CancellationToken ct = default)

@@ -24,6 +24,9 @@
   <!-- Fichiers sources purs (dépendent uniquement de DBTeam.Core) compilés ici pour être testés hors Windows. -->
   <ItemGroup>
     <Compile Include="..\..\src\Modules\DBTeam.Modules.SchemaCompare\Engine\TableAlterGenerator.cs" Link="Linked\TableAlterGenerator.cs" />
+    <Compile Include="..\..\src\DBTeam.Data\Stores\JsonConnectionStore.cs" Link="Linked\JsonConnectionStore.cs" />
+    <Compile Include="..\..\src\Modules\DBTeam.Modules.AiAssistant\Engine\AiSettingsStore.cs" Link="Linked\AiSettingsStore.cs" />
+    <Compile Include="..\..\src\Modules\DBTeam.Modules.AiAssistant\Engine\AiClient.cs" Link="Linked\AiClient.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -24,6 +24,7 @@ public partial class AiAssistantViewModel : ObservableObject
     {
         _store = store;
         Settings = _store.Load();
+        if (_store.LastWarning is { } warning) Status = warning;
         ProviderChoices = new ObservableCollection<AiProvider>((AiProvider[])Enum.GetValues(typeof(AiProvider)));
         QuickPrompts = new ObservableCollection<string>
         {
@@ -50,8 +51,15 @@ public partial class AiAssistantViewModel : ObservableObject
     [RelayCommand]
     public void SaveSettings()
     {
-        _store.Save(Settings);
-        Status = "Settings saved";
+        try
+        {
+            _store.Save(Settings);
+            Status = "Settings saved";
+        }
+        catch (System.Exception ex) when (ex is System.IO.IOException or System.UnauthorizedAccessException)
+        {
+            Status = $"Settings NOT saved: {ex.Message}";
+        }
     }
 
     [RelayCommand]
