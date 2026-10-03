@@ -26,6 +26,10 @@ public sealed class DpapiProtector : ISecretProtector
             var dec = ProtectedData.Unprotect(data, Entropy, DataProtectionScope.CurrentUser);
             return Encoding.UTF8.GetString(dec);
         }
-        catch { return string.Empty; }
+        catch (Exception ex) when (ex is CryptographicException or FormatException)
+        {
+            throw new SecretUnreadableException(
+                "Secret illisible : il a été chiffré par un autre profil Windows ou une autre machine, ou est altéré.", ex);
+        }
     }
 }

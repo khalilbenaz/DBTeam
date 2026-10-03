@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace DBTeam.Core.Models;
 
@@ -18,4 +19,10 @@ public sealed class SqlConnectionInfo
     public int ConnectTimeoutSeconds { get; set; } = 15;
     public string? ApplicationName { get; set; } = "DBTeam";
     public DateTime? LastUsed { get; set; }
+
+    /// <summary>Vrai si le mot de passe stocké n'a pas pu être déchiffré au chargement (autre profil Windows/machine).</summary>
+    [JsonIgnore] public bool PasswordUnreadable { get; set; }
+
+    /// <summary>Valeur chiffrée d'origine d'un mot de passe illisible, conservée pour ne pas l'écraser à la sauvegarde.</summary>
+    [JsonIgnore] public string? UnreadableProtectedPassword { get; set; }
 }

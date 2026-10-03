@@ -34,6 +34,9 @@ public partial class ConnectionsPanelViewModel : ObservableObject
         var all = await _svc.LoadAllAsync();
         Connections.Clear();
         foreach (var c in all.OrderByDescending(x => x.LastUsed ?? DateTime.MinValue)) Connections.Add(c);
+        if (_svc.LastLoadWarnings.Count > 0)
+            MessageBox.Show(string.Join(Environment.NewLine + Environment.NewLine, _svc.LastLoadWarnings),
+                "DBTeam — connexions", MessageBoxButton.OK, MessageBoxImage.Warning);
     }
 
     [RelayCommand]
