@@ -2,12 +2,12 @@ PackageIdentifier: KhalilBenazzouz.DBTeam
 PackageVersion: 1.7.0
 PackageLocale: en-US
 Publisher: Khalil Benazzouz
-PublisherUrl: https://github.com/khalilbenaz
-PublisherSupportUrl: https://github.com/khalilbenaz/DBTeam/issues
+PublisherUrl: https://github.com/vantaflow
+PublisherSupportUrl: https://github.com/vantaflow/DBTeam/issues
 PackageName: DB TEAM
-PackageUrl: https://khalilbenaz.github.io/DBTeam/
+PackageUrl: https://vantaflow.github.io/DBTeam/
 License: MIT
-LicenseUrl: https://github.com/khalilbenaz/DBTeam/blob/main/LICENSE
+LicenseUrl: https://github.com/vantaflow/DBTeam/blob/main/LICENSE
 ShortDescription: Professional SQL Server IDE for Windows
 Description: |
   DB TEAM is a modular, bilingual (EN/FR) SQL Server IDE for Windows. Features
@@ -25,6 +25,6 @@ Tags:
   - ide
   - tsql
   - developer-tools
-ReleaseNotesUrl: https://github.com/khalilbenaz/DBTeam/releases
+ReleaseNotesUrl: https://github.com/vantaflow/DBTeam/releases
 ManifestType: defaultLocale
 ManifestVersion: 1.6.0

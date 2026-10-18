@@ -17,7 +17,7 @@ InstallerSwitches:
 UpgradeBehavior: install
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/khalilbenaz/DBTeam/releases/download/v1.7.0/DBTeam-Setup-1.7.0.exe
+    InstallerUrl: https://github.com/vantaflow/DBTeam/releases/download/v1.7.0/DBTeam-Setup-1.7.0.exe
     InstallerSha256: PLACEHOLDER_AFTER_RELEASE
 ManifestType: installer
 ManifestVersion: 1.6.0

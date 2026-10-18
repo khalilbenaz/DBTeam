@@ -7,7 +7,7 @@ github:
   is_project_page: true
   repository_url: https://github.com/vantaflow/DBTeam
   repository_name: DBTeam
-  owner_name: khalilbenaz
+  owner_name: vantaflow
   owner_url: https://github.com/vantaflow
 markdown: kramdown
 plugins:
