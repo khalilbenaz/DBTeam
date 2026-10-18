@@ -1,14 +1,14 @@
 title: DB TEAM
 description: Professional SQL Server IDE for Windows — modular, bilingual, themeable
-url: "https://khalilbenaz.github.io"
+url: "https://vantaflow.github.io"
 baseurl: "/DBTeam"
 show_downloads: false
 github:
   is_project_page: true
-  repository_url: https://github.com/khalilbenaz/DBTeam
+  repository_url: https://github.com/vantaflow/DBTeam
   repository_name: DBTeam
   owner_name: khalilbenaz
-  owner_url: https://github.com/khalilbenaz
+  owner_url: https://github.com/vantaflow
 markdown: kramdown
 plugins:
   - jekyll-relative-links

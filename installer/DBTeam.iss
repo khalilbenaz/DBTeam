@@ -9,8 +9,8 @@
 #ifndef AppVersion
   #define AppVersion "1.2.0"
 #endif
-#define AppPublisher "Khalil Benazzouz"
-#define AppURL "https://github.com/khalilbenaz/DBTeam"
+#define AppPublisher "vantaflow"
+#define AppURL "https://github.com/vantaflow/DBTeam"
 #define AppExeName "DBTeam.App.exe"
 #ifndef SourceDir
   #define SourceDir "..\dist\DBTeam-" + AppVersion + "-win-x64"

@@ -145,6 +145,6 @@ pwsh ./scripts/sign.ps1 -PfxPath path/to/cert.pfx -Password <pwd>
 | State | Today (unsigned v1.9.0) | Self-signed (Path A) | Azure Trusted Signing (Path B) |
 |---|---|---|---|
 | SmartScreen download | "Éditeur inconnu" | idem unless user trusts cert | No warning |
-| UAC dialog | "Éditeur: Inconnu" (yellow) | "DB TEAM Dev" (blue, if trusted) | "Khalil Benazzouz" (blue) |
+| UAC dialog | "Éditeur: Inconnu" (yellow) | "DB TEAM Dev" (blue, if trusted) | "vantaflow" (blue) |
 | winget submission | Rejected | Rejected | Accepted |
 | Enterprise GPO rollout | Blocked | Blocked | Unblocked |

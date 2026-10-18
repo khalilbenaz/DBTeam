@@ -8,7 +8,7 @@
 
 ## Download
 
-1. Go to the [Releases page](https://github.com/khalilbenaz/DBTeam/releases).
+1. Go to the [Releases page](https://github.com/vantaflow/DBTeam/releases).
 2. Download the latest **`DBTeam-<version>-win-x64.zip`** asset.
 3. Extract the archive anywhere (e.g. `C:\Tools\DBTeam\`).
 4. Run **`DBTeam.App.exe`**.
@@ -44,7 +44,7 @@ The portable build is not registered in *Apps & features*. To remove it:
 ## Build from source
 
 ```bash
-git clone https://github.com/khalilbenaz/DBTeam.git
+git clone https://github.com/vantaflow/DBTeam.git
 cd DBTeam
 dotnet build DBTeam.sln
 dotnet run --project src/DBTeam.App

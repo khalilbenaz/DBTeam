@@ -16,14 +16,14 @@
 .PARAMETER Password
     Password for the exported .pfx. Defaults to "dbteam" (dev convenience).
 .PARAMETER Subject
-    Certificate subject. Defaults to "CN=DB TEAM Dev, O=Khalil Benazzouz".
+    Certificate subject. Defaults to "CN=DB TEAM Dev, O=vantaflow".
 .EXAMPLE
     pwsh ./scripts/generate-selfsigned-cert.ps1
     pwsh ./scripts/generate-selfsigned-cert.ps1 -Password mysecret
 #>
 param(
     [string]$Password = "dbteam",
-    [string]$Subject  = "CN=DB TEAM Dev, O=Khalil Benazzouz, C=FR"
+    [string]$Subject  = "CN=DB TEAM Dev, O=vantaflow, C=FR"
 )
 
 $ErrorActionPreference = "Stop"

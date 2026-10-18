@@ -101,7 +101,7 @@ Enable after `scripts/publish.ps1` and before `scripts/build-installer.ps1` so t
    ```csharp
    VelopackApp.Build().Run();
    Task.Run(async () => {
-       var mgr = new UpdateManager("https://github.com/khalilbenaz/DBTeam");
+       var mgr = new UpdateManager("https://github.com/vantaflow/DBTeam");
        var info = await mgr.CheckForUpdatesAsync();
        if (info != null) await mgr.DownloadUpdatesAsync(info);
    });
@@ -213,7 +213,7 @@ CI step (already in `ci.yml`): `dotnet test` picks it up automatically.
 **Steps**:
 1. Install `wingetcreate`: `winget install Microsoft.WinGetCreate`
 2. `wingetcreate new` interactive — provide GitHub release URL + SHA256.
-3. Produces `manifests/k/khalilbenaz/DBTeam/{version}/*.yaml`.
+3. Produces `manifests/k/vantaflow/DBTeam/{version}/*.yaml`.
 4. Submit PR to [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs).
 5. Automate future versions via `wingetcreate update` in `release.yml`:
    ```yaml

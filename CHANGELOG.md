@@ -58,7 +58,7 @@ All notable changes to DB TEAM are documented here. Format: [Keep a Changelog](h
 
 ### Fixed
 - PackIcon `PulseOutline` → `Pulse` (the former is not a valid `PackIconKind`; it crashed the app at startup when the user opened it after a clean install).
-- `Author` line added to About dialog — `Khalil Benazzouz`.
+- `Author` line added to About dialog — `vantaflow`.
 
 ### i18n
 - All hardcoded English strings in Welcome tab, History panel, Monitoring module, Debugger context menu/tooltips and the Tools menu items (Monitoring, Git, Query Builder, Import CSV) are now bound with `DynamicResource`.
@@ -211,7 +211,7 @@ Closes the last two items from the roadmap.
 - **T-SQL Debugger** stub replaced with a proper "Coming in v2" view (accessible via Tools → Debugger)
 - **Auto-format** of generated scripts: Schema Compare / Data Compare / Table Designer / Data Generator outputs arrive pre-formatted in the editor
 - **Format SQL** button added to the Query Profiler
-- **GitHub Pages**: landing page at https://khalilbenaz.github.io/DBTeam/
+- **GitHub Pages**: landing page at https://vantaflow.github.io/DBTeam/
 - **Dependabot**: weekly NuGet + monthly GitHub Actions updates with grouped PRs
 - **CodeQL** security analysis workflow (push/PR + weekly schedule)
 - **12 Epic issues** on GitHub tracking the full roadmap (E1–E13)

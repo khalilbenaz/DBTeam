@@ -6,12 +6,12 @@
     IgnorableNamespaces="uap rescap">
 
   <Identity Name="KhalilBenazzouz.DBTeam"
-            Publisher="CN=Khalil Benazzouz"
+            Publisher="CN=vantaflow"
             Version="1.7.0.0"/>
 
   <Properties>
     <DisplayName>DB TEAM</DisplayName>
-    <PublisherDisplayName>Khalil Benazzouz</PublisherDisplayName>
+    <PublisherDisplayName>vantaflow</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
     <Description>Professional SQL Server IDE for Windows</Description>
   </Properties>

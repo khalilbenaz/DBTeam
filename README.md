@@ -3,19 +3,19 @@
 > Professional SQL Server IDE built with WPF · **v2.2.0**
 
 [![.NET](https://img.shields.io/badge/.NET-8-blueviolet)](https://dotnet.microsoft.com/)
-[![Platform](https://img.shields.io/badge/platform-Windows-blue)](https://github.com/khalilbenaz/DBTeam/releases)
-[![Release](https://img.shields.io/github/v/release/khalilbenaz/DBTeam?include_prereleases&label=release)](https://github.com/khalilbenaz/DBTeam/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows-blue)](https://github.com/vantaflow/DBTeam/releases)
+[![Release](https://img.shields.io/github/v/release/vantaflow/DBTeam?include_prereleases&label=release)](https://github.com/vantaflow/DBTeam/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![CI](https://github.com/khalilbenaz/DBTeam/actions/workflows/ci.yml/badge.svg)](https://github.com/khalilbenaz/DBTeam/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/khalilbenaz/DBTeam/actions/workflows/codeql.yml/badge.svg)](https://github.com/khalilbenaz/DBTeam/actions/workflows/codeql.yml)
-[![Website](https://img.shields.io/badge/website-khalilbenaz.github.io%2FDBTeam-1E88E5)](https://khalilbenaz.github.io/DBTeam/)
+[![CI](https://github.com/vantaflow/DBTeam/actions/workflows/ci.yml/badge.svg)](https://github.com/vantaflow/DBTeam/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/vantaflow/DBTeam/actions/workflows/codeql.yml/badge.svg)](https://github.com/vantaflow/DBTeam/actions/workflows/codeql.yml)
+[![Website](https://img.shields.io/badge/website-vantaflow.github.io%2FDBTeam-1E88E5)](https://vantaflow.github.io/DBTeam/)
 
 **DB TEAM** is a modular, bilingual (EN/FR), themeable Windows desktop IDE for Microsoft SQL Server.
 
 Connection management · Object Explorer · T-SQL editor with autocomplete + format · Schema Compare with column-level ALTER · Data Compare · Table Designer (create + edit) · Query Profiler with plan tree · Data Generator · HTML Documenter · Interactive ER Diagram · Query History & favorites · Session restore.
 
-**📥 Download installer**: [DBTeam-Setup-2.2.0.exe](https://github.com/khalilbenaz/DBTeam/releases/latest) or [portable ZIP](https://github.com/khalilbenaz/DBTeam/releases/latest)
-**🌐 Website**: <https://khalilbenaz.github.io/DBTeam/>
+**📥 Download installer**: [DBTeam-Setup-2.2.0.exe](https://github.com/vantaflow/DBTeam/releases/latest) or [portable ZIP](https://github.com/vantaflow/DBTeam/releases/latest)
+**🌐 Website**: <https://vantaflow.github.io/DBTeam/>
 **📚 Docs**: [Install](docs/INSTALL.md) · [User guide](docs/USER-GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Modules](docs/MODULES.md) · [Changelog](CHANGELOG.md)
 
 ---
@@ -123,12 +123,12 @@ Each **module** exposes a `ModuleRegistration.Register(IServiceCollection)` stat
 
 ### Install (end user)
 
-Download the latest `DBTeam-<version>-win-x64.zip` from the [Releases page](https://github.com/khalilbenaz/DBTeam/releases), extract, and run `DBTeam.App.exe`. Full instructions in [docs/INSTALL.md](docs/INSTALL.md). No .NET install required — the binary is self-contained.
+Download the latest `DBTeam-<version>-win-x64.zip` from the [Releases page](https://github.com/vantaflow/DBTeam/releases), extract, and run `DBTeam.App.exe`. Full instructions in [docs/INSTALL.md](docs/INSTALL.md). No .NET install required — the binary is self-contained.
 
 ### Build from source
 
 ```bash
-git clone https://github.com/khalilbenaz/DBTeam.git
+git clone https://github.com/vantaflow/DBTeam.git
 cd DBTeam
 dotnet restore
 dotnet build DBTeam.sln

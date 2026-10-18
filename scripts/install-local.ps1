@@ -65,11 +65,11 @@ New-Item -Path $regKey -Force | Out-Null
 $uninstall = "powershell.exe -ExecutionPolicy Bypass -NoProfile -Command `"Remove-Item -Recurse -Force '$installRoot'; Remove-Item -Force '$shortcut' -ErrorAction SilentlyContinue; Remove-Item -Force '$((Join-Path $desktop 'DB TEAM.lnk'))' -ErrorAction SilentlyContinue; Remove-Item -Recurse -Force '$regKey'`""
 Set-ItemProperty -Path $regKey -Name "DisplayName"     -Value "DB TEAM"
 Set-ItemProperty -Path $regKey -Name "DisplayVersion"  -Value $Version
-Set-ItemProperty -Path $regKey -Name "Publisher"       -Value "Khalil Benazzouz"
+Set-ItemProperty -Path $regKey -Name "Publisher"       -Value "vantaflow"
 Set-ItemProperty -Path $regKey -Name "DisplayIcon"     -Value $exe
 Set-ItemProperty -Path $regKey -Name "InstallLocation" -Value $installRoot
 Set-ItemProperty -Path $regKey -Name "UninstallString" -Value $uninstall
-Set-ItemProperty -Path $regKey -Name "URLInfoAbout"    -Value "https://github.com/khalilbenaz/DBTeam"
+Set-ItemProperty -Path $regKey -Name "URLInfoAbout"    -Value "https://github.com/vantaflow/DBTeam"
 Set-ItemProperty -Path $regKey -Name "NoModify"        -Value 1 -Type DWord
 Set-ItemProperty -Path $regKey -Name "NoRepair"        -Value 1 -Type DWord
 Write-Host "   Registered in Apps & features (per-user)"

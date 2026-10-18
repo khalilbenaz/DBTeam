@@ -7,7 +7,7 @@
 - **Name**: DB TEAM
 - **Purpose**: Professional SQL Server IDE on Windows desktop
 - **Status**: Brownfield, ~80 % complete, not yet installable, not shipping
-- **Repo**: https://github.com/khalilbenaz/DBTeam
+- **Repo**: https://github.com/vantaflow/DBTeam
 - **License**: MIT
 
 ## Tech

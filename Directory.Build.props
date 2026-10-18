@@ -7,9 +7,9 @@
     <InformationalVersion>2.2.0</InformationalVersion>
 
     <Company>DB TEAM</Company>
-    <Authors>Khalil Benazzouz</Authors>
+    <Authors>vantaflow</Authors>
     <Product>DB TEAM</Product>
-    <Copyright>Copyright © 2026 Khalil Benazzouz</Copyright>
+    <Copyright>Copyright © 2026 vantaflow</Copyright>
 
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>

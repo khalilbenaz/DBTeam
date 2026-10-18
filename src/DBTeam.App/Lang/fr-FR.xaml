@@ -18,7 +18,7 @@
     <sys:String x:Key="About.Version">Version 2.1.2</sys:String>
     <sys:String x:Key="About.Description">IDE SQL Server professionnel développé en WPF.</sys:String>
     <sys:String x:Key="About.Close">Fermer</sys:String>
-    <sys:String x:Key="About.Author">Auteur · Khalil Benazzouz</sys:String>
+    <sys:String x:Key="About.Author">Auteur · vantaflow</sys:String>
     <sys:String x:Key="About.Stack">Stack</sys:String>
     <sys:String x:Key="Shortcuts.Title">Raccourcis clavier</sys:String>
     <sys:String x:Key="Menu.Language">_Langue</sys:String>

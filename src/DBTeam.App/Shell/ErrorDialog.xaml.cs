@@ -40,7 +40,7 @@ public partial class ErrorDialog : Window
         {
             var title = Uri.EscapeDataString("[bug] " + (MessageText.Text ?? "crash"));
             var body = Uri.EscapeDataString("**Source**: " + (SourceText.Text ?? "") + "\n\n```\n" + _details + "\n```\n");
-            var url = $"https://github.com/khalilbenaz/DBTeam/issues/new?title={title}&body={body}";
+            var url = $"https://github.com/vantaflow/DBTeam/issues/new?title={title}&body={body}";
             Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
         catch { }

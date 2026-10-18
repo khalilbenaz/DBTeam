@@ -176,4 +176,4 @@ Generates a self-contained HTML document with every table, column, index, FK, vi
 
 ## Reporting bugs
 
-The error dialog (triggered on unhandled exceptions) has a **Report** button that opens a prefilled GitHub issue with the stack trace. Or manually: https://github.com/khalilbenaz/DBTeam/issues
+The error dialog (triggered on unhandled exceptions) has a **Report** button that opens a prefilled GitHub issue with the stack trace. Or manually: https://github.com/vantaflow/DBTeam/issues

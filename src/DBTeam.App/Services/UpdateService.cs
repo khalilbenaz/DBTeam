@@ -10,7 +10,7 @@ namespace DBTeam.App.Services;
 /// <code>
 /// using Velopack;
 /// using Velopack.Sources;
-/// var mgr = new UpdateManager(new GithubSource("https://github.com/khalilbenaz/DBTeam", null, prerelease: false));
+/// var mgr = new UpdateManager(new GithubSource("https://github.com/vantaflow/DBTeam", null, prerelease: false));
 /// var info = await mgr.CheckForUpdatesAsync();
 /// if (info is null) return (null, null);
 /// await mgr.DownloadUpdatesAsync(info);

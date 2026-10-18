@@ -2,13 +2,13 @@
 
 ## Supported versions
 
-Only the latest release published on [GitHub Releases](https://github.com/khalilbenaz/DBTeam/releases) receives security fixes.
+Only the latest release published on [GitHub Releases](https://github.com/vantaflow/DBTeam/releases) receives security fixes.
 
 ## Reporting a vulnerability
 
 **Please do not open a public issue for a security problem.**
 
-Use GitHub private vulnerability reporting: <https://github.com/khalilbenaz/DBTeam/security/advisories/new>
+Use GitHub private vulnerability reporting: <https://github.com/vantaflow/DBTeam/security/advisories/new>
 (repository maintainers: this requires *Settings → Code security → Private vulnerability reporting* to be enabled).
 
 Please include the DB TEAM version, Windows version, SQL Server version, reproduction steps, and the impact you foresee.

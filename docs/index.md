@@ -17,16 +17,16 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
     Query, compare, design, profile, generate, document — all in one installable app.
   </p>
   <div class="hero-cta">
-    <a href="https://github.com/khalilbenaz/DBTeam/releases/latest" class="btn-primary">⬇ Download installer</a>
-    <a href="https://github.com/khalilbenaz/DBTeam" class="btn-ghost">View on GitHub</a>
+    <a href="https://github.com/vantaflow/DBTeam/releases/latest" class="btn-primary">⬇ Download installer</a>
+    <a href="https://github.com/vantaflow/DBTeam" class="btn-ghost">View on GitHub</a>
   </div>
   <div class="hero-badges">
     <img src="https://img.shields.io/badge/.NET-8-blueviolet" alt=".NET 8">
     <img src="https://img.shields.io/badge/platform-Windows-blue" alt="Windows">
-    <img src="https://img.shields.io/github/v/release/khalilbenaz/DBTeam?label=release" alt="Release">
+    <img src="https://img.shields.io/github/v/release/vantaflow/DBTeam?label=release" alt="Release">
     <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License">
-    <img src="https://github.com/khalilbenaz/DBTeam/actions/workflows/ci.yml/badge.svg" alt="CI">
-    <img src="https://github.com/khalilbenaz/DBTeam/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
+    <img src="https://github.com/vantaflow/DBTeam/actions/workflows/ci.yml/badge.svg" alt="CI">
+    <img src="https://github.com/vantaflow/DBTeam/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
   </div>
 </section>
 
@@ -235,8 +235,8 @@ description: Modular, bilingual, themeable SQL Server IDE for Windows. Connectio
   <h2>Get started</h2>
   <p class="section-sub">Self-contained Windows x64 binary. No .NET install. Per-user install, clean uninstall.</p>
   <div class="hero-cta">
-    <a href="https://github.com/khalilbenaz/DBTeam/releases/latest" class="btn-primary">⬇ Latest release</a>
-    <a href="https://github.com/khalilbenaz/DBTeam" class="btn-ghost">⭐ Star on GitHub</a>
-    <a href="https://github.com/khalilbenaz/DBTeam/issues/new" class="btn-ghost">🐛 Report an issue</a>
+    <a href="https://github.com/vantaflow/DBTeam/releases/latest" class="btn-primary">⬇ Latest release</a>
+    <a href="https://github.com/vantaflow/DBTeam" class="btn-ghost">⭐ Star on GitHub</a>
+    <a href="https://github.com/vantaflow/DBTeam/issues/new" class="btn-ghost">🐛 Report an issue</a>
   </div>
 </section>
